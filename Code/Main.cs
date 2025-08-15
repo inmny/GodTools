@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using GodTools.Abstract;
+using GodTools.Features;
 using NeoModLoader.api;
 using NeoModLoader.utils;
 using TMPro;
@@ -33,6 +34,7 @@ internal class Main : BasicMod<Main>, IReloadable
     private void Update()
     {
         //pos_show_effect_controller.update(Time.fixedDeltaTime * C.pos_show_effect_time_scale);
+        MoveActorWhenFollowing.Update();
     }
 
     public void Reload()
