@@ -14,9 +14,9 @@ namespace GodTools.UI;
 public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
 {
     public static string WindowId;
-    public static TileType SelectedTileType { get; private set; }
-    public static float WidthScale { get; private set; }
-    public static float HeightScale { get; private set; }
+    public static TileTypeBase SelectedTileType { get; private set; }
+    public static float WidthScale { get; private set; } = 1;
+    public static float HeightScale { get; private set; } = 1;
     private List<SimpleButton> _tileButtons = new();
     private PrintDirection _direction;
     public enum PrintDirection
@@ -64,6 +64,28 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
         print_scale_group.AddChild(height_scale.gameObject);
 
         var print_tile_grid = vert.BeginGridGroup(5, pCellSize: new(32,32));
+        AssetManager.topTiles.ForEach<TopTileType, TopTileLibrary>(top_tile_asset =>
+        {
+            var button = SimpleButton.Instantiate();
+            print_tile_grid.AddChild(button.gameObject);
+            button.Setup(() =>
+                {
+                    SelectedTileType = top_tile_asset;
+                    foreach (var other_button in _tileButtons)
+                    {
+                        other_button.Background.sprite = SpriteTextureLoader.getSprite("ui/button");
+                    }
+                    button.Background.sprite = SpriteTextureLoader.getSprite("ui/button2");
+                }, top_tile_asset.sprites.getVariation(0).sprite,
+                pTipType: "tip",
+                pTipData: new TooltipData()
+                {
+                    tip_name = top_tile_asset.id
+                }
+            );
+            button.Background.sprite = SpriteTextureLoader.getSprite("special/button");
+            _tileButtons.Add(button);
+        });
         AssetManager.tiles.ForEach<TileType, TileLibrary>(tile_asset =>
         {
             var button = SimpleButton.Instantiate();
@@ -77,9 +99,9 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
                     {
                         other_button.Background.sprite = SpriteTextureLoader.getSprite("ui/button");
                     }
-                    button.Background.sprite = SpriteTextureLoader.getSprite("special/button2");
+                    button.Background.sprite = SpriteTextureLoader.getSprite("special/button");
                 }, tile_asset.sprites.getVariation(0).sprite,
-                pTipType: "normal",
+                pTipType: "tip",
                 pTipData: new TooltipData()
                 {
                     tip_name = tile_asset.id
