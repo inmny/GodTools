@@ -51,7 +51,7 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
             PrinterEditor.RecalcAllPrintSteps(_direction);
         });
         width_scale.input.characterValidation = InputField.CharacterValidation.Decimal;
-        width_scale.SetSize(new(60, 16));
+        width_scale.SetSize(new(60, 20));
         print_scale_group.AddChild(width_scale.gameObject);
         var height_scale = TextInput.Instantiate();
         height_scale.Setup("1", str =>
@@ -59,7 +59,7 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
             HeightScale = float.Parse(str);
             PrinterEditor.RecalcAllPrintSteps(_direction);
         });
-        height_scale.SetSize(new(60, 16));
+        height_scale.SetSize(new(60, 20));
         height_scale.input.characterValidation = InputField.CharacterValidation.Decimal;
         print_scale_group.AddChild(height_scale.gameObject);
 
