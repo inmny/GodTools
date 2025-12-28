@@ -36,7 +36,7 @@ namespace GodTools.Patch
             var list = instructions.ToList();
             var index = list.FindIndex(x => (x.opcode == OpCodes.Call) && (x.operand as MethodInfo).Name == "get_world");
 
-            var jump_index = list.FindIndex(x => (x.opcode == OpCodes.Ldarg_1));
+            var jump_index = list.FindIndex(x => (x.opcode == OpCodes.Callvirt) && (x.operand as MethodInfo).Name == "flashPixel");
             var label = new Label();
             list[jump_index].labels.Add(label);
 
