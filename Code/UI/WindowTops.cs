@@ -138,6 +138,21 @@ public partial class WindowTops : AbstractWideWindow<WindowTops>
 #if DOUPOCANGQIONG
         CreateGrid_DOUPOCANGQIONG();
 #endif
+#if WARRIOR
+        CreateGrid_WARRIOR();
+#endif
+#if XIAN_TU
+        CreateGrid_XIAN_TU();
+#endif
+#if XIAN_NI_MOD
+        CreateGrid_XIANNI();
+#endif
+#if Thefantasyworld
+        CreateGrid_FANTASY_WORLD();
+#endif
+#if CHEVALIER
+        CreateGrid_CHEVALIER();
+#endif
         var to_top_button = RawLocalizedText.Instantiate(BackgroundTransform, pName: "ToTop");
         to_top_button.SetSize(new(30,10));
         to_top_button.Setup($"{C.mod_prefix}.ui.to_top", alignment: TextAnchor.MiddleLeft);
