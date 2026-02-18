@@ -1,6 +1,7 @@
 #if CULTIWAY
 using Cultiway.Content;
 using Cultiway.Content.Components;
+using Cultiway.Content.Extensions;
 using Cultiway.Core;
 using Cultiway.Utils.Extension;
 using GodTools.UI.Prefabs;
@@ -51,6 +52,38 @@ public partial class WindowTops
             }
 
             return "无天赋";
+        });
+        new_keyword(cultiway_keyword_grid, "spell_count", "cultiway/icons/iconWakan", (a, b) =>
+        {
+            ActorExtend a_extend = a.GetExtend();
+            ActorExtend b_extend = b.GetExtend();
+            return a_extend.all_skills.Count.CompareTo(b_extend.all_skills.Count);
+        }, a =>
+        {
+            var ae = a.GetExtend();
+            return $"{ae.all_skills.Count} 法术数量";
+        });
+        new_keyword(cultiway_keyword_grid, "main_cultibook_level", "books/custom_book_covers/cultibook/01", (a, b) =>
+        {
+            ActorExtend a_extend = a.GetExtend();
+            ActorExtend b_extend = b.GetExtend();
+            var a_level = (int)(a_extend.GetMainCultibook()?.Level ?? 0);
+            var b_level = (int)(b_extend.GetMainCultibook()?.Level ?? 0);
+            return a_level.CompareTo(b_level);
+        }, a =>
+        {
+            var ae = a.GetExtend();
+            return $"{ae.GetMainCultibook()?.Level.GetName() ?? "无功法"}";
+        });
+        new_keyword(cultiway_keyword_grid, "apprentice_count", "cultiway/icons/iconMasterApprentice", (a, b) =>
+        {
+            ActorExtend a_extend = a.GetExtend();
+            ActorExtend b_extend = b.GetExtend();
+            return a_extend.GetApprentices().Count.CompareTo(b_extend.GetApprentices().Count);
+        }, a =>
+        {
+            var ae = a.GetExtend();
+            return $"{ae.GetApprentices().Count} 徒弟数量";
         });
         TitledGrid cultiway_filter_grid = new_filter_grid("cultisys");
         new_filter(cultiway_filter_grid, "xian", "cultiway/icons/iconCultivation",

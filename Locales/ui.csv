@@ -65,6 +65,7 @@ inmny.godtools.ui.keyword.vanilla.kills,击杀,Kills
 inmny.godtools.ui.keyword.vanilla.birth,年龄,Age
 inmny.godtools.ui.keyword.vanilla.max_health,最大生命值,Max Health
 inmny.godtools.ui.keyword.vanilla.damage,攻击力,Damage
+inmny.godtools.ui.keyword.vanilla.births,生育孩子数量,Births
 inmny.godtools.ui.keyword.inmny_custommodt001,特质武道,Inmny CustomMod T1
 inmny.godtools.ui.keyword.inmny_custommodt001.talent,武道天赋,Talent
 inmny.godtools.ui.keyword.inmny_custommodt001.level,武道境界,Level
@@ -74,6 +75,9 @@ inmny.godtools.ui.keyword.inmny_custommodt002.summon_level,召唤师等级,Summo
 inmny.godtools.ui.keyword.cultiway,修仙,Cultiway
 inmny.godtools.ui.keyword.cultiway.xian_level,仙路等级,Xian Level
 inmny.godtools.ui.keyword.cultiway.xian_talent,灵根品级,Xian Talent
+inmny.godtools.ui.keyword.cultiway.spell_count,法术数量,Spell Count
+inmny.godtools.ui.keyword.cultiway.apprentice_count,徒弟数量,Apprentice Count
+inmny.godtools.ui.keyword.cultiway.main_cultibook_level,主修功法等阶,Main Cultibook Level
 inmny.godtools.ui.keyword.wushu,巫术秘典,Cultiway
 inmny.godtools.ui.keyword.wushu.yuanneng,源能,Yuan Neng
 inmny.godtools.ui.keyword.zhetian,遮天,Cover Sky

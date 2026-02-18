@@ -77,6 +77,8 @@ public partial class WindowTops
             (a, b) => a.stats[S.health].CompareTo(b.stats[S.health]), a => $"{a.stats[S.health]} 最大生命");
         new_keyword(vanilla_keyword_grid, "damage", "ui/icons/iconDamage",
             (a, b) => a.stats[S.damage].CompareTo(b.stats[S.damage]), a => $"{a.stats[S.damage]} 攻击");
+        new_keyword(vanilla_keyword_grid, "births", "ui/icons/iconBirths",
+            (a, b) => a.data.births.CompareTo(b.data.births), a => $"{a.data.births} 生育孩子数量");
 
     }
     private TitledGrid asset_filter_grid;
