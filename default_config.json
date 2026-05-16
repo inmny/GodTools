@@ -1,6 +1,14 @@
 {
   "GodTools.General": [
     {
+      "Id": "GodTools.General.AgeLightChangeSpeed",
+      "Type": "SLIDER",
+      "FloatVal": 1.0,
+      "MinFloatVal": 0.0,
+      "MaxFloatVal": 5.0,
+      "Callback": "CustomGodToolsConfig:SetAgeLightChangeSpeed"
+    },
+    {
       "Id": "GodTools.General.HideCursor",
       "Type": "SWITCH",
       "BoolVal": false,

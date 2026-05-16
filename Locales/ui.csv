@@ -134,6 +134,8 @@ WindowDetailedHistory Title,详细历史信息,Detailed History
 WindowWorldScript,世界脚本,World Script
 WindowWorldScript Title,世界脚本,World Script
 GodTools.General,通用,General
+GodTools.General.AgeLightChangeSpeed,纪元光线变化速度,Age Light Change Speed
+GodTools.General.AgeLightChangeSpeed Description,调整纪元切换时光线/遮罩淡入淡出的速度倍率,Adjusts the fade speed multiplier for age light and overlay changes
 GodTools.General.HideCursor,隐藏光标,Hide Cursor
 GodTools.General.HideCursor Description,隐藏光标,Hide Cursor
 GodTools.General.HideDrop,隐藏掉落物,Hide Drop
