@@ -133,3 +133,8 @@ WindowDetailedHistory,详细历史信息,Detailed History
 WindowDetailedHistory Title,详细历史信息,Detailed History
 WindowWorldScript,世界脚本,World Script
 WindowWorldScript Title,世界脚本,World Script
+GodTools.General,通用,General
+GodTools.General.HideCursor,隐藏光标,Hide Cursor
+GodTools.General.HideCursor Description,隐藏光标,Hide Cursor
+GodTools.General.HideDrop,隐藏掉落物,Hide Drop
+GodTools.General.HideDrop Description,隐藏掉落物,Hide Drop

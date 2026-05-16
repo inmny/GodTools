@@ -1,0 +1,16 @@
+{
+  "GodTools.General": [
+    {
+      "Id": "GodTools.General.HideCursor",
+      "Type": "SWITCH",
+      "BoolVal": false,
+      "Callback": "CustomGodToolsConfig:SetHideCursor"
+    },
+    {
+      "Id": "GodTools.General.HideDrop",
+      "Type": "SWITCH",
+      "BoolVal": false,
+      "Callback": "CustomGodToolsConfig:SetHideDrop"
+    }
+  ]
+}
