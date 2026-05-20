@@ -14,10 +14,10 @@ namespace GodTools.UI;
 public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
 {
     public static string WindowId;
-    public static TileType SelectedTileType { get; private set; }
-    public static float WidthScale { get; private set; }
-    public static float HeightScale { get; private set; }
-    private List<SimpleButton> _tileButtons = new();
+    public static TileTypeBase SelectedTileType { get; private set; }
+    public static float WidthScale { get; private set; } = 1f;
+    public static float HeightScale { get; private set; } = 1f;
+    private readonly List<SimpleButton> _tileButtons = new();
     private PrintDirection _direction;
     public enum PrintDirection
     {        
@@ -47,7 +47,7 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
         var width_scale = TextInput.Instantiate();
         width_scale.Setup("1", str =>
         {
-            WidthScale = float.Parse(str);
+            WidthScale = ParseScale(str, WidthScale);
             PrinterEditor.RecalcAllPrintSteps(_direction);
         });
         width_scale.input.characterValidation = InputField.CharacterValidation.Decimal;
@@ -56,7 +56,7 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
         var height_scale = TextInput.Instantiate();
         height_scale.Setup("1", str =>
         {
-            HeightScale = float.Parse(str);
+            HeightScale = ParseScale(str, HeightScale);
             PrinterEditor.RecalcAllPrintSteps(_direction);
         });
         height_scale.SetSize(new(60, 20));
@@ -64,6 +64,25 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
         print_scale_group.AddChild(height_scale.gameObject);
 
         var print_tile_grid = vert.BeginGridGroup(5, pCellSize: new(32,32));
+        AssetManager.top_tiles.ForEach<TopTileType, TopTileLibrary>(top_tile_asset =>
+        {
+            var button = SimpleButton.Instantiate();
+            print_tile_grid.AddChild(button.gameObject);
+
+            button.Setup(() =>
+                {
+                    SelectTile(top_tile_asset, button);
+                }, top_tile_asset.sprites.getVariation(0).sprite,
+                pTipType: "tip",
+                pTipData: new TooltipData()
+                {
+                    tip_name = top_tile_asset.id
+                }
+            );
+            button.Background.sprite = SpriteTextureLoader.getSprite("ui/button");
+            _tileButtons.Add(button);
+        });
+
         AssetManager.tiles.ForEach<TileType, TileLibrary>(tile_asset =>
         {
             var button = SimpleButton.Instantiate();
@@ -72,14 +91,9 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
 
             button.Setup(() =>
                 {
-                    SelectedTileType = tile_asset;
-                    foreach (var other_button in _tileButtons)
-                    {
-                        other_button.Background.sprite = SpriteTextureLoader.getSprite("ui/button");
-                    }
-                    button.Background.sprite = SpriteTextureLoader.getSprite("special/button2");
+                    SelectTile(tile_asset, button);
                 }, tile_asset.sprites.getVariation(0).sprite,
-                pTipType: "normal",
+                pTipType: "tip",
                 pTipData: new TooltipData()
                 {
                     tip_name = tile_asset.id
@@ -88,5 +102,21 @@ public class WindowPrinterEditor : AutoLayoutWindow<WindowPrinterEditor>
             button.Background.sprite = SpriteTextureLoader.getSprite("ui/button");
             _tileButtons.Add(button);
         });
+    }
+
+    private static float ParseScale(string value, float fallback)
+    {
+        if (!float.TryParse(value, out float result)) return fallback;
+        return Math.Max(0.1f, result);
+    }
+
+    private void SelectTile(TileTypeBase tileType, SimpleButton selectedButton)
+    {
+        SelectedTileType = tileType;
+        foreach (var other_button in _tileButtons)
+        {
+            other_button.Background.sprite = SpriteTextureLoader.getSprite("ui/button");
+        }
+        selectedButton.Background.sprite = SpriteTextureLoader.getSprite("special/button2");
     }
 }
