@@ -9,6 +9,14 @@
       "Callback": "CustomGodToolsConfig:SetAgeLightChangeSpeed"
     },
     {
+      "Id": "GodTools.General.DarkAgeOverlayAlpha",
+      "Type": "SLIDER",
+      "FloatVal": 0.3,
+      "MinFloatVal": 0.0,
+      "MaxFloatVal": 1.0,
+      "Callback": "CustomGodToolsConfig:SetDarkAgeOverlayAlpha"
+    },
+    {
       "Id": "GodTools.General.HideCursor",
       "Type": "SWITCH",
       "BoolVal": false,

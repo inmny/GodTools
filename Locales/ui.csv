@@ -136,6 +136,8 @@ WindowWorldScript Title,世界脚本,World Script
 GodTools.General,通用,General
 GodTools.General.AgeLightChangeSpeed,纪元光线变化速度,Age Light Change Speed
 GodTools.General.AgeLightChangeSpeed Description,调整纪元切换时光线/遮罩淡入淡出的速度倍率,Adjusts the fade speed multiplier for age light and overlay changes
+GodTools.General.DarkAgeOverlayAlpha,黑夜纪元黑暗程度,Dark Age Darkness
+GodTools.General.DarkAgeOverlayAlpha Description,调整黑夜纪元的遮罩透明度,Adjusts age_dark era effect overlay alpha
 GodTools.General.HideCursor,隐藏光标,Hide Cursor
 GodTools.General.HideCursor Description,隐藏光标,Hide Cursor
 GodTools.General.HideDrop,隐藏掉落物,Hide Drop
