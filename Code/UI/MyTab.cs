@@ -118,6 +118,13 @@ internal class MyTab : IManager
         button = PowerButtonCreator.CreateWindowButton(WindowConsistentCreaturePowerTop.WindowId, WindowConsistentCreaturePowerTop.WindowId,
             SpriteTextureLoader.getSprite("inmny/godtools/icons/iconCreatureTop"));
         AddButton(TabButtonType.ACTOR, button);
+        button = PowerButtonCreator.CreateWindowButton(WindowSocializeTopicEditor.WindowId,
+            WindowSocializeTopicEditor.WindowId,
+            SpriteTextureLoader.getSprite("ui/icons/iconCommunity"));
+        AddButton(TabButtonType.ACTOR, button);
+        button = PowerButtonCreator.CreateGodPowerButton(GodPowers.apply_socialize_topic.id,
+            SpriteTextureLoader.getSprite("ui/icons/actor_traits/iconCommunity"));
+        AddButton(TabButtonType.ACTOR, button);
     }
 
     private static void AddButton(TabButtonType type, PowerButton button)

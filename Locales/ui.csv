@@ -142,3 +142,7 @@ GodTools.General.HideCursor,隐藏光标,Hide Cursor
 GodTools.General.HideCursor Description,隐藏光标,Hide Cursor
 GodTools.General.HideDrop,隐藏掉落物,Hide Drop
 GodTools.General.HideDrop Description,隐藏掉落物,Hide Drop
+WindowSocializeTopicEditor,社交话题图标,Social Topic Icon
+WindowSocializeTopicEditor Title,社交话题图标,Social Topic Icon
+gt_socialize_topic_drop,套用话题图标,Apply Topic Icon
+gt_socialize_topic_drop_description,将已选择的社交话题图标套用到目标生物,Apply the selected social topic icon to the target actor
