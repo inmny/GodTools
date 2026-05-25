@@ -36,4 +36,18 @@ public static class CustomGodToolsConfig
     {
         HideDrop = value;
     }
+
+    public static bool HideUnitSelectionCircle { get; private set; }
+
+    public static void SetHideUnitSelectionCircle(bool value)
+    {
+        HideUnitSelectionCircle = value;
+    }
+
+    public static bool HideMoveDestinationEffect { get; private set; }
+
+    public static void SetHideMoveDestinationEffect(bool value)
+    {
+        HideMoveDestinationEffect = value;
+    }
 }

@@ -142,6 +142,10 @@ GodTools.General.HideCursor,隐藏光标,Hide Cursor
 GodTools.General.HideCursor Description,隐藏光标,Hide Cursor
 GodTools.General.HideDrop,隐藏掉落物,Hide Drop
 GodTools.General.HideDrop Description,隐藏掉落物,Hide Drop
+GodTools.General.HideUnitSelectionCircle,隐藏单位选择光圈,Hide Unit Selection Circle
+GodTools.General.HideUnitSelectionCircle Description,隐藏已选中单位和框选候选单位脚下的光圈,Hide circles under selected units and units about to be selected
+GodTools.General.HideMoveDestinationEffect,隐藏移动目的地动画,Hide Move Destination Effect
+GodTools.General.HideMoveDestinationEffect Description,隐藏右键命令选中单位移动时目的地的动画,Hide the destination effect when ordering selected units to move
 WindowSocializeTopicEditor,社交话题图标,Social Topic Icon
 WindowSocializeTopicEditor Title,社交话题图标,Social Topic Icon
 gt_socialize_topic_drop,套用话题图标,Apply Topic Icon

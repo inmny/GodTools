@@ -27,6 +27,18 @@
       "Type": "SWITCH",
       "BoolVal": false,
       "Callback": "CustomGodToolsConfig:SetHideDrop"
+    },
+    {
+      "Id": "GodTools.General.HideUnitSelectionCircle",
+      "Type": "SWITCH",
+      "BoolVal": false,
+      "Callback": "CustomGodToolsConfig:SetHideUnitSelectionCircle"
+    },
+    {
+      "Id": "GodTools.General.HideMoveDestinationEffect",
+      "Type": "SWITCH",
+      "BoolVal": false,
+      "Callback": "CustomGodToolsConfig:SetHideMoveDestinationEffect"
     }
   ]
 }
