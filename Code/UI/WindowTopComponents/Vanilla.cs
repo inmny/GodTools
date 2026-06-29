@@ -121,16 +121,16 @@ public partial class WindowTops
             if (asset.id.StartsWith("_")) continue;
             var icon_path = string.IsNullOrEmpty(asset.icon) || SpriteTextureLoader.getSprite($"ui/icons/{asset.icon}") == null ?
                 "ui/icons/iconQuestionMark" : $"ui/icons/{asset.icon}";
-            LM.AddToCurrentLocale($"{C.mod_prefix}.ui.filter.asset.{asset.name_locale}",
-                LM.Get(asset.name_locale));
-            new_filter(asset_filter_grid, asset.name_locale, icon_path, a => a.asset.id == asset_id);
+            LM.AddToCurrentLocale($"{C.mod_prefix}.ui.filter.asset.{asset.id}",
+                GetLocalizedTextOrFallback(asset.getLocaleID(), asset.name_locale, asset.id));
+            new_filter(asset_filter_grid, asset.id, icon_path, a => a.asset.id == asset_id);
         }
 
         foreach (var trait_id in trait_set)
         {
             var asset = AssetManager.traits.get(trait_id);
             LM.AddToCurrentLocale($"{C.mod_prefix}.ui.filter.trait.{trait_id}",
-                LM.Get($"trait_{asset.id}"));
+                GetLocalizedTextOrFallback(asset.getLocaleID(), asset.id));
             new_filter(trait_filter_grid, asset.id, asset.path_icon, a => a.hasTrait(trait_id));
         }
 
@@ -153,5 +153,23 @@ public partial class WindowTops
             sub_icon.color = kingdom.kingdomColor.getColorBanner();
             sub_icon.rectTransform.sizeDelta = kingdom_filter_grid.Grid.cellSize;
         }
+    }
+
+    private static string GetLocalizedTextOrFallback(string locale_key, params string[] fallback_values)
+    {
+        if (!string.IsNullOrEmpty(locale_key) && LocalizedTextManager.stringExists(locale_key))
+        {
+            return LocalizedTextManager.getText(locale_key);
+        }
+
+        foreach (var fallback in fallback_values)
+        {
+            if (!string.IsNullOrEmpty(fallback))
+            {
+                return fallback;
+            }
+        }
+
+        return locale_key ?? string.Empty;
     }
 }
