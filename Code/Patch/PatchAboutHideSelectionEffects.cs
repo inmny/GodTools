@@ -16,6 +16,12 @@ internal static class PatchAboutHideSelectionEffects
     {
         return !CustomGodToolsConfig.HideUnitSelectionCircle;
     }
+    [HarmonyPrefix, HarmonyPatch(typeof(QuantumSpriteLibrary), "drawSquareSelection")]
+    private static bool QuantumSpriteLibrary_drawSquareSelection_prefix()
+    {
+        return !CustomGodToolsConfig.HideUnitSelectionCircle;
+    }
+
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(EffectsLibrary), nameof(EffectsLibrary.spawnAt),
