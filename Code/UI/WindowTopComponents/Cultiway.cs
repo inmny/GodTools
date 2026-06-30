@@ -3,6 +3,7 @@ using Cultiway.Content;
 using Cultiway.Content.Components;
 using Cultiway.Content.Extensions;
 using Cultiway.Core;
+using Cultiway.Core.Components;
 using Cultiway.Utils.Extension;
 using GodTools.UI.Prefabs;
 using NeoModLoader.api.attributes;
@@ -79,15 +80,20 @@ public partial class WindowTops
         {
             ActorExtend a_extend = a.GetExtend();
             ActorExtend b_extend = b.GetExtend();
-            return a_extend.GetApprentices().Count.CompareTo(b_extend.GetApprentices().Count);
+            return GetApprenticeCount(a_extend).CompareTo(GetApprenticeCount(b_extend));
         }, a =>
         {
             var ae = a.GetExtend();
-            return $"{ae.GetApprentices().Count} 徒弟数量";
+            return $"{GetApprenticeCount(ae)} 徒弟数量";
         });
         TitledGrid cultiway_filter_grid = new_filter_grid("cultisys");
         new_filter(cultiway_filter_grid, "xian", "cultiway/icons/iconCultivation",
             a => a.GetExtend().HasCultisys<Xian>());
+    }
+
+    private static int GetApprenticeCount(ActorExtend pActorExtend)
+    {
+        return pActorExtend.TryGetComponent(out MasterApprenticeState state) ? state.ApprenticeCount : 0;
     }
 }
 #endif
