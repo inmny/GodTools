@@ -55,6 +55,7 @@ inmny.godtools.ui.filter.race,种族,Race
 inmny.godtools.ui.filter.race.human,人类,Humans
 inmny.godtools.ui.filter.cultisys,修炼体系,Cultisys
 inmny.godtools.ui.filter.cultisys.xian,仙路,Xian
+inmny.godtools.ui.filter.cultisys.magic,魔法,Magic
 inmny.godtools.ui.filter.worldlog.type,事件类型,WorldLog Type
 inmny.godtools.ui.sort.ascending,升序,Ascending
 inmny.godtools.ui.sort.descending,降序,Descending
@@ -74,6 +75,7 @@ inmny.godtools.ui.keyword.inmny_custommodt002.summon_count,召唤物数量,Summo
 inmny.godtools.ui.keyword.inmny_custommodt002.summon_level,召唤师等级,Summon Level
 inmny.godtools.ui.keyword.cultiway,修仙,Cultiway
 inmny.godtools.ui.keyword.cultiway.xian_level,仙路等级,Xian Level
+inmny.godtools.ui.keyword.cultiway.magic_level,魔法等级,Magic Level
 inmny.godtools.ui.keyword.cultiway.xian_talent,灵根品级,Xian Talent
 inmny.godtools.ui.keyword.cultiway.spell_count,法术数量,Spell Count
 inmny.godtools.ui.keyword.cultiway.apprentice_count,徒弟数量,Apprentice Count
