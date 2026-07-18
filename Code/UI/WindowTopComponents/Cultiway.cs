@@ -49,6 +49,22 @@ public partial class WindowTops
 
             return "无魔法";
         });
+        new_keyword(cultiway_keyword_grid, "knight_level", "cultiway/icons/iconKnight", [Hotfixable](a, b) =>
+        {
+            ActorExtend a_extend = a.GetExtend();
+            ActorExtend b_extend = b.GetExtend();
+            return a_extend.GetCultisysLevelForSort<Knight>().CompareTo(b_extend.GetCultisysLevelForSort<Knight>());
+        }, a =>
+        {
+            var ae = a.GetExtend();
+            if (ae.HasCultisys<Knight>())
+            {
+                var knight = ae.GetCultisys<Knight>();
+                return $"{Cultisyses.Knight.GetLevelName(knight.CurrLevel)}";
+            }
+
+            return "无骑士";
+        });
         new_keyword(cultiway_keyword_grid, "xian_talent", "cultiway/icons/iconElement", (a, b) =>
         {
             ActorExtend a_extend = a.GetExtend();
@@ -107,6 +123,8 @@ public partial class WindowTops
             a => a.GetExtend().HasCultisys<Xian>());
         new_filter(cultiway_filter_grid, "magic", "cultiway/icons/iconMagic",
             a => a.GetExtend().HasCultisys<Magic>());
+        new_filter(cultiway_filter_grid, "knight", "cultiway/icons/iconKnight",
+            a => a.GetExtend().HasCultisys<Knight>());
     }
 
     private static int GetApprenticeCount(ActorExtend pActorExtend)
