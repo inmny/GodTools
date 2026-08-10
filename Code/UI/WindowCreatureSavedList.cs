@@ -56,18 +56,18 @@ public class WindowCreatureSavedList : AbstractWindow<WindowCreatureSavedList>
         _pool.clear();
         for (var i = view_start_idx; i <= view_end_idx; i++)
         {
-            var idx = i;
-            ActorData data = _list[idx].ActorData;
+            var packet = _list[i];
+            ActorData data = packet.ActorData;
             SavedActorDataCard card = _pool.getNext();
             card.Setup(data, () =>
             {
                 ScrollWindow.hideAllEvent();
-                CreatureSavedList.SelectActorToPlace(data);
+                CreatureSavedList.SelectActorToPlace(packet);
                 _power_button.clickActivePower();
             }, () =>
             {
-                CreatureSavedList.UnsaveActorData(data);
-                _list.RemoveAt(idx);
+                CreatureSavedList.UnsaveActor(packet);
+                _list.Remove(packet);
                 Main.LogInfo("delete");
             });
             card.transform.localPosition = new Vector2(0, start_y - i * single_element_height);
