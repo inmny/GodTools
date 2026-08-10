@@ -13,9 +13,10 @@ public abstract class SimpleInputEditor : CreatureDataEditorGrid
     {
         TextInput = TextInput.Instantiate(transform, pName: "TextInput");
         TextInput.Setup("", UpdateValue);
-        TextInput.SetSize(new(200, 20));
+        TextInput.SetSize(new(176, 20));
         TextInput.GetComponent<RectTransform>().pivot = new(0.5f, 1);
         TextInput.input.characterValidation = InputField.CharacterValidation.Integer;
+        OnSetup();
         TitleKey = GetTitleKey();
     }
     protected abstract string GetTitleKey();

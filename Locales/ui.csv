@@ -107,6 +107,19 @@ inmny.godtools.ui.data_editor.inmny_custommodt001.wudao_level,武道等级,Level
 inmny.godtools.ui.data_editor.inmny_custommodt001.wudao_exp,武道经验,Experience
 inmny.godtools.ui.data_editor.cultiway,修仙,Cultiway
 inmny.godtools.ui.data_editor.cultiway.power_level,力量层次,Power Level
+inmny.godtools.ui.data_editor.cultiway.element_root,灵根(天赋),Element Root (Talent)
+inmny.godtools.ui.data_editor.cultiway.element_root.iron,金,Metal
+inmny.godtools.ui.data_editor.cultiway.element_root.wood,木,Wood
+inmny.godtools.ui.data_editor.cultiway.element_root.water,水,Water
+inmny.godtools.ui.data_editor.cultiway.element_root.fire,火,Fire
+inmny.godtools.ui.data_editor.cultiway.element_root.earth,土,Earth
+inmny.godtools.ui.data_editor.cultiway.element_root.neg,阴,Yin
+inmny.godtools.ui.data_editor.cultiway.element_root.pos,阳,Yang
+inmny.godtools.ui.data_editor.cultiway.element_root.entropy,混沌,Chaos
+inmny.godtools.ui.data_editor.cultiway.jindan.strength,金丹强度,Jindan Strength
+inmny.godtools.ui.data_editor.cultiway.jindan.stage,金丹转数,Jindan Stage
+inmny.godtools.ui.data_editor.cultiway.yuanying.strength,元婴强度,Yuanying Strength
+inmny.godtools.ui.data_editor.cultiway.yuanying.stage,元婴转数,Yuanying Stage
 inmny.godtools.ui.data_editor.zhetian,遮天,Cover Sky
 inmny.godtools.ui.data_editor.zhetian.talent,遮天天赋,Talent
 inmny.godtools.ui.data_editor.zhetian.zhetian_level,遮天等级,Level
