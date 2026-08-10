@@ -55,7 +55,7 @@ public class MonoObjPool<T> where T : MonoBehaviour
             T obj = _pool[i];
             if (check(obj))
             {
-                _pool.Swap(i--, --_unused_first_idx);
+                SwapTracked(i--, --_unused_first_idx);
             }
         }
     }
@@ -72,22 +72,18 @@ public class MonoObjPool<T> where T : MonoBehaviour
 
     public void Return(T obj)
     {
-        if (obj.transform.parent != _parent)
+        var instance_id = obj.GetInstanceID();
+        if (!_idx_dict.TryGetValue(instance_id, out var idx))
         {
             obj.transform.SetParent(_parent);
             _pool.Add(obj);
+            _idx_dict[instance_id] = _pool.Count - 1;
         }
         else
         {
-            if (!_idx_dict.TryGetValue(obj.GetInstanceID(), out var idx))
-            {
-                _pool.Add(obj);
-            }
-            else
-            {
-                _pool.Swap(idx, _unused_first_idx - 1);
-                _unused_first_idx -= 1;
-            }
+            if (obj.transform.parent != _parent) obj.transform.SetParent(_parent);
+            SwapTracked(idx, _unused_first_idx - 1);
+            _unused_first_idx -= 1;
         }
 
         obj.gameObject.SetActive(false);
@@ -123,5 +119,15 @@ public class MonoObjPool<T> where T : MonoBehaviour
 
         _active_action?.Invoke(obj);
         return obj;
+    }
+
+    private void SwapTracked(int first, int second)
+    {
+        if (first == second) return;
+        var first_obj = _pool[first];
+        var second_obj = _pool[second];
+        _pool.Swap(first, second);
+        _idx_dict[first_obj.GetInstanceID()] = second;
+        _idx_dict[second_obj.GetInstanceID()] = first;
     }
 }
