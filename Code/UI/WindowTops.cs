@@ -198,15 +198,12 @@ public partial class WindowTops : AbstractWideWindow<WindowTops>
         }
         if (last_or_filter_settings.Count > 0)
         {
-            List<Actor> or_list = new();
+            var or_actors = new HashSet<Actor>();
             foreach (FilterSetting setting in last_or_filter_settings)
             {
-                or_list.AddRange(_list.FindAll(setting.FilterFunc.Invoke));
+                or_actors.UnionWith(_list.FindAll(setting.FilterFunc.Invoke));
             }
-            if (last_and_filter_settings.Count > 0)
-                _list = _list.Intersect(or_list).ToList();
-            else
-                _list = or_list;
+            _list = _list.Where(or_actors.Contains).ToList();
         }
         if (last_not_filter_settings.Count > 0)
         {
@@ -682,12 +679,13 @@ public partial class WindowTops : AbstractWideWindow<WindowTops>
     [Hotfixable]
     public void ToBottom()
     {
-        ContentTransform.DOLocalMoveY(ContentTransform.GetComponent<RectTransform>().sizeDelta.y - scroll_view_rect.sizeDelta.y, 1);
+        var bottom = Mathf.Max(0, ContentTransform.GetComponent<RectTransform>().sizeDelta.y - scroll_view_rect.sizeDelta.y);
+        ContentTransform.DOLocalMoveY(bottom, 1);
     }
     [Hotfixable]
     private void CheckJump(string num)
     {
-        if (int.TryParse(num, out var idx))
+        if (_list.Count > 0 && int.TryParse(num, out var idx))
         {
             idx = Math.Min(_list.Count - 1, Math.Max(0, idx));
             ContentTransform.DOLocalMoveY(idx * single_element_height, 1);
@@ -697,13 +695,47 @@ public partial class WindowTops : AbstractWideWindow<WindowTops>
     private void OnUpdate()
     {
         CheckFilters();
+        if (ui_sort_keys_dirty)
+        {
+            sort_button_pool.Clear();
+            foreach (SortKey key in sort_keys)
+            {
+                SortKeyButton button = sort_button_pool.GetNext();
+                button.Setup(key);
+            }
+
+            ui_sort_keys_dirty = false;
+        }
+
+        if (ui_filters_dirty)
+        {
+            filter_button_pool.Clear();
+            foreach (FilterSetting filter in all_filter_settings)
+            {
+                FilterButton button = filter_button_pool.GetNext();
+                button.Setup(filter);
+            }
+
+            ui_filters_dirty = false;
+        }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(filter_content_rect);
+
+        if (_list.Count == 0)
+        {
+            _pool.clear();
+            last_view_start = 0;
+            last_view_end = -1;
+            return;
+        }
+
         Vector3 curr_position = ContentTransform.localPosition;
 
         var view_y_start = curr_position.y;
         var view_y_end = curr_position.y + scroll_view_rect.sizeDelta.y;
 
-        var view_start_idx = (int)(view_y_start / single_element_height);
-        var view_end_idx = Math.Min((int)(view_y_end / single_element_height) + 1, _list.Count - 1);
+        var view_start_idx = Mathf.Clamp((int)(view_y_start / single_element_height), 0, _list.Count - 1);
+        var view_end_idx = Mathf.Clamp((int)(view_y_end / single_element_height) + 1,
+            view_start_idx, _list.Count - 1);
 
         var actual_start_y = start_y - view_start_idx * single_element_height;
         var actual_end_y = start_y   - view_end_idx   * single_element_height;
@@ -739,30 +771,6 @@ public partial class WindowTops : AbstractWideWindow<WindowTops>
         last_view_start = view_start_idx;
         last_view_end = view_end_idx;
 
-        if (ui_sort_keys_dirty)
-        {
-            sort_button_pool.Clear();
-            foreach (SortKey key in sort_keys)
-            {
-                SortKeyButton button = sort_button_pool.GetNext();
-                button.Setup(key);
-            }
-
-            ui_sort_keys_dirty = false;
-        }
-
-        if (ui_filters_dirty)
-        {
-            filter_button_pool.Clear();
-            foreach (FilterSetting filter in all_filter_settings)
-            {
-                FilterButton button = filter_button_pool.GetNext();
-                button.Setup(filter);
-            }
-
-            ui_filters_dirty = false;
-        }
-        LayoutRebuilder.ForceRebuildLayoutImmediate(filter_content_rect);
     }
     [Hotfixable]
     private void CheckFilters()

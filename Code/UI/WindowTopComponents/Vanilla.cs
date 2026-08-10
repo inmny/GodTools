@@ -108,7 +108,7 @@ public partial class WindowTops
             if (actor != null && actor.data != null && actor.isAlive() && actor.asset.can_be_inspected)
             {
                 asset_set.Add(actor.asset.id);
-                if (actor.kingdom != null)
+                if (actor.kingdom != null && actor.kingdom.data != null)
                     kingdom_set.Add(actor.kingdom.data.id);
                 
                 trait_set.UnionWith(actor.traits.Select(x => x.id));
@@ -141,7 +141,8 @@ public partial class WindowTops
             LM.AddToCurrentLocale($"{C.mod_prefix}.ui.filter.kingdom.{kingdom_id}",
                 kingdom.data.name);
             var filter_button_in_grid = new_filter(kingdom_filter_grid,
-                new FilterSetting(kingdom_id.ToString(), kingdom.getElementBackground(), a => a.kingdom.data.id == kingdom_id)
+                new FilterSetting(kingdom_id.ToString(), kingdom.getElementBackground(),
+                    a => a.kingdom != null && a.kingdom.data != null && a.kingdom.data.id == kingdom_id)
                 {
                     InnerColor = kingdom.kingdomColor.getColorBanner(),
                     InnerIcon = kingdom.getElementIcon(),
