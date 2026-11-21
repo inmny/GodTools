@@ -37,6 +37,13 @@ public static class CustomGodToolsConfig
         HideDrop = value;
     }
 
+    public static bool HideUnitHover { get; private set; }
+
+    public static void SetHideUnitHover(bool value)
+    {
+        HideUnitHover = value;
+    }
+
     public static bool HideUnitSelectionCircle { get; private set; }
 
     public static void SetHideUnitSelectionCircle(bool value)
@@ -49,5 +56,13 @@ public static class CustomGodToolsConfig
     public static void SetHideMoveDestinationEffect(bool value)
     {
         HideMoveDestinationEffect = value;
+    }
+
+    public static bool DisableCameraShake { get; private set; }
+
+    public static void SetDisableCameraShake(bool value)
+    {
+        DisableCameraShake = value;
+        if (value) Patch.PatchAboutDisableCameraShake.StopShake(World.world);
     }
 }

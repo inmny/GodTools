@@ -159,10 +159,14 @@ GodTools.General.HideCursor,隐藏光标,Hide Cursor
 GodTools.General.HideCursor Description,隐藏光标,Hide Cursor
 GodTools.General.HideDrop,隐藏掉落物,Hide Drop
 GodTools.General.HideDrop Description,隐藏掉落物,Hide Drop
+GodTools.General.HideUnitHover,隐藏单位悬停提示,Hide Unit Hover Info
+GodTools.General.HideUnitHover Description,鼠标悬停单位时隐藏脚下光圈及信息面板，不影响点击查看详情,Hide the circle and info panel when hovering over a unit; clicking to inspect still works
 GodTools.General.HideUnitSelectionCircle,隐藏单位选择光圈,Hide Unit Selection Circle
 GodTools.General.HideUnitSelectionCircle Description,隐藏已选中单位和框选候选单位脚下的光圈,Hide circles under selected units and units about to be selected
 GodTools.General.HideMoveDestinationEffect,隐藏移动目的地动画,Hide Move Destination Effect
 GodTools.General.HideMoveDestinationEffect Description,隐藏右键命令选中单位移动时目的地的动画,Hide the destination effect when ordering selected units to move
+GodTools.General.DisableCameraShake,禁止镜头晃动,Disable Camera Shake
+GodTools.General.DisableCameraShake Description,禁止原版及所有模组触发的镜头晃动，并立即停止正在进行的晃动,Disable camera shake from the base game and all mods; stop any shake already in progress
 WindowSocializeTopicEditor,社交话题图标,Social Topic Icon
 WindowSocializeTopicEditor Title,社交话题图标,Social Topic Icon
 gt_socialize_topic_drop,套用话题图标,Apply Topic Icon

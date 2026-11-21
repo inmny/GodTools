@@ -29,6 +29,12 @@
       "Callback": "CustomGodToolsConfig:SetHideDrop"
     },
     {
+      "Id": "GodTools.General.HideUnitHover",
+      "Type": "SWITCH",
+      "BoolVal": false,
+      "Callback": "CustomGodToolsConfig:SetHideUnitHover"
+    },
+    {
       "Id": "GodTools.General.HideUnitSelectionCircle",
       "Type": "SWITCH",
       "BoolVal": false,
@@ -39,6 +45,12 @@
       "Type": "SWITCH",
       "BoolVal": false,
       "Callback": "CustomGodToolsConfig:SetHideMoveDestinationEffect"
+    },
+    {
+      "Id": "GodTools.General.DisableCameraShake",
+      "Type": "SWITCH",
+      "BoolVal": false,
+      "Callback": "CustomGodToolsConfig:SetDisableCameraShake"
     }
   ]
 }
