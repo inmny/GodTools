@@ -16,7 +16,6 @@ item_from,锻造地,Forging Place
 item_year,锻造年份,Forging Year
 item_material,材质,Material
 item_modifier,词缀,Modifier
-INFO,信息,Information
 WORLD,世界,World
 ACTOR,生物,Creature
 BUILDING,建筑,Building
@@ -313,13 +312,11 @@ inmny.godtools.ui.world_script.choice.field.happiness,幸福度,Happiness
 inmny.godtools.ui.world_script.choice.field.stamina,耐力,Stamina
 inmny.godtools.ui.world_script.choice.field.mana,法力,Mana
 inmny.godtools.ui.world_script.choice.field.kills,击杀数,Kills
-inmny.godtools.WindowModInfo,模组介绍,Mod Info
 inmny.godtools.debug,DEBUG窗口,Debug Window
 inmny.godtools.console,控制台,Console
 inmny.godtools.debug_info,详细信息,Detailed Debug Info
 inmny.godtools.benchmark,性能测试,Benchmark
 inmny.godtools.WindowSubWorldCreator,创建亚空间,Create Sub World
-WindowModInfo,模组介绍,Mod Info
 WindowCreatureDataEditor,生物数据修改,Creature Data Editor
 WindowCreatureDataEditor Title,生物数据修改,Creature Data Editor
 WindowCreatureDataEditor Description,<color=yellow>警告！可能会导致bug</color>\n<color=red>谨慎使用</color>,Creature Data Editor

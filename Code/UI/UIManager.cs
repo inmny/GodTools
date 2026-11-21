@@ -8,7 +8,6 @@ internal class UIManager : IManager
 {
     public void Initialize()
     {
-        WindowModInfo.CreateWindow($"{C.mod_prefix}.{nameof(WindowModInfo)}", nameof(WindowModInfo));
 #if ENABLE_SPRITE_EDITOR
         WindowCreatureSpriteEditor.CreateWindow(nameof(WindowCreatureSpriteEditor), nameof(WindowCreatureSpriteEditor));
 #endif

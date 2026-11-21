@@ -10,7 +10,6 @@ namespace GodTools.UI;
 
 internal enum TabButtonType
 {
-    INFO,
     WORLD,
     ACTOR,
     BUILDING,
@@ -27,7 +26,7 @@ internal enum TabButtonType
 internal class MyTab : IManager
 {
     public static           PowersTab                            powers_tab;
-    private static readonly Dictionary<TabButtonType, Transform> button_groups = new();
+    private static readonly Dictionary<TabButtonType, RectTransform> button_groups = new();
     private static          RectTransform                        top_container;
 
 
@@ -42,20 +41,19 @@ internal class MyTab : IManager
         {
             "Controller", "Container"
         });
-        powers_tab.PutElement("Container", top_container, new Vector2(-13, -19));
+        // NML 已为分割线预留横向间距，内容从分组起点开始。
+        powers_tab.PutElement("Container", top_container, new Vector2(0, -19));
 
-        ConstructTabContainer(TabButtonType.INFO,  SpriteTextureLoader.getSprite("ui/icons/iconAbout"));
         ConstructTabContainer(TabButtonType.WORLD, SpriteTextureLoader.getSprite("ui/icons/iconWorldInfo"));
         ConstructTabContainer(TabButtonType.ACTOR, SpriteTextureLoader.getSprite("ui/icons/iconHumans"));
         ConstructTabContainer(TabButtonType.DEBUG, SpriteTextureLoader.getSprite("ui/icons/iconDebug"));
 
         powers_tab.UpdateLayout();
-        AddInfoButtons();
         AddWorldButtons();
         AddCreatureButtons();
         AddDebugButtons();
 
-        SwitchTab(TabButtonType.INFO);
+        SwitchTab(TabButtonType.ACTOR);
     }
     
     private static void AddDebugButtons()
@@ -87,19 +85,11 @@ internal class MyTab : IManager
            SpriteTextureLoader.getSprite("ui/icons/iconWorldLog"));
        AddButton(TabButtonType.WORLD, button);
        button = PowerButtonCreator.CreateWindowButton(WindowWorldScript.WindowId, WindowWorldScript.WindowId,
-           SpriteTextureLoader.getSprite("ui/icons/iconWorldLaws"));
+           SpriteTextureLoader.getSprite("inmny/godtools/icons/iconWorldScript"));
        AddButton(TabButtonType.WORLD, button);
        button = PowerButtonCreator.CreateWindowButton(WindowPrinterEditor.WindowId, WindowPrinterEditor.WindowId,
-           SpriteTextureLoader.getSprite("ui/icons/iconWorldLaws"));
+           SpriteTextureLoader.getSprite("inmny/godtools/icons/iconPrinterEditor"));
        AddButton(TabButtonType.WORLD, button);
-    }
-
-    private static void AddInfoButtons()
-    {
-        PowerButton button;
-        button = PowerButtonCreator.CreateWindowButton(WindowModInfo.WINDOW_ID, WindowModInfo.WINDOW_ID,
-            SpriteTextureLoader.getSprite("ui/icons/iconAbout"));
-        AddButton(TabButtonType.INFO, button);
     }
 
     private static void AddCreatureButtons()
@@ -126,7 +116,7 @@ internal class MyTab : IManager
 
     private static void AddButton(TabButtonType type, PowerButton button)
     {
-        if (!button_groups.TryGetValue(type, out Transform group))
+        if (!button_groups.TryGetValue(type, out var group))
         {
             ConstructTabContainer(type, null);
             group = button_groups[type];
@@ -141,29 +131,35 @@ internal class MyTab : IManager
         powers_tab.AddPowerButton("Controller",
             PowerButtonCreator.CreateSimpleButton(type.ToString(), () => { SwitchTab(type); },
                 icon));
-        Transform transform = new GameObject(type.ToString(), typeof(GridLayoutGroup), typeof(ContentSizeFitter))
-            .transform;
-        transform.SetParent(top_container);
-        transform.localPosition = Vector3.zero;
-        transform.localScale = Vector3.one;
-        ((RectTransform)transform).pivot = new Vector2(0, 0.5f);
+        var group = new GameObject(type.ToString(), typeof(GridLayoutGroup), typeof(ContentSizeFitter))
+            .GetComponent<RectTransform>();
+        group.SetParent(top_container, false);
+        group.anchorMin = group.anchorMax = group.pivot = new Vector2(0, 0.5f);
+        group.anchoredPosition = Vector2.zero;
 
-        var layout = transform.GetComponent<GridLayoutGroup>();
+        var layout = group.GetComponent<GridLayoutGroup>();
         layout.spacing = new Vector2(4, 4);
         layout.startAxis = GridLayoutGroup.Axis.Vertical;
         layout.constraint = GridLayoutGroup.Constraint.FixedRowCount;
         layout.constraintCount = 2;
         layout.cellSize = new Vector2(32, 32);
 
-        var fitter = transform.GetComponent<ContentSizeFitter>();
+        var fitter = group.GetComponent<ContentSizeFitter>();
         fitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-        button_groups[type] = transform;
+        button_groups[type] = group;
     }
 
     private static void SwitchTab(TabButtonType type)
     {
         foreach (var pair in button_groups) pair.Value.gameObject.SetActive(pair.Key == type);
+
+        var group = button_groups[type];
+        var layout = group.GetComponent<GridLayoutGroup>();
+        int columns = Mathf.CeilToInt((float)group.childCount / layout.constraintCount);
+        float width = layout.padding.horizontal + columns * layout.cellSize.x + Mathf.Max(0, columns - 1) * layout.spacing.x;
+        top_container.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+        if (powers_tab.isCurrentPowerTabSelected()) powers_tab.recalc();
     }
 }
