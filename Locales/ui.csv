@@ -327,6 +327,26 @@ WindowCreatureSpriteEditor,生物贴图修改,Creature Sprite Editor
 WindowCreatureSearch,生物搜索,Creature Search
 WindowCreatureSavedList Title,保存的生物,Saved Creatures
 WindowCreatureSavedList,保存的生物,Saved Creatures
+inmny.godtools.saved_creatures.search,搜索姓名、种族、归属,Name / species / origin
+inmny.godtools.saved_creatures.clear,清空搜索,Clear search
+inmny.godtools.saved_creatures.only_favorites,切换只看收藏,Toggle favorites only
+inmny.godtools.saved_creatures.recent,最近保存,Recent
+inmny.godtools.saved_creatures.name,姓名,Name
+inmny.godtools.saved_creatures.level,等级,Level
+inmny.godtools.saved_creatures.ascending,升序 · 点击逆序,Ascending · Click to reverse
+inmny.godtools.saved_creatures.descending,降序 · 点击逆序,Descending · Click to reverse
+inmny.godtools.saved_creatures.creature,生物,Creature
+inmny.godtools.saved_creatures.count,共 {0} 项,{0} saved
+inmny.godtools.saved_creatures.match_count,{0} / {1} 项,{0} / {1} saved
+inmny.godtools.saved_creatures.favorite_count,收藏 · {0} / {1} 项,Favorites · {0} / {1} saved
+inmny.godtools.saved_creatures.empty,在人物详情中保存生物后，会显示在这里。,Creatures saved from their details appear here.
+inmny.godtools.saved_creatures.no_results,没有符合条件的生物,No matching creatures
+inmny.godtools.saved_creatures.unnamed,未命名生物,Unnamed creature
+inmny.godtools.saved_creatures.favorite,收藏这份记录,Favorite this record
+inmny.godtools.saved_creatures.unfavorite,取消收藏,Remove from favorites
+inmny.godtools.saved_creatures.delete,删除保存记录,Delete saved record
+inmny.godtools.saved_creatures.confirm_delete,再点一次确认删除,Click again to delete
+inmny.godtools.saved_creatures.save_error,无法写入生物存档，请重试。,Could not write the saved creatures file. Try again.
 WindowCreatureTitleEditor,称号编辑器,Title Editor
 WindowPrinterEditor,打印蚁编辑器,Printer Editor
 WindowDetailedHistory,详细历史信息,Detailed History

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GodTools.Abstract;
+using GodTools.Features.Rankings;
 using GodTools.Libraries;
 using GodTools.Utils;
 using Newtonsoft.Json;
@@ -43,7 +44,17 @@ public class CreatureSavedList : IManager
 
     private static void Persist()
     {
-        File.WriteAllText(_save_path, JsonConvert.SerializeObject(SavedActors));
+        string temporary = $"{_save_path}.{Guid.NewGuid():N}.tmp";
+        try
+        {
+            File.WriteAllText(temporary, JsonConvert.SerializeObject(SavedActors));
+            if (File.Exists(_save_path)) File.Replace(temporary, _save_path, null);
+            else File.Move(temporary, _save_path);
+        }
+        finally
+        {
+            if (File.Exists(temporary)) File.Delete(temporary);
+        }
     }
 
     public static bool ActorSaved(Actor actor)
@@ -57,8 +68,20 @@ public class CreatureSavedList : IManager
         var id = GetOrCreateSavedActorId(actor.data);
         var packet = Capture(actor);
         packet.ID = id;
+        packet.SavedAtUtc = DateTime.UtcNow;
+        var previous = SavedActors.GetValueOrDefault(id);
+        packet.Favorite = previous?.Favorite == true;
+        try { packet.Portrait = RankingPeakPortrait.Capture(actor); }
+        catch (Exception error) { Main.LogWarning($"Could not capture the portrait of saved creature '{id}': {error.Message}"); }
         SavedActors[id] = packet;
-        Persist();
+        try { Persist(); }
+        catch
+        {
+            if (previous == null) SavedActors.Remove(id);
+            else SavedActors[id] = previous;
+            throw;
+        }
+        previous?.Portrait?.Release();
     }
 
     internal static SavedActorPacket Capture(Actor actor)
@@ -103,21 +126,32 @@ public class CreatureSavedList : IManager
         };
     }
 
-    public static void UnsaveActor(Actor actor)
+    public static void UnsaveActor(Actor actor) => Remove(GetSavedActorId(actor.data));
+
+    public static void UnsaveActor(SavedActorPacket packet) => Remove(packet.ID);
+
+    private static void Remove(string id)
     {
-        SavedActors.Remove(GetSavedActorId(actor.data));
-        Persist();
+        if (id == null || !SavedActors.TryGetValue(id, out var packet)) return;
+        SavedActors.Remove(id);
+        try { Persist(); }
+        catch { SavedActors[id] = packet; throw; }
+        packet.Portrait?.Release();
     }
 
-    public static void UnsaveActor(SavedActorPacket packet)
+    internal static void ToggleFavorite(SavedActorPacket packet)
     {
-        SavedActors.Remove(packet.ID);
-        Persist();
+        if (SavedActors.GetValueOrDefault(packet.ID) != packet) return;
+        packet.Favorite = !packet.Favorite;
+        try { Persist(); }
+        catch { packet.Favorite = !packet.Favorite; throw; }
     }
 
     public void Initialize()
     {
         AppDomain.CurrentDomain.SetData("GodTools.CreatureSaveExtensions/v1", typeof(CreatureSaveExtensions));
+        if (SavedActors != null)
+            foreach (var packet in SavedActors.Values) packet?.Portrait?.Release();
         try
         {
             SavedActors = JsonConvert.DeserializeObject<Dictionary<string, SavedActorPacket>>(File.ReadAllText(_save_path));
@@ -159,6 +193,9 @@ public class CreatureSavedList : IManager
     {
         public string ID;
         public ActorData ActorData;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] public DateTime? SavedAtUtc;
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)] public bool Favorite;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] internal RankingPeakPortrait Portrait;
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] public int? AgeAtCapture;
         public ClanData ClanData;
         public CultureData CultureData;

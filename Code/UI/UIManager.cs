@@ -15,7 +15,7 @@ internal class UIManager : IManager
         WindowCreatureDataEditor.CreateAndInit(nameof(WindowCreatureDataEditor), pSize: new(300, 250));
         WindowCreatureSearch.CreateWindow(nameof(WindowCreatureSearch), nameof(WindowCreatureSearch));
         WindowCreatureTitleEditor.CreateWindow(nameof(WindowCreatureTitleEditor), nameof(WindowCreatureTitleEditor));
-        WindowCreatureSavedList.CreateAndInit(nameof(WindowCreatureSavedList));
+        WindowCreatureSavedList.CreateAndInit(nameof(WindowCreatureSavedList), pSize: new(352, 275));
         WindowSocializeTopicEditor.CreateWindow(nameof(WindowSocializeTopicEditor), nameof(WindowSocializeTopicEditor));
         WindowPrinterEditor.CreateWindow(nameof(WindowPrinterEditor), nameof(WindowPrinterEditor));
         WindowRankings.CreateAndInit(nameof(WindowRankings));

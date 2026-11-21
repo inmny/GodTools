@@ -41,7 +41,7 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
     private const float PaneLeft = -284.5f;
     private const float PaneRight = 278.5f;
     private const float PaneGap = 3.5f;
-    private const float ScrollbarGutter = 9;
+    private const float ScrollbarGutter = NativeListPane.ScrollbarGutter;
     private const float ControlHeight = 25;
     private const float OverviewLineHeight = 22;
     private const float RowHeight = 39;
@@ -177,12 +177,12 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         _scroll = ContentTransform.GetComponentInParent<ScrollRect>(true);
         _navigation = Instantiate(_scroll, BackgroundTransform);
         _navigation.name = "RankingNavigation";
-        _navigationContent = ConfigurePane(_navigation, NavigationWidth, 222, NavigationX, -14);
+        _navigationContent = NativeListPane.Configure(_navigation, BackgroundTransform, NavigationWidth, 222, NavigationX, -14);
         _navigationRail = CreateRail(_navigation, "RankingNavigationBackground", NavigationWidth, NavigationX);
         _navigationHeader = Band("RankingNavigationHeader", 108, NavigationWidth, NavigationX - 4);
         _sidebarScroll = Instantiate(_scroll, BackgroundTransform);
         _sidebarScroll.name = "RankingRightSidebar";
-        _sidebarContent = ConfigurePane(_sidebarScroll, RightWidth, 198, SidebarX, -26);
+        _sidebarContent = NativeListPane.Configure(_sidebarScroll, BackgroundTransform, RightWidth, 198, SidebarX, -26);
         _sidebarRail = CreateRail(_sidebarScroll, "RankingRightBackground", RightWidth, SidebarX);
         _sidebarTabs = Band("RankingRightTabs", 108, RightWidth, SidebarX - 4);
         _sidebarTools = Band("RankingRightTools", 85, RightWidth, SidebarX - 4);
@@ -193,7 +193,7 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         {
             if (ShowSidebar) SidebarOffset = _sidebarContent.anchoredPosition.y;
         });
-        _content = ConfigurePane(_scroll, Width, 188, BoardX, -32);
+        _content = NativeListPane.Configure(_scroll, BackgroundTransform, Width, 188, BoardX, -32);
         if (GetComponent<ScrollWindow>().scrollingGradient is Image gradient)
             gradient.enabled = false;
         var actorList = Resources.Load<ListWindow>("windows/list_favorite_units");
@@ -237,73 +237,6 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         image.pixelsPerUnitMultiplier = compact ? 1.6f : 1;
         image.color = compact ? (Color)new Color32(39, 45, 36, 226) : new Color(0.77f, 0.80f, 0.72f, 0.76f);
         image.raycastTarget = false;
-    }
-
-    private RectTransform ConfigurePane(ScrollRect scroll, float width, float height, float x, float y)
-    {
-        var layout = (RectTransform)scroll.transform;
-        Place(layout, BackgroundTransform, width + ScrollbarGutter, height, x, y, centered: true);
-        scroll.horizontal = false;
-        scroll.movementType = ScrollRect.MovementType.Clamped;
-        scroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHide;
-        ConfigureScrollbar(scroll);
-        scroll.viewport.anchorMin = Vector2.zero;
-        scroll.viewport.anchorMax = Vector2.one;
-        scroll.viewport.offsetMin = Vector2.zero;
-        scroll.viewport.offsetMax = new Vector2(-ScrollbarGutter, 0);
-        var content = scroll.content;
-        if (content.TryGetComponent<LayoutGroup>(out var group)) group.enabled = false;
-        if (content.TryGetComponent<ContentSizeFitter>(out var fitter)) fitter.enabled = false;
-        content.anchorMin = content.anchorMax = content.pivot = new Vector2(0, 1);
-        content.anchoredPosition = Vector2.zero;
-        return content;
-    }
-
-    private static void ConfigureScrollbar(ScrollRect scroll)
-    {
-        var bar = scroll.verticalScrollbar;
-        if (bar == null) return;
-        var track = (RectTransform)bar.transform;
-        var oldMask = track.parent;
-        if (oldMask != scroll.transform)
-        {
-            track.SetParent(scroll.transform, false);
-            if (oldMask.childCount == 0) oldMask.gameObject.SetActive(false);
-        }
-        track.SetAsLastSibling();
-        track.anchorMin = new Vector2(1, 0);
-        track.anchorMax = Vector2.one;
-        track.offsetMin = new Vector2(-ScrollbarGutter, 4);
-        track.offsetMax = new Vector2(-1, -4);
-
-        var oldBackground = track.Find("Background");
-        if (oldBackground != null) oldBackground.gameObject.SetActive(false);
-        var groove = track.GetComponent<Image>() ?? track.gameObject.AddComponent<Image>();
-        groove.sprite = SpriteTextureLoader.getSprite("ui/special/windowInnerSlicedRoundWhite");
-        groove.type = Image.Type.Sliced;
-        groove.pixelsPerUnitMultiplier = 2.5f;
-        groove.color = new Color32(36, 41, 34, 255);
-        groove.raycastTarget = true;
-
-        var slide = (RectTransform)bar.handleRect.parent;
-        slide.anchorMin = Vector2.zero;
-        slide.anchorMax = Vector2.one;
-        slide.offsetMin = Vector2.one;
-        slide.offsetMax = -Vector2.one;
-        bar.handleRect.offsetMin = bar.handleRect.offsetMax = Vector2.zero;
-
-        var thumb = bar.image;
-        thumb.sprite = groove.sprite;
-        thumb.type = Image.Type.Sliced;
-        thumb.pixelsPerUnitMultiplier = 2f;
-        thumb.color = Color.white;
-        bar.transition = Selectable.Transition.ColorTint;
-        var colors = bar.colors;
-        colors.normalColor = new Color32(231, 83, 64, 255);
-        colors.highlightedColor = new Color32(247, 109, 89, 255);
-        colors.pressedColor = new Color32(197, 61, 46, 255);
-        colors.selectedColor = colors.normalColor;
-        bar.colors = colors;
     }
 
     private int _fallbackRevision;

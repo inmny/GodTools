@@ -21,20 +21,20 @@ public class SavedActorDataAvatar : APrefab<SavedActorDataAvatar>
         if (Initialized) return;
         base.Init();
         image = GetComponent<Image>();
+        image.preserveAspect = true;
+        image.raycastTarget = false;
     }
 
     [Hotfixable]
-    public void Setup(ActorData data)
+    public void Setup(ActorData data, Sprite portrait = null)
     {
         Init();
-        image.sprite = GetSprite(data);
+        image.sprite = portrait ?? GetSprite(data);
     }
 
     private Sprite GetSprite(ActorData data)
     {
         ActorAsset asset = AssetManager.actor_library.get(data.asset_id);
-        if (asset == null) return SpriteTextureLoader.getSprite("ui/icons/iconQuestionMark");
-
-        return SpriteTextureLoader.getSprite($"ui/icons/{asset.icon}");
+        return asset?.getSpriteIcon() ?? SpriteTextureLoader.getSprite("ui/icons/iconQuestionMark");
     }
 }

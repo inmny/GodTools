@@ -34,7 +34,7 @@ public partial class WindowRankings
     internal static void ShowSavedCreatureTooltip(GameObject target, CreatureSavedList.SavedActorPacket creature, Sprite portrait, string name) =>
         Tooltip.show(target, PeakTooltip, new PeakTooltipData { Creature = creature, Portrait = portrait, Name = name });
 
-    private static void HidePeakTooltip() => Tooltip.findActive(tip => tip.asset.id == PeakTooltip)?.hide();
+    internal static void HidePeakTooltip() => Tooltip.findActive(tip => tip.asset.id == PeakTooltip)?.hide();
 
     private static string CreatureStatus(CreatureSavedList.SavedActorPacket creature) => creature?.ActorData == null ? L("peak.score_only") :
         CreatureSavedList.CanPlace(creature) ? L("peak.ready") : L("peak.missing_actor");
