@@ -1220,6 +1220,7 @@ inmny.godtools.ranking.favorite,收藏状态,Favorite Status
 inmny.godtools.ranking.favorited,已收藏,Favorited
 inmny.godtools.ranking.not_favorited,未收藏,Not Favorited
 
+WindowPrinterEditor Title,打印蚁编辑器,Printer Editor
 inmny.godtools.history.event_types,事件类型,Event types
 inmny.godtools.history.search,搜索事件正文,Search event text
 inmny.godtools.history.from,起始年份,From year
@@ -1241,3 +1242,34 @@ inmny.godtools.history.actor,查看人物,View unit
 inmny.godtools.history.no_results,没有符合条件的事件,No matching events
 inmny.godtools.history.empty,这个世界还没有可查事件,No events in this world
 inmny.godtools.history.invalid_range,起始年份应早于或等于结束年份,Start year must be at or before end year
+inmny.godtools.printer.patterns,原版图样,Patterns
+inmny.godtools.printer.width,横向倍率,Width scale
+inmny.godtools.printer.height,纵向倍率,Height scale
+inmny.godtools.printer.preview,打印预览 · 十字为落点,Preview · cross marks the origin
+inmny.godtools.printer.default_tile,原版地块,Default
+inmny.godtools.printer.base,地形,Ground
+inmny.godtools.printer.top,地表覆盖,Overlay
+inmny.godtools.printer.tile,地块 · {0},Tile · {0}
+inmny.godtools.printer.metrics,{0} × {1} 格 · 覆盖 {2} 格,{0} × {1} · {2} tiles covered
+inmny.godtools.printer.empty_shape,当前倍率下没有覆盖格,No tiles covered at this scale
+inmny.godtools.printer.reset,恢复默认,Reset
+inmny.godtools.printer.apply,应用,Apply
+inmny.godtools.printer.applied,当前设置用于之后放置的普通打印蚁,Current settings apply to new printers
+inmny.godtools.printer.draft,应用后用于之后放置的普通打印蚁,Apply to use these settings for new printers
+inmny.godtools.printer.invalid_scale,横向和纵向倍率都要至少为 0.1,Both scales must be at least 0.1
+inmny.godtools.printer.too_big,有图样超出尺寸上限 · 请减小倍率,A pattern is too large · reduce the scales
+inmny.godtools.printer.no_patterns,没有可预览的打印图样,No patterns available
+inmny.godtools.printer.shape.hexagon,六边形,Hexagon
+inmny.godtools.printer.shape.skull,骷髅,Skull
+inmny.godtools.printer.shape.squares,方格,Squares
+inmny.godtools.printer.shape.yinyang,阴阳,Yin and yang
+inmny.godtools.printer.shape.island1,岛屿,Island
+inmny.godtools.printer.shape.star,星星,Star
+inmny.godtools.printer.shape.heart,爱心,Heart
+inmny.godtools.printer.shape.diamond,菱形,Diamond
+inmny.godtools.printer.shape.aliendrawing,外星图案,Alien drawing
+inmny.godtools.printer.shape.crater,环形坑,Crater
+inmny.godtools.printer.shape.labyrinth,迷宫,Labyrinth
+inmny.godtools.printer.shape.spiral,螺旋,Spiral
+inmny.godtools.printer.shape.starfort,星形堡垒,Star fort
+inmny.godtools.printer.shape.code,代码,Code
