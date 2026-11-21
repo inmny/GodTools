@@ -13,6 +13,7 @@ public static class CreatureSaveExtensions
         internal readonly int Version = version;
         internal readonly Func<Actor, JToken> Capture = capture;
         internal readonly Action<Actor, int, JToken> Restore = restore;
+        internal Func<int, JToken, string> Describe;
     }
 
     internal sealed class Payload
@@ -31,6 +32,28 @@ public static class CreatureSaveExtensions
             id.EndsWith(":", StringComparison.Ordinal) || id.Any(char.IsWhiteSpace) ||
             version < 1 || capture == null || restore == null) return false;
         return Providers.TryAdd(id, new Provider(version, capture, restore));
+    }
+
+    /// <summary>为已注册的保存扩展提供简短的本地化说明。回调读取保存时的版本和数据副本。</summary>
+    public static bool RegisterSummary(string id, Func<int, JToken, string> describe)
+    {
+        if (id == null || describe == null || !Providers.TryGetValue(id, out var provider) || provider.Describe != null)
+            return false;
+        provider.Describe = describe;
+        return true;
+    }
+
+    internal static bool IsRegistered(string id) => Providers.ContainsKey(id);
+
+    internal static string Describe(string id, Payload payload)
+    {
+        if (!Providers.TryGetValue(id, out var provider) || provider.Describe == null) return null;
+        try { return provider.Describe(payload.Version, payload.Data.DeepClone()); }
+        catch (Exception error)
+        {
+            Main.LogWarning($"Could not describe saved creature data for '{id}': {error.Message}");
+            return null;
+        }
     }
 
     internal static Dictionary<string, Payload> Capture(Actor actor)

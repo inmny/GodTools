@@ -1012,6 +1012,17 @@ inmny.godtools.ranking.current_peaks,战力峰值记录,Power peak records
 inmny.godtools.ranking.item_kills,装备击杀榜,Equipment kills
 inmny.godtools.ranking.culture_population,文化人口榜,Culture population
 inmny.godtools.ranking.peak_samples,采样峰值,Sampled peaks
+inmny.godtools.ranking.peak.time_score,世界第 {0} 年 · 峰值战力 {1},World year {0} · Peak power {1}
+inmny.godtools.ranking.peak.traits,特质,Traits
+inmny.godtools.ranking.peak.gear,装备,Gear
+inmny.godtools.ranking.peak.bag,背包,Backpack
+inmny.godtools.ranking.peak.affiliations,归属,Affiliation
+inmny.godtools.ranking.peak.mods,模组,Mods
+inmny.godtools.ranking.peak.mod_count,保存了 {0} 项模组数据,{0} mod data entries saved
+inmny.godtools.ranking.peak.ready,已保存角色 · 可放回地图,Creature saved · Can be placed
+inmny.godtools.ranking.peak.score_only,仅保存战力记录,Only the power record was saved
+inmny.godtools.ranking.peak.missing_actor,缺少生物类型 · 暂无法放置,Creature type unavailable · Cannot be placed
+inmny.godtools.ranking.peak.partial,缺少相关资源或模组 · 部分数据暂无法恢复,Missing assets or mods · Some data cannot be restored
 inmny.godtools.ranking.power.score,战力,Power
 inmny.godtools.ranking.power.legacy,旧战力,Legacy power
 inmny.godtools.ranking.power.legacy_filter,请删除旧战力条件并按当前战力重新设置数值。,Replace the legacy power condition with a threshold for the current score.

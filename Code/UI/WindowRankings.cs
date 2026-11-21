@@ -171,6 +171,7 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
     {
         RegisterPresetTooltip();
         RegisterMetricTooltip();
+        RegisterPeakTooltip();
         _scroll = ContentTransform.GetComponentInParent<ScrollRect>(true);
         _navigation = Instantiate(_scroll, BackgroundTransform);
         _navigation.name = "RankingNavigation";
@@ -441,6 +442,7 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
     private void Enter(Page page)
     {
         HideMetricTooltip();
+        HidePeakTooltip();
         _page = page;
         _drawing = true;
         _scroll.StopMovement();
@@ -756,6 +758,7 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         int first = Mathf.Clamp(Mathf.FloorToInt(_content.anchoredPosition.y / RowHeight), 0, Math.Max(0, _rows.Count - 1));
         if (first == _firstRow) return;
         HideMetricTooltip();
+        HidePeakTooltip();
         _firstRow = first;
         int length = Mathf.Min(Mathf.CeilToInt(_scroll.viewport.rect.height / RowHeight) + 2, _rows.Count - first);
         while (_pool.Count < length) _pool.Add(NewLine());
@@ -787,6 +790,7 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
             line.Locate.gameObject.SetActive(_source.Locate != null);
             line.Locate.interactable = _source.Locate?.Invoke(entry.Key) != null;
             line.Place.gameObject.SetActive(_source.Place != null);
+            line.Place.interactable = entry.Peak == null || CreatureSavedList.CanPlace(entry.Peak.Creature);
         }
     }
 
@@ -898,7 +902,9 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         tip.showOnClick = false;
         tip.setHoverAction(() =>
         {
-            if (_source.ActorPortrait?.Invoke(line.Entry.Key) is Actor actor && actor.isAlive())
+            if (line.Entry.Peak != null)
+                ShowPeakTooltip(tip.gameObject, line.Entry);
+            else if (_source.ActorPortrait?.Invoke(line.Entry.Key) is Actor actor && actor.isAlive())
                 actor.showTooltip(tip.gameObject);
             else if (line.Portrait.gameObject.activeSelf && line.Banner?.gameObject.activeSelf == true && _source.MetaPortrait?.Invoke(line.Entry.Key) != null)
                 line.Banner.showTooltip();
@@ -912,7 +918,11 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
                 World.world.locatePosition(new Vector3(tile.x, tile.y, 0));
         }, Icon("iconArrowAttackTarget"), hint: L("locate"));
         line.Place = Button(line.Root, "+", 22, () => _source.Place?.Invoke(line.Entry.Key),
-            Icon("iconShovelPlus"), hint: L("place"));
+            Icon("iconShovelPlus"));
+        var placeTip = line.Place.gameObject.AddComponent<TipButton>();
+        placeTip.showOnClick = false;
+        placeTip.setHoverAction(() => Tooltip.show(placeTip.gameObject, "normal",
+            new TooltipData { tip_name = line.Place.interactable ? L("place") : PeakStatus(line.Entry.Peak) }), false);
         return line;
     }
 

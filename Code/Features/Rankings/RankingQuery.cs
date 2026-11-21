@@ -19,12 +19,13 @@ internal sealed class RankingRow
     [JsonProperty] internal string Name;
     internal Sprite Icon;
     internal Sprite SavedPortrait;
+    internal RankingPeak Peak;
     [JsonProperty] internal int Rank;
     [JsonProperty] internal Dictionary<string, RankingValue> Values;
 
     internal RankingRow CopyForRanking() => new()
     {
-        Key = Key, Name = Name, Icon = Icon, SavedPortrait = SavedPortrait, Values = Values
+        Key = Key, Name = Name, Icon = Icon, SavedPortrait = SavedPortrait, Peak = Peak, Values = Values
     };
 }
 
@@ -111,7 +112,7 @@ internal static class RankingQuery
             rows.Add(new RankingRow
             {
                 Key = key, Name = source.Name(item) ?? key, Icon = source.Icon(item),
-                SavedPortrait = source.SavedPortrait?.Invoke(item), Values = values
+                SavedPortrait = source.SavedPortrait?.Invoke(item), Peak = item as RankingPeak, Values = values
             });
         }
         return rows;
