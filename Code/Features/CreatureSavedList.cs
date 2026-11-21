@@ -54,6 +54,14 @@ public class CreatureSavedList : IManager
     public static void SaveActor(Actor actor)
     {
         var id = GetOrCreateSavedActorId(actor.data);
+        var packet = Capture(actor);
+        packet.ID = id;
+        SavedActors[id] = packet;
+        Persist();
+    }
+
+    internal static SavedActorPacket Capture(Actor actor)
+    {
         actor.prepareForSave();
         actor.clan?.save();
         actor.culture?.save();
@@ -70,17 +78,18 @@ public class CreatureSavedList : IManager
             }
         }
 
-        SavedActors[id] = new SavedActorPacket
+        var data = actor.data.Copy();
+        data.saved_items = item_datas is { Count: > 0 } ? item_datas.Select(item => item.id).ToList() : null;
+        return new SavedActorPacket
         {
-            ID = id,
-            ActorData = actor.data.Copy(),
+            ActorData = data,
             ClanData = actor.clan?.data.Copy(),
             CultureData = actor.culture?.data.Copy(),
             LanguageData = actor.language?.data.Copy(),
             SubspeciesData = actor.subspecies?.data.Copy(),
-            ItemDatas = item_datas
+            ItemDatas = item_datas,
+            ModData = CreatureSaveExtensions.Capture(actor)
         };
-        Persist();
     }
 
     public static void UnsaveActor(Actor actor)
@@ -97,6 +106,7 @@ public class CreatureSavedList : IManager
 
     public void Initialize()
     {
+        AppDomain.CurrentDomain.SetData("GodTools.CreatureSaveExtensions/v1", typeof(CreatureSaveExtensions));
         try
         {
             SavedActors = JsonConvert.DeserializeObject<Dictionary<string, SavedActorPacket>>(File.ReadAllText(_save_path));
@@ -130,7 +140,7 @@ public class CreatureSavedList : IManager
         if (migrated) Persist();
     }
 
-    private static string _selected_id;
+    private static Func<SavedActorPacket> _selected;
 
     public class SavedActorPacket
     {
@@ -141,15 +151,24 @@ public class CreatureSavedList : IManager
         public LanguageData LanguageData;
         public SubspeciesData SubspeciesData;
         public List<ItemData> ItemDatas;
+        [JsonProperty] internal Dictionary<string, CreatureSaveExtensions.Payload> ModData;
     }
 
     public static void SelectActorToPlace(SavedActorPacket packet)
     {
-        _selected_id = packet.ID;
+        _selected = () => SavedActors.GetValueOrDefault(packet.ID);
     }
-    public static bool SpawnSelectedSavedActor(WorldTile tile, string power_id)
+
+    internal static void SelectSnapshotToPlace(SavedActorPacket packet) => _selected = () => packet;
+
+    public static bool SpawnSelectedSavedActor(WorldTile tile, string power_id) => Place(_selected?.Invoke(), tile);
+
+    internal static bool CanPlace(SavedActorPacket packet) => packet?.ActorData?.asset_id is { Length: > 0 } id &&
+        AssetManager.actor_library.get(id) != null;
+
+    internal static bool Place(SavedActorPacket saved_actor, WorldTile tile, bool keep_original_id = false)
     {
-        if (!SavedActors.TryGetValue(_selected_id, out var saved_actor)) return false;
+        if (tile == null || !CanPlace(saved_actor)) return false;
         var subspecies_data = saved_actor.SubspeciesData.Copy();
         var language_data = saved_actor.LanguageData.Copy();
         var culture_data = saved_actor.CultureData.Copy();
@@ -189,28 +208,30 @@ public class CreatureSavedList : IManager
             World.world.clans.loadObject(clan_data);
         }
 
-        if (item_datas != null)
+        if (data.saved_items != null)
         {
             var item_ids = new Dictionary<long, long>();
-            foreach (var item_data in item_datas)
+            foreach (var item_data in item_datas ?? Enumerable.Empty<ItemData>())
             {
                 var old_item_id = item_data.id;
+                if (!data.saved_items.Contains(old_item_id) || item_ids.ContainsKey(old_item_id) ||
+                    AssetManager.items.get(item_data.asset_id) == null) continue;
+                item_data.modifiers.RemoveAll(id => !AssetManager.items_modifiers.has(id));
                 item_data.id = World.world.map_stats.getNextId("item");
                 item_data.created_time = World.world.map_stats.world_time;
                 World.world.items.loadObject(item_data);
                 item_ids[old_item_id] = item_data.id;
             }
-            for (int i = 0; i < data.saved_items.Count; i++)
-            {
-                if (item_ids.TryGetValue(data.saved_items[i], out var new_item_id))
-                {
-                    data.saved_items[i] = new_item_id;
-                }
-            }
+            data.saved_items = data.saved_items.Where(item_ids.ContainsKey).Select(id => item_ids[id]).ToList();
         }
 
-        data.id = World.world.map_stats.getNextId("unit");
+        if (!keep_original_id || World.world.units.get(data.id) != null)
+            data.id = World.world.map_stats.getNextId("unit");
 
+        var resources = data.inventory?.getResources();
+        if (resources != null)
+            foreach (var resource in resources.Values.Where(resource => !AssetManager.resources.has(resource.id)).ToArray())
+                data.inventory = data.inventory.remove(resource.id, resource.amount);
 
         if (World.world.cities.get(data.cityID) == null) data.cityID = -1;
 
@@ -219,6 +240,8 @@ public class CreatureSavedList : IManager
         data.x = tile.pos.x;
         data.y = tile.pos.y;
         var actor = World.world.units.loadObject(data);
+        if (actor == null) return false;
+        CreatureSaveExtensions.Restore(actor, saved_actor.ModData);
         actor.setStatsDirty();
         return true;
     }

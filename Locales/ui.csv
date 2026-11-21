@@ -28,8 +28,10 @@ TILE,地块,Tile
 OTHERS,其他,Others
 DEBUG,调试,Debug
 RemoveScar,去除圣痕,Remove Scar
-inmny.godtools.place_saved_actor,保存人物,Save Actor
-inmny.godtools.place_saved_actor description,永久保存该人物,Save the actor permanently
+inmny.godtools.place_saved_actor,放置已保存的生物,Place saved creature
+inmny.godtools.place_saved_actor description,点击地图放置保存时的角色副本。,Click the map to place a copy of the saved creature.
+inmny.godtools.place_saved_actor_in_top,放置旧战力记录中的生物,Place creature from a legacy power record
+inmny.godtools.place_saved_actor_in_top description,点击地图放置旧战力记录中的角色。,Click the map to place the creature from this record.
 inmny.godtools.ui.create_sub_world,创建亚空间,Create Sub World
 inmny.godtools.ui.sub_world_size,亚空间大小,Sub World Size
 inmny.godtools.ui.sub_world_size_tip,滚轮调节亚空间大小,Scroll to Change Sub World Size

@@ -61,9 +61,8 @@ public class WindowCreatureSavedList : AbstractWindow<WindowCreatureSavedList>
             SavedActorDataCard card = _pool.getNext();
             card.Setup(data, () =>
             {
-                ScrollWindow.hideAllEvent();
                 CreatureSavedList.SelectActorToPlace(packet);
-                _power_button.clickActivePower();
+                ArmPlacement();
             }, () =>
             {
                 CreatureSavedList.UnsaveActor(packet);
@@ -77,5 +76,18 @@ public class WindowCreatureSavedList : AbstractWindow<WindowCreatureSavedList>
     public override void OnNormalEnable()
     {
         _list = new (CreatureSavedList.SavedActors.Values);
+    }
+
+    internal static void PlaceSnapshot(CreatureSavedList.SavedActorPacket packet)
+    {
+        CreatureSavedList.SelectSnapshotToPlace(packet);
+        Instance.ArmPlacement();
+    }
+
+    private void ArmPlacement()
+    {
+        ScrollWindow.hideAllEvent();
+        if (World.world.selected_power != GodPowers.place_saved_actor)
+            _power_button.clickActivePower();
     }
 }

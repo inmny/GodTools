@@ -34,8 +34,6 @@ public class ConsistentCreaturePowerTop : IManager
     private static List<long> _sortedCreaturesInTop = new();
     private static Dictionary<long, CreaturePowerData> _creaturePowerData = new();
     private static long _select_id;
-    private static int _check_suppression_depth;
-    private static bool _world_load_checks_suppressed;
 
     public static void SelectCreatureToPlace(long id)
     {
@@ -47,90 +45,17 @@ public class ConsistentCreaturePowerTop : IManager
 
     public static bool SpawnSelectedSavedActor(WorldTile tile, string power_id)
     {
-        SubspeciesData subspecies_data;
-        LanguageData language_data;
-        CultureData culture_data;
-        ClanData clan_data;
-        ActorData data;
-        List<ItemData> item_datas;
+        CreatureSavedList.SavedActorPacket packet;
         lock (_data_lock)
         {
-            if (!_creaturePowerData.TryGetValue(_select_id, out var power_data))
+            if (!_creaturePowerData.TryGetValue(_select_id, out var entry)) return false;
+            packet = new CreatureSavedList.SavedActorPacket
             {
-                return false;
-            }
-
-            subspecies_data = power_data.SubspeciesData?.Copy();
-            language_data = power_data.LanguageData?.Copy();
-            culture_data = power_data.CultureData?.Copy();
-            clan_data = power_data.ClanData?.Copy();
-            data = power_data.Data.Copy();
-            item_datas = power_data.ItemDatas?.Select(item => item.Copy()).ToList();
+                ActorData = entry.Data, SubspeciesData = entry.SubspeciesData, LanguageData = entry.LanguageData,
+                CultureData = entry.CultureData, ClanData = entry.ClanData, ItemDatas = entry.ItemDatas
+            };
         }
-
-        if (subspecies_data != null)
-        {
-            subspecies_data.id = World.world.map_stats.getNextId("subspecies");
-            subspecies_data.created_time = World.world.map_stats.world_time;
-            data.subspecies = subspecies_data.id;
-            World.world.subspecies.loadObject(subspecies_data);
-        }
-
-        if (language_data != null)
-        {
-            language_data.id = World.world.map_stats.getNextId("language");
-            language_data.created_time = World.world.map_stats.world_time;
-            data.language = language_data.id;
-            World.world.languages.loadObject(language_data);
-        }
-
-        if (culture_data != null)
-        {
-            culture_data.id = World.world.map_stats.getNextId("culture");
-            culture_data.created_time = World.world.map_stats.world_time;
-            data.culture = culture_data.id;
-            World.world.cultures.loadObject(culture_data);
-        }
-
-        if (clan_data != null)
-        {
-            clan_data.id = World.world.map_stats.getNextId("clan");
-            clan_data.created_time = World.world.map_stats.world_time;
-            data.clan = clan_data.id;
-            World.world.clans.loadObject(clan_data);
-        }
-
-        if (item_datas != null)
-        {
-            foreach (var item_data in item_datas)
-            {
-                var old_item_id = item_data.id;
-                item_data.id = World.world.map_stats.getNextId("item");
-                item_data.created_time = World.world.map_stats.world_time;
-                World.world.items.loadObject(item_data);
-                data.saved_items[data.saved_items.FindIndex(x => x == old_item_id)] = item_data.id;
-            }
-        }
-        if (World.world.units.get(data.id)!= null)
-            data.id = World.world.map_stats.getNextId("unit");
-
-
-        if (World.world.cities.get(data.cityID) == null) data.cityID = -1;
-
-        data.homeBuildingID = -1;
-        data.transportID = -1;
-        data.x = tile.pos.x;
-        data.y = tile.pos.y;
-        SuppressChecks();
-        try
-        {
-            World.world.units.loadObject(data).setStatsDirty();
-        }
-        finally
-        {
-            ResumeChecks();
-        }
-        return true;
+        return CreatureSavedList.Place(packet, tile, keep_original_id: true);
     }
 
     public static List<CreaturePowerData> GetSortedCreaturePowerData()
@@ -144,6 +69,11 @@ public class ConsistentCreaturePowerTop : IManager
         }
     }
 
+    internal static bool HasRecords()
+    {
+        lock (_data_lock) return _creaturePowerData.Count > 0;
+    }
+
     public static void Check(Actor actor)
     {
         lock (_data_lock)
@@ -154,8 +84,7 @@ public class ConsistentCreaturePowerTop : IManager
 
     private static void CheckLocked(Actor actor)
     {
-        if (_check_suppression_depth > 0) return;
-        var power = CalcPower(actor);
+        var power = CalculatePower(actor);
         try
         {
             actor.getName();
@@ -295,58 +224,18 @@ public class ConsistentCreaturePowerTop : IManager
         };
     }
 
-    private static void SuppressChecks()
-    {
-        lock (_data_lock)
-        {
-            _check_suppression_depth++;
-        }
-    }
+    public static double CalculatePower(Actor actor) => CalculatePower(actor, out _, out _);
 
-    private static void ResumeChecks()
+    internal static double CalculatePower(Actor actor, out float dps, out float live_time)
     {
-        lock (_data_lock)
-        {
-            if (_check_suppression_depth > 0)
-            {
-                _check_suppression_depth--;
-            }
-        }
-    }
-
-    private static void SuppressChecksForWorldLoad()
-    {
-        lock (_data_lock)
-        {
-            if (_world_load_checks_suppressed) return;
-            _world_load_checks_suppressed = true;
-            _check_suppression_depth++;
-        }
-    }
-
-    private static void ResumeChecksForWorldLoad()
-    {
-        lock (_data_lock)
-        {
-            if (!_world_load_checks_suppressed) return;
-            _world_load_checks_suppressed = false;
-            if (_check_suppression_depth > 0)
-            {
-                _check_suppression_depth--;
-            }
-        }
-    }
-
-    private static double CalcPower(Actor actor)
-    {
-        var live_time = actor.stats[S.health] / Mathf.Max(1f, 100 - actor.stats[S.armor]);
+        live_time = actor.stats[S.health] / Mathf.Max(1f, 100 - actor.stats[S.armor]);
         var attack_speed = actor.asset.skip_fight_logic
             ? 1f
             : (1f / Mathf.Clamp(actor.getAttackCooldown(), 0.016f, 100));
         var attack_fluctuation = (actor.stats[S.damage_range] + 1) * 0.5f;
         var critical_bonus = Mathf.Max(0, actor.stats[S.critical_chance]) *
                              Mathf.Max(0, actor.stats[S.critical_damage_multiplier] - 1);
-        var dps = attack_speed * Mathf.Max(1f, actor.stats[S.damage]) *
+        dps = attack_speed * Mathf.Max(1f, actor.stats[S.damage]) *
                   attack_fluctuation * (1 + critical_bonus);
 
         return ((double)live_time) * ((double)dps) * 0.182699;
@@ -357,34 +246,6 @@ public class ConsistentCreaturePowerTop : IManager
         Harmony.CreateAndPatchAll(typeof(ConsistentCreaturePowerTop));
     }
 
-    [HarmonyPostfix, HarmonyPatch(typeof(Actor), nameof(Actor.updateStats))]
-    private static void OnStatsUpdate(Actor __instance)
-    {
-        Check(__instance);
-    }
-    [HarmonyPrefix, HarmonyPatch(typeof(BabyMaker), nameof(BabyMaker.makeBaby))]
-    private static void makeBaby_prefix(out bool __state)
-    {
-        SuppressChecks();
-        __state = true;
-    }
-    [HarmonyFinalizer, HarmonyPatch(typeof(BabyMaker), nameof(BabyMaker.makeBaby))]
-    private static void makeBaby_finalizer(bool __state)
-    {
-        if (__state) ResumeChecks();
-    }
-    [HarmonyPrefix, HarmonyPatch(typeof(SaveManager), nameof(SaveManager.loadActors))]
-    private static void loadActors_prefix(out bool __state)
-    {
-        SuppressChecks();
-        __state = true;
-    }
-    [HarmonyFinalizer, HarmonyPatch(typeof(SaveManager), nameof(SaveManager.loadActors))]
-    private static void loadActors_finalizer(bool __state)
-    {
-        if (__state) ResumeChecks();
-    }
-
     [HarmonyPostfix, HarmonyPatch(typeof(MapBox), nameof(MapBox.clearWorld))]
     private static void OnCleanUp()
     {
@@ -392,13 +253,9 @@ public class ConsistentCreaturePowerTop : IManager
         {
             _creaturePowerData.Clear();
             _sortedCreaturesInTop.Clear();
-            _cache_save_data = null;
-            _check_suppression_depth = 0;
-            _world_load_checks_suppressed = false;
+            _select_id = 0;
         }
-
         ReleaseLoadedVisuals();
-        ReleaseCachedTexture();
     }
 
     private struct RawRectInt(int posX, int posY, int fitWidth, int fitHeight)
@@ -423,127 +280,66 @@ public class ConsistentCreaturePowerTop : IManager
         public List<ItemData> ItemDatas;
     }
 
-    private static List<CreaturePowerDataForSave> _cache_save_data = null;
-    private static Texture2D _cache_texture = null;
+    private static (MapStats Map, string Folder) _pendingLoad;
     private static readonly List<Sprite> _loaded_sprites = new();
     private static Texture2D _loaded_texture;
 
+    [HarmonyPostfix, HarmonyPatch(typeof(SaveManager), nameof(SaveManager.loadData))]
+    private static void QueueLoad(SavedMap pData, string pPath)
+    {
+        _pendingLoad = string.IsNullOrEmpty(pPath) ? default : (pData.mapStats, SaveManager.folderPath(pPath));
+    }
+
     [HarmonyPostfix, HarmonyPatch(typeof(MapBox), nameof(MapBox.finishingUpLoading))]
-    private static void LoadToWorld()
+    private static void LoadToWorld(MapBox __instance)
     {
-        try
-        {
-            List<CreaturePowerDataForSave> cached_save_data;
-            Texture2D cached_texture;
-            lock (_data_lock)
-            {
-                if (_cache_texture == null || _cache_save_data == null) return;
-                cached_save_data = _cache_save_data;
-                cached_texture = _cache_texture;
-                _cache_save_data = null;
-                _cache_texture = null;
-            }
+        var (map, folder) = _pendingLoad;
+        _pendingLoad = default;
+        if (map == null || !ReferenceEquals(map, __instance.map_stats)) return;
 
-            ReleaseLoadedVisuals();
-            lock (_data_lock)
-            {
-                _loaded_texture = cached_texture;
-                _creaturePowerData.Clear();
-                foreach (var data in cached_save_data)
-                {
-                    if (_creaturePowerData.ContainsKey(data.ID)) continue;
-                    var sprite = Sprite.Create(cached_texture,
-                        new Rect(data.SpriteRect.x, data.SpriteRect.y, data.SpriteRect.width,
-                            data.SpriteRect.height),
-                        new Vector2(0.5f, 0), 1);
-                    _loaded_sprites.Add(sprite);
-                    _creaturePowerData.Add(data.ID, new CreaturePowerData
-                    {
-                        ID = data.ID,
-                        Name = data.Name,
-                        Power = data.Power,
-                        Sprite = sprite,
-                        Data = data.Data,
-                        ClanData = data.ClanData,
-                        CultureData = data.CultureData,
-                        LanguageData = data.LanguageData,
-                        SubspeciesData = data.SubspeciesData,
-                        ItemDatas = data.ItemDatas
-                    });
-                }
-
-                SortLocked();
-            }
-        }
-        catch (Exception e)
-        {
-            lock (_data_lock)
-            {
-                _creaturePowerData.Clear();
-                _sortedCreaturesInTop.Clear();
-            }
-            ReleaseLoadedVisuals();
-            Main.LogWarning($"Ignoring invalid creature power-top snapshot: {e.Message}");
-        }
-        finally
-        {
-            ResumeChecksForWorldLoad();
-        }
-    }
-
-    [HarmonyFinalizer, HarmonyPatch(typeof(MapBox), nameof(MapBox.finishingUpLoading))]
-    private static void finishingUpLoading_finalizer()
-    {
-        ResumeChecksForWorldLoad();
-    }
-
-    [HarmonyPostfix, HarmonyPatch(typeof(SaveManager), nameof(SaveManager.loadWorld), [typeof(string), typeof(bool)])]
-    private static void LoadSave(string pPath)
-    {
-        var folder = SaveManager.folderPath(pPath);
         Texture2D texture = null;
         try
         {
-            if (!TryGetSnapshotPaths(folder, out var list_save_path, out var texture_save_path)) return;
-
-            var save_data = JsonConvert.DeserializeObject<List<CreaturePowerDataForSave>>(
-                                File.ReadAllText(list_save_path), GeneralTools.private_members_visit_settings)
-                            ?? throw new InvalidDataException("生物战力榜存档内容为空");
+            if (!TryGetSnapshotPaths(folder, out var listPath, out var texturePath)) return;
+            var entries = JsonConvert.DeserializeObject<List<CreaturePowerDataForSave>>(
+                File.ReadAllText(listPath), GeneralTools.private_members_visit_settings)
+                ?? throw new InvalidDataException("生物战力榜存档内容为空");
             texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            if (!texture.LoadImage(File.ReadAllBytes(texture_save_path), true))
-            {
+            if (!texture.LoadImage(File.ReadAllBytes(texturePath), true))
                 throw new InvalidDataException("生物战力榜贴图无法读取");
-            }
 
-            foreach (var data in save_data)
-            {
-                if (data.SpriteRect.x < 0 || data.SpriteRect.y < 0 ||
-                    data.SpriteRect.width <= 0 || data.SpriteRect.height <= 0 ||
-                    data.SpriteRect.x + data.SpriteRect.width > texture.width ||
-                    data.SpriteRect.y + data.SpriteRect.height > texture.height)
-                {
-                    throw new InvalidDataException("生物战力榜贴图区域越界");
-                }
-            }
-
-            ReleaseCachedTexture();
             lock (_data_lock)
             {
-                _cache_save_data = save_data;
-                _cache_texture = texture;
+                _loaded_texture = texture;
+                texture = null;
+                foreach (var entry in entries)
+                {
+                    if (entry.Data == null || _creaturePowerData.ContainsKey(entry.ID)) continue;
+                    var rect = entry.SpriteRect;
+                    if (rect.x < 0 || rect.y < 0 || rect.width <= 0 || rect.height <= 0 ||
+                        rect.x + rect.width > _loaded_texture.width || rect.y + rect.height > _loaded_texture.height)
+                        throw new InvalidDataException("生物战力榜贴图区域越界");
+                    var sprite = Sprite.Create(_loaded_texture, new Rect(rect.x, rect.y, rect.width, rect.height),
+                        new Vector2(0.5f, 0), 1);
+                    _loaded_sprites.Add(sprite);
+                    _creaturePowerData.Add(entry.ID, new CreaturePowerData
+                    {
+                        ID = entry.ID, Name = entry.Name, Power = entry.Power, Sprite = sprite,
+                        Data = entry.Data, ClanData = entry.ClanData, CultureData = entry.CultureData,
+                        LanguageData = entry.LanguageData, SubspeciesData = entry.SubspeciesData, ItemDatas = entry.ItemDatas
+                    });
+                }
+                SortLocked();
             }
-            texture = null;
-            SuppressChecksForWorldLoad();
         }
-        catch (Exception e)
+        catch (Exception error)
         {
-            if (texture != null)
-            {
-                UnityEngine.Object.Destroy(texture);
-            }
-            ReleaseCachedTexture();
-            ResumeChecksForWorldLoad();
-            Main.LogWarning($"Ignoring invalid creature power-top save data: {e.Message}");
+            OnCleanUp();
+            Main.LogWarning($"Ignoring invalid creature power-top snapshot: {error.Message}");
+        }
+        finally
+        {
+            if (texture != null) UnityEngine.Object.Destroy(texture);
         }
     }
 
@@ -832,22 +628,6 @@ public class ConsistentCreaturePowerTop : IManager
                 UnityEngine.Object.Destroy(sprite);
             }
         }
-        if (texture != null)
-        {
-            UnityEngine.Object.Destroy(texture);
-        }
-    }
-
-    private static void ReleaseCachedTexture()
-    {
-        Texture2D texture;
-        lock (_data_lock)
-        {
-            texture = _cache_texture;
-            _cache_texture = null;
-            _cache_save_data = null;
-        }
-
         if (texture != null)
         {
             UnityEngine.Object.Destroy(texture);
