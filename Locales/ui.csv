@@ -101,6 +101,18 @@ inmny.godtools.ui.jump_to,跳转至,Jump to
 inmny.godtools.ui.jump_to_year,跳转至(年),Jump to Year
 inmny.godtools.ui.segment_chart.no_data,暂无可统计数据,No data to display
 inmny.godtools.ui.segment_chart.select_keyword,选择关键词后显示分段分布,Select a keyword to display distribution
+inmny.godtools.ui.data_editor.backpack,背包资源,Backpack resources
+inmny.godtools.ui.data_editor.backpack.carried,已携带,Carried
+inmny.godtools.ui.data_editor.backpack.all,全部,All
+inmny.godtools.ui.data_editor.backpack.search,资源名或 ID,Resource or ID
+inmny.godtools.ui.data_editor.backpack.empty,背包里没有资源,No resources in the backpack
+inmny.godtools.ui.data_editor.backpack.no_results,没有匹配的资源,No matching resources
+inmny.godtools.ui.data_editor.backpack.unavailable,未选中可编辑的生物,No creature selected
+inmny.godtools.ui.data_editor.backpack.increase,增加 1,Add 1
+inmny.godtools.ui.data_editor.backpack.decrease,减少 1,Remove 1
+inmny.godtools.ui.data_editor.backpack.remove,移除这项资源,Remove this resource
+inmny.godtools.ui.data_editor.backpack.count,携带 {0},Carrying {0}
+inmny.godtools.backpack.blood,血液,Blood
 inmny.godtools.ui.data_editor.chinese_name,中文名,Chinese Name
 inmny.godtools.ui.data_editor.chinese_name.family_name,姓氏,Family Name
 inmny.godtools.ui.data_editor.inmny_custommodt001,特质武道,Inmny CustomMod T001

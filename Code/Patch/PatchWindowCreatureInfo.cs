@@ -58,6 +58,8 @@ internal static class PatchWindowCreatureInfo
             {
                 SelectedUnit.unit.removeTrait("scar_of_divinity");
             },"ui/icons/iconDivineScar");
+            AddSideButton(__instance, "inmny.godtools.ui.data_editor.backpack",
+                WindowCreatureDataEditor.OpenBackpack, "ui/icons/iconCityInventory");
 
             GameObject save_actor =
                 Object.Instantiate(__instance._icon_favorite.transform.parent.gameObject, __instance._icon_favorite.transform.parent.parent);
@@ -79,9 +81,6 @@ internal static class PatchWindowCreatureInfo
             });
             button.GetComponent<TipButton>().textOnClick = "save_actor";
 
-#if 一米_中文名
-            __instance.name_input.addListener(new_name => { });
-#endif
         }
 #if ENABLE_STATUS_EDITOR
         WindowStatusEffectEditor.init(__instance);

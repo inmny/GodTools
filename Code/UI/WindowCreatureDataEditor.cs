@@ -14,6 +14,7 @@ namespace GodTools.UI;
 
 public partial class WindowCreatureDataEditor : AbstractWideWindow<WindowCreatureDataEditor>
 {
+    internal const string BackpackPage = "backpack";
     private Actor _selected_actor;
     public RectTransform contentRect;
     public RectTransform contentScrollRect;
@@ -35,7 +36,8 @@ public partial class WindowCreatureDataEditor : AbstractWideWindow<WindowCreatur
 
         contentScrollRect = ContentTransform.parent.parent.GetComponent<RectTransform>();
         ConfigureScrollView(contentScrollRect, new Vector2(38, 0), new Vector2(200, 215), true);
-        BackgroundTransform.Find("Scrollgradient").gameObject.SetActive(false);
+        if (GetComponent<ScrollWindow>().scrollingGradient is Image gradient)
+            gradient.enabled = false;
 
         SimpleLine line = Instantiate(SimpleLine.Prefab, BackgroundTransform);
         line.transform.localPosition = new Vector3(-64, 0);
@@ -46,6 +48,7 @@ public partial class WindowCreatureDataEditor : AbstractWideWindow<WindowCreatur
         ConfigureScrollView(page_list_scroll_view, new Vector2(-110, 0), new Vector2(70, 215), false);
 
         pageListContent = page_list_scroll_view.Find("Viewport/Content").GetComponent<RectTransform>();
+        RegisterGrid<BackpackResourceEditor>(BackpackPage);
 #if 一米_中文名
         RegisterGrid<FamilyNameEditor>("chinese_name");
 #endif
@@ -66,6 +69,13 @@ public partial class WindowCreatureDataEditor : AbstractWideWindow<WindowCreatur
         RegisterGrid<ZheTianTalentEditor>("zhetian");
         RegisterGrid<ZheTianLevelEditor>("zhetian");
         #endif
+        _current_page = BackpackPage;
+    }
+
+    internal static void OpenBackpack()
+    {
+        Instance._current_page = BackpackPage;
+        ScrollWindow.showWindow(WindowId);
     }
 
     private static void ConfigureScrollView(RectTransform scroll_view, Vector2 position, Vector2 size,
@@ -108,6 +118,18 @@ public partial class WindowCreatureDataEditor : AbstractWideWindow<WindowCreatur
         scrollbar.offsetMin = Vector2.zero;
         scrollbar.offsetMax = Vector2.zero;
         scrollbar.localScale = Vector3.one;
+
+        var track = scrollbar.Find("Background").GetComponent<RectTransform>();
+        track.anchorMin = Vector2.zero;
+        track.anchorMax = Vector2.one;
+        track.offsetMin = track.offsetMax = Vector2.zero;
+        var handle = scroll_rect.verticalScrollbar.handleRect;
+        var slide = (RectTransform)handle.parent;
+        slide.anchorMin = Vector2.zero;
+        slide.anchorMax = Vector2.one;
+        slide.offsetMin = new Vector2(1, 2);
+        slide.offsetMax = new Vector2(-1, -2);
+        handle.offsetMin = handle.offsetMax = Vector2.zero;
     }
 
     private void RegisterGrid<T>(string page_name) where T : CreatureDataEditorGrid
