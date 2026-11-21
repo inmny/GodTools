@@ -1,5 +1,3 @@
-
-#if ZHETIAN
 namespace GodTools.UI.CreatureDataEditorGrids;
 
 public class ZheTianTalentEditor : SimpleInputEditor
@@ -20,4 +18,3 @@ public class ZheTianTalentEditor : SimpleInputEditor
         return ((int)talent).ToString();
     }
 }
-#endif

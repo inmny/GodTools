@@ -1,8 +1,5 @@
-#if CULTIWAY
 using System.Collections.Generic;
-using Cultiway.Const;
-using Cultiway.Core.Components;
-using Cultiway.Utils.Extension;
+using GodTools.Features.Rankings;
 using GodTools.UI.Prefabs;
 using NeoModLoader.General.UI.Prefabs;
 using UnityEngine;
@@ -20,12 +17,6 @@ public class ElementRootEditor : CreatureDataEditorGrid
     private Actor _actor;
     private readonly List<TextInput> _inputs = new();
 
-    // 8 个属性的索引与对应的本地化 key 后缀
-    private static readonly int[] _indices =
-    {
-        ElementIndex.Iron, ElementIndex.Wood, ElementIndex.Water, ElementIndex.Fire,
-        ElementIndex.Earth, ElementIndex.Neg, ElementIndex.Pos, ElementIndex.Entropy
-    };
     private static readonly string[] _key_suffixes =
     {
         "iron", "wood", "water", "fire", "earth", "neg", "pos", "entropy"
@@ -35,9 +26,8 @@ public class ElementRootEditor : CreatureDataEditorGrid
     {
         TitleKey = "inmny.godtools.ui.data_editor.cultiway.element_root";
         GetComponent<VerticalLayoutGroup>().spacing = 2;
-        for (int i = 0; i < _indices.Length; i++)
+        for (int i = 0; i < _key_suffixes.Length; i++)
         {
-            int idx = _indices[i];
             string suffix = _key_suffixes[i];
             var row = new GameObject($"Row_{suffix}", typeof(HorizontalLayoutGroup), typeof(LayoutElement));
             row.transform.SetParent(transform, false);
@@ -70,29 +60,20 @@ public class ElementRootEditor : CreatureDataEditorGrid
     {
         if (_actor == null) return;
         if (!float.TryParse(value, out float parsed)) return;
-        var ae = _actor.GetExtend();
-        if (!ae.HasElementRoot())
-        {
-            // 没有灵根时无法逐项编辑，直接忽略（赋予灵根由 Roll 按钮负责）
-            return;
-        }
-
-        float[] composition = new float[8];
-        var root = ae.GetElementRoot();
-        for (int i = 0; i < 8; i++) composition[i] = root[_indices[i]];
+        var api = CultiwayCompatibility.Find();
+        var root = api.Component(_actor, "ElementRoot");
+        if (root == null) return;
+        float[] composition = new float[_key_suffixes.Length];
+        for (int i = 0; i < composition.Length; i++) composition[i] = CultiwayCompatibility.RootElement(root, i);
         composition[slot] = Mathf.Max(0, parsed);
-
-        // 整体替换：移除旧组件，添加由新数组构造的灵根
-        ae.E.RemoveComponent<ElementRoot>();
-        ae.E.AddComponent(new ElementRoot(composition));
-        ae.MarkCultiwayStatsDirty();
+        api.SetComponent(_actor, api.CreateRoot(composition));
     }
 
     public override void EnabledWith(Actor actor)
     {
         _actor = actor;
-        var ae = actor.GetExtend();
-        if (!ae.HasElementRoot())
+        var root = CultiwayCompatibility.Find().Component(actor, "ElementRoot");
+        if (root == null)
         {
             for (int i = 0; i < _inputs.Count; i++)
             {
@@ -103,14 +84,12 @@ public class ElementRootEditor : CreatureDataEditorGrid
             return;
         }
 
-        var root = ae.GetElementRoot();
         for (int i = 0; i < _inputs.Count; i++)
         {
             int captured = i;
-            float v = root[_indices[i]];
+            float v = CultiwayCompatibility.RootElement(root, i);
             _inputs[i].Setup(v.ToString("F2"), value => OnValueChanged(captured, value));
             _inputs[i].input.interactable = true;
         }
     }
 }
-#endif

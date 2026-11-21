@@ -112,10 +112,7 @@ internal class MyTab : IManager
             WindowCreatureSavedList.WindowId,
             SpriteTextureLoader.getSprite("gt_windows/save_actor_list"));
         AddButton(TabButtonType.ACTOR, button);
-        button = PowerButtonCreator.CreateWindowButton(WindowTops.WindowId, WindowTops.WindowId,
-            SpriteTextureLoader.getSprite("inmny/godtools/icons/iconCreatureTop"));
-        AddButton(TabButtonType.ACTOR, button);
-        button = PowerButtonCreator.CreateWindowButton(WindowConsistentCreaturePowerTop.WindowId, WindowConsistentCreaturePowerTop.WindowId,
+        button = PowerButtonCreator.CreateWindowButton(WindowRankings.WindowId, WindowRankings.WindowId,
             SpriteTextureLoader.getSprite("inmny/godtools/icons/iconCreatureTop"));
         AddButton(TabButtonType.ACTOR, button);
         button = PowerButtonCreator.CreateWindowButton(WindowSocializeTopicEditor.WindowId,

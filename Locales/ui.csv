@@ -99,8 +99,6 @@ inmny.godtools.ui.to_top,至顶,Goto Top
 inmny.godtools.ui.to_bottom,至底,Goto Bottom
 inmny.godtools.ui.jump_to,跳转至,Jump to
 inmny.godtools.ui.jump_to_year,跳转至(年),Jump to Year
-inmny.godtools.ui.segment_chart.no_data,暂无可统计数据,No data to display
-inmny.godtools.ui.segment_chart.select_keyword,选择关键词后显示分段分布,Select a keyword to display distribution
 inmny.godtools.ui.data_editor.backpack,背包资源,Backpack resources
 inmny.godtools.ui.data_editor.backpack.carried,已携带,Carried
 inmny.godtools.ui.data_editor.backpack.all,全部,All
@@ -317,8 +315,6 @@ inmny.godtools.debug,DEBUG窗口,Debug Window
 inmny.godtools.console,控制台,Console
 inmny.godtools.debug_info,详细信息,Detailed Debug Info
 inmny.godtools.benchmark,性能测试,Benchmark
-inmny.godtools.WindowTops,世界生物相关排行,World Tops
-inmny.godtools.WindowTops Title,世界生物相关排行,World Tops
 inmny.godtools.WindowSubWorldCreator,创建亚空间,Create Sub World
 WindowModInfo,模组介绍,Mod Info
 WindowCreatureDataEditor,生物数据修改,Creature Data Editor
@@ -328,7 +324,6 @@ WindowCreatureSpriteEditor,生物贴图修改,Creature Sprite Editor
 WindowCreatureSearch,生物搜索,Creature Search
 WindowCreatureSavedList Title,保存的生物,Saved Creatures
 WindowCreatureSavedList,保存的生物,Saved Creatures
-WindowConsistentCreaturePowerTop,历史生物战力排行,History Creature Power Top
 WindowCreatureTitleEditor,称号编辑器,Title Editor
 WindowPrinterEditor,打印蚁编辑器,Printer Editor
 WindowDetailedHistory,详细历史信息,Detailed History
@@ -855,3 +850,338 @@ inmny.godtools.ui.world_script.scene.trial_message,百年之约已至，试炼�
 inmny.godtools.ui.world_script.scene.trial_start,守关人的试炼,The keeper's trial
 inmny.godtools.ui.world_script.scene.trial_end,试炼后的第一年,The first year after the trial
 inmny.godtools.ui.world_script.scene.watching,正在等候 · {0},Waiting for · {0}
+inmny.godtools.ranking.boards,选择榜单,Choose board
+inmny.godtools.ranking.name,名称,Name
+inmny.godtools.ranking.rank,名次,Rank
+inmny.godtools.ranking.refresh,刷新,Refresh
+inmny.godtools.ranking.jump_hint,跳到指定名次,Jump to a rank
+inmny.godtools.ranking.jump_rank,名次,Rank
+inmny.godtools.ranking.to_bottom,至底,Go to bottom
+inmny.godtools.ranking.to_top,至顶,Go to top
+inmny.godtools.ranking.filters,筛选,Filters
+inmny.godtools.ranking.hide_sidebar,收起右侧栏,Hide sidebar
+inmny.godtools.ranking.collapse_navigation,收起榜单导航,Collapse board navigation
+inmny.godtools.ranking.expand_navigation,展开榜单导航,Expand board navigation
+inmny.godtools.ranking.filter_back,返回条件,Back to conditions
+inmny.godtools.ranking.filter_line,条件行,Condition line
+inmny.godtools.ranking.filter_logic,运算符,Operators
+inmny.godtools.ranking.filter_fields,筛选字段,Fields
+inmny.godtools.ranking.filter_comparison,比较方式,Comparison
+inmny.godtools.ranking.filter_previous,光标左移,Move cursor left
+inmny.godtools.ranking.filter_next,光标右移,Move cursor right
+inmny.godtools.ranking.filter_remove_before,删除光标前的条件或符号,Delete before cursor
+inmny.godtools.ranking.filter_line_start,插入到条件行开头,Insert at the start
+inmny.godtools.ranking.filter_preview_count,预览 · 共 {0} 项,Preview · {0} entries
+inmny.godtools.ranking.sort,排序,Sort
+inmny.godtools.ranking.sort_keys,排序关键字,Sort keys
+inmny.godtools.ranking.sort_order,当前顺序,Current order
+inmny.godtools.ranking.reset_sort,恢复默认排序,Reset sort
+inmny.godtools.ranking.move_sort_up,提高排序优先级,Move up
+inmny.godtools.ranking.move_sort_down,降低排序优先级,Move down
+inmny.godtools.ranking.asc_short,升,Asc
+inmny.godtools.ranking.desc_short,降,Desc
+inmny.godtools.ranking.hide_sort,收起排序栏,Hide sorting sidebar
+inmny.godtools.ranking.remove_sort,移除排序关键字,Remove sort key
+inmny.godtools.ranking.group.world,人物与装备,Characters and equipment
+inmny.godtools.ranking.group.vanilla,原版,Base game
+inmny.godtools.ranking.actor_board,人物榜,Creature ranking
+inmny.godtools.ranking.item_board,装备榜,Equipment ranking
+inmny.godtools.ranking.culture_board,文化榜,Culture ranking
+inmny.godtools.ranking.pinned_columns,固定列,Pins
+inmny.godtools.ranking.pinned_count,已固定 {0}/{1},Pinned {0}/{1}
+inmny.godtools.ranking.pin_fields,可固定字段,Available columns
+inmny.godtools.ranking.clear_pins,清空,Clear
+inmny.godtools.ranking.move_pin_left,固定列左移,Move column left
+inmny.godtools.ranking.move_pin_right,固定列右移,Move column right
+inmny.godtools.ranking.remove_pin,取消固定,Unpin column
+inmny.godtools.ranking.group.powers,势力与聚落,Powers and settlements
+inmny.godtools.ranking.group.communities,文化与亲缘,Culture and kinship
+inmny.godtools.ranking.group.conflicts,战争与谋划,Wars and plots
+inmny.godtools.ranking.kingdom_board,王国榜,Kingdom ranking
+inmny.godtools.ranking.city_board,城市榜,City ranking
+inmny.godtools.ranking.alliance_board,联盟榜,Alliance ranking
+inmny.godtools.ranking.army_board,军队榜,Army ranking
+inmny.godtools.ranking.clan_board,氏族榜,Clan ranking
+inmny.godtools.ranking.family_board,家庭榜,Family ranking
+inmny.godtools.ranking.language_board,语言榜,Language ranking
+inmny.godtools.ranking.subspecies_board,亚种榜,Subspecies ranking
+inmny.godtools.ranking.religion_board,宗教榜,Religion ranking
+inmny.godtools.ranking.war_board,战争榜,War ranking
+inmny.godtools.ranking.plot_board,谋划榜,Plot ranking
+inmny.godtools.ranking.settlements,村庄数,Villages
+inmny.godtools.ranking.territory,领地分区,Territory zones
+inmny.godtools.ranking.warriors,兵力,Warriors
+inmny.godtools.ranking.ruler,统治者,Ruler
+inmny.godtools.ranking.alliance,所属联盟,Alliance
+inmny.godtools.ranking.buildings,建筑数,Buildings
+inmny.godtools.ranking.member_kingdoms,成员王国,Member kingdoms
+inmny.godtools.ranking.home_city,驻地城市,Home city
+inmny.godtools.ranking.melee,近战兵力,Melee troops
+inmny.godtools.ranking.ranged,远程兵力,Ranged troops
+inmny.godtools.ranking.ruled_kingdoms,统治王国,Kingdoms ruled
+inmny.godtools.ranking.covered_kingdoms,覆盖王国,Kingdoms covered
+inmny.godtools.ranking.members,成员数,Members
+inmny.godtools.ranking.renown,声望,Renown
+inmny.godtools.ranking.founder,创始人,Founder
+inmny.godtools.ranking.children,子女数,Children
+inmny.godtools.ranking.speakers,使用人数,Speakers
+inmny.godtools.ranking.written_books,著作数,Written books
+inmny.godtools.ranking.family_count,家庭数,Families
+inmny.godtools.ranking.main_cities,主要城市,Main cities
+inmny.godtools.ranking.main_kingdoms,主要王国,Main kingdoms
+inmny.godtools.ranking.followers,信徒数,Followers
+inmny.godtools.ranking.casualties,阵亡人数,Deaths
+inmny.godtools.ranking.participants,参战王国,Kingdoms at war
+inmny.godtools.ranking.attacker,主攻王国,Main attacker
+inmny.godtools.ranking.defender,主守王国,Main defender
+inmny.godtools.ranking.progress,进度,Progress
+inmny.godtools.ranking.author,发起者,Author
+inmny.godtools.ranking.target_kingdom,目标王国,Target kingdom
+inmny.godtools.ranking.target_city,目标城市,Target city
+inmny.godtools.ranking.presets,预设,Presets
+inmny.godtools.ranking.chart,分布,Distribution
+inmny.godtools.ranking.chart_hide,收起分布图,Hide distribution
+inmny.godtools.ranking.chart_pick_key,选择主排序关键字后查看分布,Choose a primary sort key
+inmny.godtools.ranking.chart_no_values,当前结果没有该指标的数据,No values for this metric
+inmny.godtools.ranking.chart_samples,样本 {0},{0} samples
+inmny.godtools.ranking.chart_coverage,有值 {0} / {1},Values {0} / {1}
+inmny.godtools.ranking.details,条目说明,Entry description
+inmny.godtools.ranking.table,榜单,Rankings
+inmny.godtools.ranking.field,选择条件,Choose condition
+inmny.godtools.ranking.value,条件值,Value
+inmny.godtools.ranking.back,返回榜单,Back to board
+inmny.godtools.ranking.empty,没有符合条件的条目,No matching entries
+inmny.godtools.ranking.result_count,共 {0} 项,{0} entries
+inmny.godtools.ranking.locate,在地图上定位,Locate on map
+inmny.godtools.ranking.place,放置已保存的生物,Place saved creature
+inmny.godtools.ranking.invalid,条件未完成，请检查运算符和括号。,Complete the condition and check its operators and brackets.
+inmny.godtools.ranking.unavailable,条件或指标暂不可用 · {0},Unavailable condition or metric · {0}
+inmny.godtools.ranking.long_filter,条件过长,The condition is too long
+inmny.godtools.ranking.no_filter,当前没有筛选条件,No active conditions
+inmny.godtools.ranking.add_condition,添加条件,Add condition
+inmny.godtools.ranking.remove_token,退格,Backspace
+inmny.godtools.ranking.apply_filter,应用筛选,Apply filter
+inmny.godtools.ranking.preview,预览命中,Preview matches
+inmny.godtools.ranking.clear,清空条件,Clear conditions
+inmny.godtools.ranking.default_sort,按名称排列,Sorted by name
+inmny.godtools.ranking.asc,升序,Ascending
+inmny.godtools.ranking.desc,降序,Descending
+inmny.godtools.ranking.add_sort,添加排序指标,Add sort metric
+inmny.godtools.ranking.preset_name,预设名称,Preset name
+inmny.godtools.ranking.save_preset,保存预设,Save preset
+inmny.godtools.ranking.no_presets,此榜单暂无预设,No presets for this board
+inmny.godtools.ranking.preset_current,当前设置,Current settings
+inmny.godtools.ranking.preset_conditions,筛选条件,Filter conditions
+inmny.godtools.ranking.preset_and,并且,And
+inmny.godtools.ranking.preset_or,或者,Or
+inmny.godtools.ranking.preset_not,不满足,Does not match
+inmny.godtools.ranking.preset_contains,{0}包含{1},{0} contains {1}
+inmny.godtools.ranking.preset_not_contains,{0}不包含{1},{0} does not contain {1}
+inmny.godtools.ranking.preset_quote,「{0}」,“{0}”
+inmny.godtools.ranking.preset_saved,已保存的预设,Saved presets
+inmny.godtools.ranking.preset_all_entries,全部条目,All entries
+inmny.godtools.ranking.update_preset,更新预设,Update preset
+inmny.godtools.ranking.rename_preset,重命名预设,Rename preset
+inmny.godtools.ranking.delete_preset,删除预设,Delete preset
+inmny.godtools.ranking.confirm_preset_rename,确认重命名,Confirm rename
+inmny.godtools.ranking.confirm_preset_delete,删除此预设？,Delete this preset?
+inmny.godtools.ranking.cancel_preset_action,取消,Cancel
+inmny.godtools.ranking.preset_duplicate,此榜单已有同名预设,This board already has a preset with that name
+inmny.godtools.ranking.invalid_number,请输入有效数字,Enter a valid number
+inmny.godtools.ranking.find_value,搜索条件值,Search values
+inmny.godtools.ranking.refresh_choices,搜索,Search
+inmny.godtools.ranking.refine_choices,可继续搜索缩小范围,Search to narrow the choices
+inmny.godtools.ranking.other,其余,Other
+inmny.godtools.ranking.symbol.and,与,And
+inmny.godtools.ranking.symbol.or,或,Or
+inmny.godtools.ranking.symbol.not,非,Not
+inmny.godtools.ranking.symbol.open,（,(
+inmny.godtools.ranking.symbol.close,）,)
+inmny.godtools.ranking.operator.equal,等于,=
+inmny.godtools.ranking.operator.atleast,至少,At least
+inmny.godtools.ranking.operator.atmost,至多,At most
+inmny.godtools.ranking.operator.contains,包含,Contains
+inmny.godtools.ranking.operator.present,有值,Has value
+inmny.godtools.ranking.operator.absent,无值,No value
+inmny.godtools.ranking.actor_power,人物基础战力榜,Base creature power
+inmny.godtools.ranking.actor_kills,人物击杀榜,Creature kills
+inmny.godtools.ranking.actor_age,人物年龄榜,Creature age
+inmny.godtools.ranking.actor_damage,人物攻击榜,Creature damage
+inmny.godtools.ranking.basic_peaks,旧战力峰值记录,Legacy power peak records
+inmny.godtools.ranking.current_peaks,战力峰值记录,Power peak records
+inmny.godtools.ranking.item_kills,装备击杀榜,Equipment kills
+inmny.godtools.ranking.culture_population,文化人口榜,Culture population
+inmny.godtools.ranking.peak_samples,采样峰值,Sampled peaks
+inmny.godtools.ranking.power.score,战力,Power
+inmny.godtools.ranking.power.legacy,旧战力,Legacy power
+inmny.godtools.ranking.power.legacy_filter,请删除旧战力条件并按当前战力重新设置数值。,Replace the legacy power condition with a threshold for the current score.
+inmny.godtools.ranking.power.dps,预估每秒伤害,Estimated damage per second
+inmny.godtools.ranking.power.toughness,耐久因子,Toughness factor
+inmny.godtools.ranking.power.scale,缩放系数,Scale factor
+inmny.godtools.ranking.kills,击杀,Kills
+inmny.godtools.ranking.age,年龄,Age
+inmny.godtools.ranking.level,等级,Level
+inmny.godtools.ranking.damage,攻击,Damage
+inmny.godtools.ranking.health,最大生命,Max health
+inmny.godtools.ranking.births,子女数,Children
+inmny.godtools.ranking.kingdom,王国,Kingdom
+inmny.godtools.ranking.actor_culture,所属文化,Culture
+inmny.godtools.ranking.actor_clan,所属氏族,Clan
+inmny.godtools.ranking.actor_language,所属语言,Language
+inmny.godtools.ranking.actor_subspecies,所属亚种,Subspecies
+inmny.godtools.ranking.actor_city,所属城市,City
+inmny.godtools.ranking.actor_religion,所属宗教,Religion
+inmny.godtools.ranking.ungrouped_traits,未分组,Ungrouped
+inmny.godtools.ranking.profession,职业,Profession
+inmny.godtools.ranking.species,生物类型,Species
+inmny.godtools.ranking.traits,特质,Traits
+inmny.godtools.ranking.profession.warrior,战士,Warrior
+inmny.godtools.ranking.profession.king,国王,King
+inmny.godtools.ranking.profession.leader,村庄首领,Village leader
+inmny.godtools.ranking.profession.unit,平民,Civilian
+inmny.godtools.ranking.profession.nothing,无职业,None
+inmny.godtools.ranking.durability,耐久,Durability
+inmny.godtools.ranking.mod_count,词条数,Modifiers
+inmny.godtools.ranking.item_type,装备类型,Equipment type
+inmny.godtools.ranking.item_type.weapon,武器,Weapon
+inmny.godtools.ranking.item_type.helmet,头盔,Helmet
+inmny.godtools.ranking.item_type.armor,护甲,Armor
+inmny.godtools.ranking.item_type.boots,靴子,Boots
+inmny.godtools.ranking.item_type.ring,戒指,Ring
+inmny.godtools.ranking.item_type.amulet,护符,Amulet
+inmny.godtools.ranking.material,材质,Material
+inmny.godtools.ranking.holder,持有者,Holder
+inmny.godtools.ranking.population,人口,Population
+inmny.godtools.ranking.cities,覆盖村庄,Villages
+inmny.godtools.ranking.year,世界年份,World year
+inmny.godtools.WindowRankings,天榜,World Rankings
+inmny.godtools.WindowRankings Title,天榜,World Rankings
+WindowRankings,天榜,World Rankings
+WindowRankings Title,天榜,World Rankings
+inmny.godtools.ranking.modifiers,装备词条,Equipment modifiers
+inmny.godtools.ranking.culture_traits,文化特质,Culture traits
+inmny.godtools.ranking.overview,榜单总览,Board overview
+inmny.godtools.ranking.more,更多,More
+inmny.godtools.ranking.group.actors,人物,Creatures
+inmny.godtools.ranking.group.items,装备,Equipment
+inmny.godtools.ranking.group.cultures,文化,Cultures
+inmny.godtools.ranking.group.archive,历史记录,History
+inmny.godtools.ranking.group.mods,模组榜单,Mod rankings
+inmny.godtools.ranking.cultiway.realm,修仙境界,Cultivation realm
+inmny.godtools.ranking.cultiway.mortal,凡人,Mortal
+inmny.godtools.ranking.cultiway.magic,魔法境界,Magic realm
+inmny.godtools.ranking.cultiway.knight,骑士境界,Knight realm
+inmny.godtools.ranking.cultiway.no_magic,无魔法,No magic
+inmny.godtools.ranking.cultiway.no_knight,无骑士境界,No knighthood
+inmny.godtools.ranking.cultiway.talent,修仙天赋,Cultivation talent
+inmny.godtools.ranking.cultiway.skill_count,法术数量,Number of spells
+inmny.godtools.ranking.cultiway.book_grade,主修功法品阶,Main manual grade
+inmny.godtools.ranking.cultiway.no_book,无功法,No manual
+inmny.godtools.ranking.cultiway.apprentices,徒弟数量,Apprentices
+inmny.godtools.ranking.cultiway.grade,品阶,Grade
+inmny.godtools.ranking.cultiway.learners,修炼人数,Practitioners
+inmny.godtools.ranking.cultiway.spells,可领悟法术数,Learnable spells
+inmny.godtools.ranking.cultiway.books,功法榜,Cultivation manuals
+inmny.godtools.ranking.duel.score,标准单体战力,Standard duel power
+inmny.godtools.ranking.duel.melee,近战压制对手,Melee benchmark
+inmny.godtools.ranking.duel.ranged,远程牵制对手,Ranged benchmark
+inmny.godtools.ranking.duel.armored,重甲对手,Armored benchmark
+inmny.godtools.ranking.duel.casts,对照测试中最多施法次数,Maximum casts in benchmark
+inmny.godtools.ranking.duel.parries,近战对照的预计招架次数,Expected ordinary parries
+inmny.godtools.ranking.duel.limited,部分模组资料不可用,Some mod data unavailable
+inmny.godtools.ranking.duel.cultiway_level,修仙 · 已估算境界减伤和无效命中,Cultiway · Estimated tier suppression and ineffective hits
+inmny.godtools.ranking.duel.cultiway_abilities,修仙 · 已估算 {0} 个单次命中能力及资源消耗,Cultiway · Estimated {0} single-impact abilities and their costs
+inmny.godtools.ranking.duel.cultiway_uncovered,修仙 · {0} 个其他能力尚未计入,Cultiway · {0} other abilities not modeled
+inmny.godtools.ranking.duel.gods_uncovered,战斗之神 · 面板已计入，其他招式未估算,Combat Gods · Stats included · other moves unmodeled
+inmny.godtools.ranking.duel.gods_parry,战斗之神 · 已估算止水的近战普攻招架,Combat Gods · Still Water melee parry estimated
+inmny.godtools.ranking.duel.below,未能击倒最低档对手,Below the lowest reachable benchmark
+inmny.godtools.ranking.duel.above,达到当前最高测试档,Reached the highest benchmark
+inmny.godtools.ranking.duel.attack_input,普攻超出原版伤害输入范围,Ordinary hit outside the native damage input range
+inmny.godtools.ranking.duel.base,32 秒估算 · 面板、技能条件和共享资源,32-second estimate · Stats and modeled skills and resources
+inmny.godtools.ranking.duel.description,用固定对手试算技能与资源，悬停分数查看分项。,"Estimates performance against set opponents. Hover over a score for details."
+inmny.godtools.ranking.duel.provider,{0} · {1} 个技能 · {2} 个资源池,{0} · {1} skills · {2} resource pools
+inmny.godtools.ranking.duel.condition_error,一个技能条件异常，已跳过,Skipped one skill after a condition error
+inmny.godtools.ranking.duel.reactions,对照测试中最多受伤触发次数,Maximum incoming-damage reactions in benchmark
+inmny.godtools.ranking.unranked,未排名,Unranked
+inmny.godtools.ranking.invalid_integer,请输入整数,Enter an integer
+inmny.godtools.ranking.filter_scope,参排范围,Ranking scope
+inmny.godtools.ranking.filter_scope_hint,先按条件选出参排对象，再分配名次。,Filter entries before assigning ranks.
+inmny.godtools.ranking.filter_display,显示筛选,Display filter
+inmny.godtools.ranking.filter_display_hint,只隐藏不符合条件的条目，保留原有名次。,Hide entries while keeping their original ranks.
+inmny.godtools.ranking.feature_view,收藏预设,Favorite preset
+inmny.godtools.ranking.unfeature_view,取消收藏,Remove from favorites
+inmny.godtools.ranking.feature_empty,在榜单的「预设」页保存预设后，点击该行右侧的星星。,Save a preset and click its star to show it here.
+inmny.godtools.ranking.refresh_featured,刷新常看视图,Refresh featured views
+inmny.godtools.ranking.feature_waiting,暂无可用结果,No result available
+inmny.godtools.ranking.feature_unavailable,榜单暂不可用,Board unavailable
+inmny.godtools.ranking.feature_counts,参排 {0}/{1} · 显示 {2},Ranked {0}/{1} · Showing {2}
+inmny.godtools.ranking.feature_no_ranked,暂无已排名条目,No ranked entries
+inmny.godtools.ranking.feature_timestamp,刷新于 {0},Refreshed {0}
+inmny.godtools.ranking.rank_history,榜单记录,Ranking records
+inmny.godtools.ranking.recent_archives,最近记录,Recent records
+inmny.godtools.ranking.capture_archive,保存本次排名,Save current ranking
+inmny.godtools.ranking.capture_archive_hint,记录当前显示的条目、名次和分数。随世界存档保存。,Records the displayed entries and scores with their ranks and is saved with the world.
+inmny.godtools.ranking.archive_empty,在榜单顶栏点击「保存本次排名」即可记录当前结果。,Use Save current ranking on a board to record its current results.
+inmny.godtools.ranking.archive_places,{0} 条有名次,{0} ranked
+inmny.godtools.ranking.back_history,返回记录列表,Back to records
+inmny.godtools.ranking.archive_compare,对比往期记录,Compare past records
+inmny.godtools.ranking.archive_close_compare,关闭对照,Close comparison
+inmny.godtools.ranking.archive_no_compatible,暂无使用相同排序和筛选规则的榜单记录。,No records with the same sorting and filtering rules.
+inmny.godtools.ranking.archive_compared_time,对照样本 {0},Compared with {0}
+inmny.godtools.ranking.feature_more,多显示一项,Show one more item
+inmny.godtools.ranking.feature_fewer,少显示一项,Show one fewer item
+inmny.godtools.ranking.feature_details,预设详情,Preset details
+inmny.godtools.ui.keyword.wushu.meditation,无根之源,Rootless Source
+inmny.godtools.ui.keyword.knight.knight,生命之力,Life Force
+inmny.godtools.ui.keyword.warrior_mod.warrior,气血,Vitality
+inmny.godtools.ui.keyword.warrior_mod.true_gang,真罡,True Gang
+inmny.godtools.ui.keyword.warrior_mod.pattern,阵纹,Formation Pattern
+inmny.godtools.ui.keyword.xian_tu_mod.xian_tu,真元,True Essence
+inmny.godtools.ui.keyword.xian_tu_mod.qi_xue,气血,Vitality
+inmny.godtools.ui.keyword.xian_tu_mod.wu_xing,悟性,Comprehension
+inmny.godtools.ui.keyword.xianni.combat_power,仙逆战力,Xianni Combat Power
+inmny.godtools.ui.keyword.xianni.xiuwei,修为,Cultivation
+inmny.godtools.ui.keyword.xianni.gushen_power,古神之力,Ancient God Power
+inmny.godtools.ui.keyword.xianni.yaoli,妖力,Demonic Power
+inmny.godtools.ui.keyword.xianni.wuxin,悟性,Comprehension
+inmny.godtools.ui.keyword.xianni.qiyun,气运,Fortune
+inmny.godtools.ui.keyword.xianni.xinmo,心魔,Inner Demon
+inmny.godtools.ui.keyword.Chevalier_mod.Chevalier,斗气,Fighting Spirit
+inmny.godtools.ui.keyword.Chevalier_mod.Comprehension,领悟度,Comprehension
+inmny.godtools.ui.keyword.fantasy_mod.experience,经验,Experience
+inmny.godtools.ui.keyword.fantasy_mod.Determination,意志力,Determination
+inmny.godtools.ui.keyword.fantasy_mod.Defydeath,跨越死亡,Defy Death
+inmny.godtools.ui.keyword.fantasy_mod.BattleIntent,战意,Battle Intent
+inmny.godtools.ui.keyword.fantasy_mod.PaladinTough,坚韧,Toughness
+inmny.godtools.ui.keyword.fantasy_mod.PhilosophersStone,贤者之石,Philosopher’s Stone
+inmny.godtools.ui.keyword.fantasy_mod.Anger,怒意,Anger
+inmny.godtools.ui.keyword.fantasy_mod.DodgeEvade,闪避,Dodge
+inmny.godtools.ui.keyword.fantasy_mod.hitthetarget,命中,Hit Chance
+inmny.godtools.ui.keyword.fantasy_mod.MagicApplication,魔法应用,Magic Application
+inmny.godtools.ui.keyword.fantasy_mod.MeditationExperience,冥想法经验,Meditation Experience
+inmny.godtools.ui.keyword.fantasy_mod.MeditationInsight,冥想法悟性,Meditation Insight
+inmny.godtools.ui.keyword.fantasy_mod.MeditationTier,冥想法功法层数,Meditation Tier
+inmny.godtools.ui.keyword.fantasy_mod.MagicShield,护盾,Shield
+inmny.godtools.ui.keyword.fantasy_mod.FixedPhysicalDamage,固定物伤,Flat Physical Damage
+inmny.godtools.ui.keyword.fantasy_mod.FixedMagicalDamage,固定法伤,Flat Magic Damage
+inmny.godtools.ui.keyword.fantasy_mod.Restorehealth,回血,Health Recovery
+inmny.godtools.ui.keyword.fantasy_mod.MagicReply,回魔,Mana Recovery
+inmny.godtools.ui.keyword.fantasy_mod.MagicDamage,法伤,Magic Damage
+inmny.godtools.ui.keyword.fantasy_mod.MagicResistance,法抗,Magic Resistance
+inmny.godtools.ui.keyword.fantasy_mod.PhysicalDamage,物伤,Physical Damage
+inmny.godtools.ui.keyword.fantasy_mod.PhysicalDefense,物抗,Physical Defense
+inmny.godtools.ui.keyword.fantasy_mod.LegendaryStatus,传奇,Legendary Status
+inmny.godtools.ranking.row_layout,行内容,Row content
+inmny.godtools.ranking.row_show_portrait,头像,Portrait
+inmny.godtools.ranking.row_show_portrait_hint,显示头像或旗帜,Show portraits or banners
+inmny.godtools.ranking.row_show_rank,名次,Rank
+inmny.godtools.ranking.row_show_rank_hint,在名称下显示名次,Show the rank beneath the name
+inmny.godtools.ranking.row_fill_columns,自动补列,Fill columns
+inmny.godtools.ranking.row_fill_columns_hint,排序字段和固定列之后有空间时用榜单默认字段补齐,Fill space after sort keys and pinned columns with board defaults
+inmny.godtools.ranking.current_health,当前生命,Current Health
+inmny.godtools.ranking.sex,性别,Sex
+inmny.godtools.ranking.male,雄性,Male
+inmny.godtools.ranking.female,雌性,Female
+inmny.godtools.ranking.favorite,收藏状态,Favorite Status
+inmny.godtools.ranking.favorited,已收藏,Favorited
+inmny.godtools.ranking.not_favorited,未收藏,Not Favorited

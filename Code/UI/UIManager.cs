@@ -3,7 +3,7 @@ using GodTools.Libraries;
 
 namespace GodTools.UI;
 
-[Dependency(typeof(GodPowers))]
+[Dependency(typeof(GodPowers), typeof(Features.Rankings.BuiltInRankings))]
 internal class UIManager : IManager
 {
     public void Initialize()
@@ -16,10 +16,9 @@ internal class UIManager : IManager
         WindowCreatureSearch.CreateWindow(nameof(WindowCreatureSearch), nameof(WindowCreatureSearch));
         WindowCreatureTitleEditor.CreateWindow(nameof(WindowCreatureTitleEditor), nameof(WindowCreatureTitleEditor));
         WindowCreatureSavedList.CreateAndInit(nameof(WindowCreatureSavedList));
-        WindowConsistentCreaturePowerTop.CreateWindow(nameof(WindowConsistentCreaturePowerTop), nameof(WindowConsistentCreaturePowerTop));
         WindowSocializeTopicEditor.CreateWindow(nameof(WindowSocializeTopicEditor), nameof(WindowSocializeTopicEditor));
         WindowPrinterEditor.CreateWindow(nameof(WindowPrinterEditor), nameof(WindowPrinterEditor));
-        WindowTops.CreateAndInit($"{C.mod_prefix}.{nameof(WindowTops)}");
+        WindowRankings.CreateAndInit(nameof(WindowRankings));
         WindowDetailedHistory.CreateAndInit(nameof(WindowDetailedHistory));
         WindowWorldScript.CreateAndInit(nameof(WindowWorldScript));
         CanvasCreatureTitle.Init();

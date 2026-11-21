@@ -1,6 +1,3 @@
-
-#if INMNY_CUSTOMMODT001
-using CustomModT001;
 using GodTools.UI.Prefabs;
 using NeoModLoader.General.UI.Prefabs;
 using UnityEngine;
@@ -32,4 +29,3 @@ public class WudaoExpEditor : SimpleInputEditor
         return value.ToString();
     }
 }
-#endif

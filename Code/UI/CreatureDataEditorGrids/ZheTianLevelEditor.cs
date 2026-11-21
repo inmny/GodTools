@@ -1,6 +1,4 @@
 
-#if ZHETIAN
-
 namespace GodTools.UI.CreatureDataEditorGrids;
 
 public class ZheTianLevelEditor : SimpleInputEditor
@@ -44,4 +42,3 @@ public class ZheTianLevelEditor : SimpleInputEditor
         return value.ToString();
     }
 }
-#endif

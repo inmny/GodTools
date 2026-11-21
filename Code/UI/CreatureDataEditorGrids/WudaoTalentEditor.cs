@@ -1,7 +1,4 @@
 
-#if INMNY_CUSTOMMODT001
-using CustomModT001;
-
 namespace GodTools.UI.CreatureDataEditorGrids;
 
 public class WudaoTalentEditor : SimpleInputEditor
@@ -18,7 +15,7 @@ public class WudaoTalentEditor : SimpleInputEditor
 
     protected override string GetInitValue()
     {
-        return ((int)Actor.GetTalent()).ToString();
+        Actor.data.get("inmny.custommodt001.talent", out float talent);
+        return ((int)talent).ToString();
     }
 }
-#endif

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GodTools.Abstract;
+using GodTools.Features.Rankings;
 using GodTools.UI.CreatureDataEditorGrids;
 using GodTools.UI.Prefabs;
 using GodTools.Utils;
@@ -49,26 +50,6 @@ public partial class WindowCreatureDataEditor : AbstractWideWindow<WindowCreatur
 
         pageListContent = page_list_scroll_view.Find("Viewport/Content").GetComponent<RectTransform>();
         RegisterGrid<BackpackResourceEditor>(BackpackPage);
-#if 一米_中文名
-        RegisterGrid<FamilyNameEditor>("chinese_name");
-#endif
-        #if INMNY_CUSTOMMODT001
-        RegisterGrid<WudaoTalentEditor>("inmny_custommodt001");
-        RegisterGrid<WudaoLevelEditor>("inmny_custommodt001");
-        RegisterGrid<WudaoExpEditor>("inmny_custommodt001");
-        #endif
-        #if CULTIWAY
-        RegisterGrid<PowerLevelEditor>("cultiway");
-        RegisterGrid<ElementRootEditor>("cultiway");
-        RegisterGrid<JindanStrengthEditor>("cultiway");
-        RegisterGrid<JindanStageEditor>("cultiway");
-        RegisterGrid<YuanyingStrengthEditor>("cultiway");
-        RegisterGrid<YuanyingStageEditor>("cultiway");
-        #endif
-        #if ZHETIAN
-        RegisterGrid<ZheTianTalentEditor>("zhetian");
-        RegisterGrid<ZheTianLevelEditor>("zhetian");
-        #endif
         _current_page = BackpackPage;
     }
 
@@ -76,6 +57,34 @@ public partial class WindowCreatureDataEditor : AbstractWideWindow<WindowCreatur
     {
         Instance._current_page = BackpackPage;
         ScrollWindow.showWindow(WindowId);
+    }
+
+    private bool _optionalGridsInitialized;
+
+    private void RegisterOptionalGrids()
+    {
+        if (OptionalMods.Present("一米_中文名"))
+            RegisterGrid<FamilyNameEditor>("chinese_name");
+        if (OptionalMods.Present("INMNY_CUSTOMMODT001"))
+        {
+            RegisterGrid<WudaoTalentEditor>("inmny_custommodt001");
+            RegisterGrid<WudaoLevelEditor>("inmny_custommodt001");
+            RegisterGrid<WudaoExpEditor>("inmny_custommodt001");
+        }
+        if (CultiwayCompatibility.Find() != null)
+        {
+            RegisterGrid<PowerLevelEditor>("cultiway");
+            RegisterGrid<ElementRootEditor>("cultiway");
+            RegisterGrid<JindanStrengthEditor>("cultiway");
+            RegisterGrid<JindanStageEditor>("cultiway");
+            RegisterGrid<YuanyingStrengthEditor>("cultiway");
+            RegisterGrid<YuanyingStageEditor>("cultiway");
+        }
+        if (OptionalMods.Present("ZHETIAN"))
+        {
+            RegisterGrid<ZheTianTalentEditor>("zhetian");
+            RegisterGrid<ZheTianLevelEditor>("zhetian");
+        }
     }
 
     private static void ConfigureScrollView(RectTransform scroll_view, Vector2 position, Vector2 size,
@@ -181,6 +190,11 @@ public partial class WindowCreatureDataEditor : AbstractWideWindow<WindowCreatur
     private string _current_page;
     public override void OnNormalEnable()
     {
+        if (!_optionalGridsInitialized)
+        {
+            RegisterOptionalGrids();
+            _optionalGridsInitialized = true;
+        }
         _selected_actor = SelectedUnit.unit;
         UpdatePage();
     }
