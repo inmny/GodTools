@@ -8,9 +8,11 @@ internal sealed class RankingArchive
 {
     public string ID;
     public RankingPreset View;
+    public string Name;
     public string BoardName;
     public string PrimaryName;
     public DateTime RefreshedAt;
+    public DateTime? SavedAt;
     public double WorldTime;
     public int ScopeCount;
     public int RankedCount;
@@ -25,7 +27,7 @@ internal sealed class RankingArchive
         return new RankingArchive
         {
             ID = Guid.NewGuid().ToString("N"), View = RankingStore.Copy(snapshot.View), BoardName = boardName, PrimaryName = primaryName,
-            RefreshedAt = snapshot.Data.RefreshedAt, WorldTime = snapshot.Data.WorldTime,
+            RefreshedAt = snapshot.Data.RefreshedAt, SavedAt = DateTime.UtcNow, WorldTime = snapshot.Data.WorldTime,
             ScopeCount = snapshot.ScopeCount, RankedCount = snapshot.RankedCount, RulesVersion = 1,
             Schema = RankingQuery.RuleFields(snapshot.View).Select(id =>
             {

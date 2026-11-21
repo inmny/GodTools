@@ -249,7 +249,10 @@ public partial class WindowRankings
     }
 
     private static string RankLabel(int rank) => rank > 0 ? $"#{rank}" : L("unranked");
-    private static string SampleTime(DateTime at) => at.ToLocalTime().ToString("g");
+    private static string SampleTime(DateTime at) => at.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+    private static string RecordTime(RankingArchive archive) => SampleTime(archive.SavedAt ?? archive.RefreshedAt);
+    private static string ArchiveName(RankingArchive archive) =>
+        archive.Name ?? archive.View.Name ?? Name(archive.BoardName ?? archive.View.BoardID);
 
     private void CaptureArchive()
     {
@@ -279,26 +282,92 @@ public partial class WindowRankings
             Button(_tools, L("overview"), 83, () => Go(Page.Overview), Icon("iconWorldInfo"));
             return;
         }
-        SummaryText(_tools, _archive?.View.Name ?? L("rank_history"), TableWidth - 106, HeadingTint, 12);
+        SummaryText(_tools, _archive == null ? L("rank_history") : ArchiveName(_archive), TableWidth - 106, HeadingTint, 12);
         Button(_tools, L("back_history"), 95, () => Go(Page.History), Icon("iconArrowLeft"));
     }
 
-    private void DrawHistory() => DrawArchiveList(RankingStore.Archives, L("archive_empty"), OpenArchive);
+    private void DrawHistory() => DrawArchiveList(RankingStore.Archives, L("archive_empty"), OpenArchive, allowRename: true);
 
-    private void DrawArchiveList(IEnumerable<RankingArchive> archives, string empty, Action<RankingArchive> select)
+    private void DrawArchiveList(IEnumerable<RankingArchive> archives, string empty, Action<RankingArchive> select,
+        bool allowRename = false)
     {
+        const float timeWidth = 106;
+        const float countWidth = 63;
+        const float actionWidth = 22;
+        float nameWidth = TableWidth - timeWidth - countWidth - 12 - (allowRename ? actionWidth + RowGap : 0);
         bool found = false;
+        Action closeEditor = null;
         foreach (var archive in archives)
         {
             found = true;
             var line = NextLine();
-            string caption = archive.View.Name == Name(archive.BoardName)
-                ? archive.View.Name : $"{Name(archive.BoardName)} · {archive.View.Name}";
-            var button = Button(line, caption, TableWidth - 175, () => select(archive), Icon("iconWorldLog"), hint: caption);
-            AlignCaption(button, 20);
-            button.gameObject.AddComponent<ScrollableButton>()._scroll_wheel_only = true;
-            SummaryText(line, SampleTime(archive.RefreshedAt), 96, MutedTint);
-            SummaryText(line, string.Format(L("archive_places"), archive.Rows.Count(row => row.Rank > 0)), 63, MutedTint);
+            string board = Name(archive.BoardName ?? archive.View.BoardID);
+            string time = RecordTime(archive);
+            string count = string.Format(L("archive_places"), archive.Rows.Count(row => row.Rank > 0));
+            ShowRow();
+
+            void ShowRow()
+            {
+                string name = ArchiveName(archive);
+                string caption = name == board ? name : $"{board} · {name}";
+                var button = Button(line, caption, nameWidth, () => select(archive), Icon("iconWorldLog"), hint: caption);
+                AlignCaption(button, 20);
+                button.gameObject.AddComponent<ScrollableButton>()._scroll_wheel_only = true;
+                Metadata();
+                if (allowRename) ActionButton("RankingArchiveRename", "archive_rename", "iconEdit", BeginRename);
+            }
+
+            void Metadata()
+            {
+                SummaryText(line, time, timeWidth, MutedTint);
+                SummaryText(line, count, countWidth, MutedTint);
+            }
+
+            Button ActionButton(string id, string hint, string icon, Action action)
+            {
+                var button = Button(line, L(hint), actionWidth, action, Icon(icon), hint: L(hint));
+                button.name = id;
+                return button;
+            }
+
+            void BeginRename()
+            {
+                closeEditor?.Invoke();
+                Tooltip.hideTooltipNow();
+                Clear(line);
+                closeEditor = Finish;
+                var input = Input(line, ArchiveName(archive), nameWidth - 2 * (actionWidth + RowGap), _ => { });
+                input.name = "RankingArchiveRenameInput";
+                var confirm = ActionButton("RankingArchiveConfirmRename", "archive_confirm_rename", "iconOn", Rename);
+                ActionButton("RankingArchiveCancelRename", "archive_cancel_rename", "iconOff", Finish);
+                Metadata();
+                confirm.interactable = !string.IsNullOrWhiteSpace(input.text);
+                input.onValueChanged.AddListener(value => confirm.interactable = !string.IsNullOrWhiteSpace(value));
+                input.onEndEdit.AddListener(_ =>
+                {
+                    if (!input.isActiveAndEnabled) return;
+                    if (input.wasCanceled) Finish();
+                    else if (UnityEngine.Input.GetKeyDown(KeyCode.Return) || UnityEngine.Input.GetKeyDown(KeyCode.KeypadEnter))
+                        Rename();
+                });
+                input.ActivateInputField();
+
+                void Rename()
+                {
+                    string name = input.text.Trim();
+                    if (name.Length == 0) return;
+                    archive.Name = name;
+                    Finish();
+                }
+
+                void Finish()
+                {
+                    closeEditor = null;
+                    Tooltip.hideTooltipNow();
+                    Clear(line);
+                    ShowRow();
+                }
+            }
         }
         if (!found) SummaryText(NextLine(), empty, TableWidth - 6, MutedTint);
     }
@@ -310,7 +379,7 @@ public partial class WindowRankings
         string metricName = _archive.View.BoardID == BuiltInRankings.Actors && primary == StandardDuelPower.BaseFieldID
             ? L("power.legacy") : Name(_archive.PrimaryName);
         var controls = NextLine();
-        string subtitle = $"{metricName}   ·   {SampleTime(_archive.RefreshedAt)}";
+        string subtitle = $"{metricName}   ·   {RecordTime(_archive)}";
         SummaryText(controls, subtitle, TableWidth - 123, HeadingTint, 10);
         if (_chooseComparison || _compare != null)
             Button(controls, L("archive_close_compare"), 111, () =>
@@ -343,7 +412,8 @@ public partial class WindowRankings
         SummaryText(scope, string.Format(L("feature_counts"), _archive.RankedCount, _archive.ScopeCount, _archive.Rows.Count),
             TableWidth - 7, MutedTint);
         if (_compare != null)
-            SummaryText(NextLine(), string.Format(L("archive_compared_time"), SampleTime(_compare.RefreshedAt)), TableWidth - 7, MutedTint);
+            SummaryText(NextLine(), string.Format(L("archive_compared_time"), $"{ArchiveName(_compare)} · {RecordTime(_compare)}"),
+                TableWidth - 7, MutedTint);
         var before = _compare?.Rows.ToDictionary(row => row.Key, StringComparer.Ordinal);
         var current = _archive.Rows.Select(row => (Now: row, Before: before?.GetValueOrDefault(row.Key))).ToList();
         if (before != null)

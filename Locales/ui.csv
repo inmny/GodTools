@@ -1157,6 +1157,9 @@ inmny.godtools.ranking.capture_archive,保存本次排名,Save current ranking
 inmny.godtools.ranking.capture_archive_hint,记录当前显示的条目、名次和分数。随世界存档保存。,Records the displayed entries and scores with their ranks and is saved with the world.
 inmny.godtools.ranking.archive_empty,在榜单顶栏点击「保存本次排名」即可记录当前结果。,Use Save current ranking on a board to record its current results.
 inmny.godtools.ranking.archive_places,{0} 条有名次,{0} ranked
+inmny.godtools.ranking.archive_rename,重命名记录,Rename record
+inmny.godtools.ranking.archive_confirm_rename,确认重命名,Confirm rename
+inmny.godtools.ranking.archive_cancel_rename,取消重命名,Cancel rename
 inmny.godtools.ranking.back_history,返回记录列表,Back to records
 inmny.godtools.ranking.archive_compare,对比往期记录,Compare past records
 inmny.godtools.ranking.archive_close_compare,关闭对照,Close comparison

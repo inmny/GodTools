@@ -18,8 +18,8 @@ public partial class WindowRankings
     private const float DistributionContentWidth = DistributionWidth - 2 * DistributionInset;
 
     private RectTransform _distribution;
-    private RectTransform _distributionDock;
-    private RectTransform _distributionCanvas;
+    private RectTransform _windowDock;
+    private RectTransform _windowCanvas;
     private RectTransform _windowToolbar;
     private List<RankingRow> _distributionRows;
     private bool _distributionOpen = true;
@@ -27,13 +27,13 @@ public partial class WindowRankings
     private void InitDistribution()
     {
         var window = (RectTransform)transform;
-        // Fit the pair without taking over ScrollWindow's local movement animations.
-        _distributionDock = Rect("RankingWindowDock", window.parent, 0, 0, 0, 0);
-        _distributionDock.anchorMin = _distributionDock.anchorMax = _distributionDock.pivot = new Vector2(0.5f, 0.5f);
-        _distributionDock.SetSiblingIndex(window.GetSiblingIndex());
-        window.SetParent(_distributionDock, false);
-        _distributionCanvas = (RectTransform)CanvasMain.instance.canvas_windows.transform;
-        _windowToolbar = _distributionCanvas.Find("WindowToolbarContainer/WindowToolbar") as RectTransform;
+        // 在原版窗口外层避让工具栏，保留 ScrollWindow 的窗口动画。
+        _windowDock = Rect("RankingWindowDock", window.parent, 0, 0, 0, 0);
+        _windowDock.anchorMin = _windowDock.anchorMax = _windowDock.pivot = new Vector2(0.5f, 0.5f);
+        _windowDock.SetSiblingIndex(window.GetSiblingIndex());
+        window.SetParent(_windowDock, false);
+        _windowCanvas = (RectTransform)CanvasMain.instance.canvas_windows.transform;
+        _windowToolbar = _windowCanvas.Find("WindowToolbarContainer/WindowToolbar") as RectTransform;
 
         _distribution = Rect("RankingDistribution", BackgroundTransform, DistributionWidth, DistributionHeight, DistributionGap, 116);
         _distribution.anchorMin = _distribution.anchorMax = new Vector2(1, 0.5f);
@@ -59,44 +59,36 @@ public partial class WindowRankings
     {
         bool visible = _page == Page.Table && _distributionOpen;
         _distribution.gameObject.SetActive(visible);
-        if (visible)
-        {
-            FitDistribution();
-            if (ReferenceEquals(_distributionRows, _rows)) return;
-            _distributionRows = _rows;
-            DrawDistribution();
-        }
-        else
-        {
-            _distributionDock.localScale = Vector3.one;
-            _distributionDock.anchoredPosition = Vector2.zero;
-        }
+        FitRankingWindow();
+        if (!visible || ReferenceEquals(_distributionRows, _rows)) return;
+        _distributionRows = _rows;
+        DrawDistribution();
     }
 
     private void LateUpdate()
     {
         if (_fallbackRevision != RankingRegistry.FallbackRevision && ScrollWindow.isCurrentWindow("WindowRankings"))
             OnNormalEnable();
-        if (_distribution != null && _distribution.gameObject.activeSelf) FitDistribution();
+        if (_windowDock != null) FitRankingWindow();
     }
 
-    private void FitDistribution()
+    private void FitRankingWindow()
     {
-        float unit = Mathf.Abs(_distributionDock.parent.lossyScale.x);
-        if (unit <= 0 || _distributionCanvas.rect.width <= 0) return;
-        float width = _distributionCanvas.rect.width * Mathf.Abs(_distributionCanvas.lossyScale.x) / unit;
+        float unit = Mathf.Abs(_windowDock.parent.lossyScale.x);
+        if (unit <= 0 || _windowCanvas.rect.width <= 0) return;
+        float width = _windowCanvas.rect.width * Mathf.Abs(_windowCanvas.lossyScale.x) / unit;
         float tools = _windowToolbar != null && _windowToolbar.gameObject.activeInHierarchy
             ? _windowToolbar.rect.width * Mathf.Abs(_windowToolbar.lossyScale.x) / unit : 0;
         float windowUnit = Mathf.Abs(transform.localScale.x * BackgroundTransform.localScale.x);
-        float extra = (DistributionWidth + DistributionGap) * windowUnit;
+        float extra = _distribution.gameObject.activeSelf ? (DistributionWidth + DistributionGap) * windowUnit : 0;
         float total = ((RectTransform)BackgroundTransform).rect.width * windowUnit + extra;
         if (total <= 0) return;
         const float margin = 8;
         float fit = Mathf.Min(1, Mathf.Max(1, width - tools - 2 * margin) / total);
         var scale = Vector3.one * fit;
         var position = new Vector2((tools - extra * fit) * 0.5f, 0);
-        if (_distributionDock.localScale != scale) _distributionDock.localScale = scale;
-        if (_distributionDock.anchoredPosition != position) _distributionDock.anchoredPosition = position;
+        if (_windowDock.localScale != scale) _windowDock.localScale = scale;
+        if (_windowDock.anchoredPosition != position) _windowDock.anchoredPosition = position;
     }
 
     private void DrawDistribution()
