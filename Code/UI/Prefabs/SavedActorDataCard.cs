@@ -1,3 +1,4 @@
+using GodTools.Features;
 using NeoModLoader.api.attributes;
 using NeoModLoader.General.UI.Prefabs;
 using UnityEngine;
@@ -15,15 +16,27 @@ public class SavedActorDataCard : APrefab<SavedActorDataCard>
     public  RawText              Name         { get; private set; }
     public  Button               Button       { get; private set; }
     public  SimpleButton         DeleteButton { get; private set; }
+    public  SimpleButton         VillageButton { get; private set; }
+    private CreatureSavedList.SavedActorPacket _packet;
 
-    public void Setup(ActorData data, UnityAction on_click, UnityAction delete_action)
+    internal void Setup(CreatureSavedList.SavedActorPacket packet, UnityAction place, UnityAction placeInVillage, UnityAction delete_action)
     {
         Init();
 
-        Avatar.Setup(data);
-        Name.Setup(data.name);
+        _packet = packet;
+        Avatar.Setup(packet.ActorData);
+        Name.Setup(packet.ActorData.name);
         Button.onClick.RemoveAllListeners();
-        Button.onClick.AddListener(on_click);
+        Button.onClick.AddListener(place);
+        Button.interactable = CreatureSavedList.CanPlace(packet);
+        VillageButton.Setup(placeInVillage, SpriteTextureLoader.getSprite("ui/icons/iconCitySelect"), pSize: new Vector2(22, 22),
+            pTipType: "tip", pTipData: new TooltipData
+            {
+                tip_name = "inmny.godtools.place_saved_actor_in_village",
+                tip_description = "inmny.godtools.place_saved_actor_in_village description"
+            });
+        VillageButton.Background.sprite = SpriteTextureLoader.getSprite("ui/special/special_buttonGray_insides");
+        VillageButton.Button.interactable = CreatureSavedList.CanPlaceInVillage(packet);
 
         DeleteButton.Setup([Hotfixable]() =>
             {
@@ -62,6 +75,14 @@ public class SavedActorDataCard : APrefab<SavedActorDataCard>
         Name = transform.Find(nameof(Name)).GetComponent<RawText>();
         Button = GetComponent<Button>();
         DeleteButton = transform.Find(nameof(DeleteButton)).GetComponent<SimpleButton>();
+        VillageButton = transform.Find(nameof(VillageButton)).GetComponent<SimpleButton>();
+        var tooltip = gameObject.AddComponent<TipButton>();
+        tooltip.showOnClick = false;
+        tooltip.setHoverAction(() =>
+        {
+            if (_packet != null)
+                WindowRankings.ShowSavedCreatureTooltip(gameObject, _packet, Avatar.image.sprite, _packet.ActorData.name);
+        }, false);
     }
 
     private static void _init()
@@ -69,9 +90,6 @@ public class SavedActorDataCard : APrefab<SavedActorDataCard>
         GameObject obj = new(nameof(SavedActorDataCard), typeof(Image), typeof(Button));
         obj.transform.SetParent(Main.prefabs);
         var rect_transform = obj.GetComponent<RectTransform>();
-
-        var button = obj.GetComponent<Button>();
-        button.OnHover(ShowTooltip);
 
         var bg = obj.GetComponent<Image>();
         bg.sprite = SpriteTextureLoader.getSprite("ui/special/windowInnerSliced");
@@ -86,9 +104,9 @@ public class SavedActorDataCard : APrefab<SavedActorDataCard>
 
 
         RawText name = Instantiate(RawText.Prefab, obj.transform);
-        name.SetSize(new Vector2(120, 12));
+        name.SetSize(new Vector2(78, 30));
         name.name = nameof(Name);
-        name.transform.localPosition = new Vector3(20, 12);
+        name.transform.localPosition = new Vector3(-10, 0);
         name.transform.localScale = Vector3.one;
 
         SimpleButton delete_button = Instantiate(SimpleButton.Prefab, obj.transform);
@@ -96,10 +114,12 @@ public class SavedActorDataCard : APrefab<SavedActorDataCard>
         delete_button.transform.localPosition = new Vector3(70, 0);
         delete_button.transform.localScale = Vector3.one;
 
+        var village = Instantiate(SimpleButton.Prefab, obj.transform);
+        village.name = nameof(VillageButton);
+        village.transform.localPosition = new Vector3(42, 0);
+        village.transform.localScale = Vector3.one;
+
         Prefab = obj.AddComponent<SavedActorDataCard>();
     }
 
-    private static void ShowTooltip()
-    {
-    }
 }

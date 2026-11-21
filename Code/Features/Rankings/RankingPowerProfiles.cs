@@ -107,6 +107,8 @@ public static class RankingPowerProfiles
         int version = archive.Version;
         string id = $"godtools:peak:{profile}@{version}";
         bool builtIn = profile == StandardDuelPower.ProfileID && version == StandardDuelPower.Version;
+        CreatureSavedList.SavedActorPacket Creature(string key) =>
+            RankingStore.FindPeaks(profile, version)?.Entries.Find(sample => sample.ActorID == key)?.Creature;
         if (!RankingRegistry.RegisterSource(new RankingSource<RankingPeak>
             {
                 ID = id, Read = () => RankingStore.FindPeaks(profile, version)?.Entries ?? Enumerable.Empty<RankingPeak>(),
@@ -115,13 +117,10 @@ public static class RankingPowerProfiles
                 SavedPortrait = builtIn ? sample => sample.Portrait?.GetSprite() ??
                     (BuiltInRankings.FindActor(sample.ActorID) == null ? RankingPeakPortrait.FromSavedCreature(sample) : null) : null,
                 ActorPortrait = builtIn ? BuiltInRankings.FindActor : null,
+                SavedCreature = builtIn ? Creature : null,
                 Inspect = BuiltInRankings.InspectActor, CanInspect = BuiltInRankings.CanInspectActor,
                 Locate = BuiltInRankings.LocateActor,
-                Place = builtIn ? key =>
-                {
-                    var creature = RankingStore.FindPeaks(profile, version)?.Entries.Find(sample => sample.ActorID == key)?.Creature;
-                    if (CreatureSavedList.CanPlace(creature)) WindowCreatureSavedList.PlaceSnapshot(creature);
-                } : null
+                Place = builtIn ? key => WindowCreatureSavedList.PlaceSnapshot(Creature(key)) : null
             })) return;
         BuiltInRankings.Field<RankingPeak>(id, "name", "name", RankingFieldKind.Text,
             sample => RankingValue.Text(sample.ActorName));

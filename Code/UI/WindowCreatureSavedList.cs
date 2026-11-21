@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using GodTools.Features;
 using GodTools.Libraries;
 using GodTools.UI.Prefabs;
-using GodTools.Utils;
 using NeoModLoader.api;
-using NeoModLoader.api.attributes;
 using NeoModLoader.General;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace GodTools.UI;
@@ -18,11 +14,10 @@ public class WindowCreatureSavedList : AbstractWindow<WindowCreatureSavedList>
     private const float single_element_height = 56;
     private const float start_y               = -single_element_height / 2;
 
-    private static ActorData _selected_data;
-
     private List<CreatureSavedList.SavedActorPacket>                           _list;
     private ObjectPoolGenericMono<SavedActorDataCard> _pool;
     private PowerButton                               _power_button;
+    private PowerButton                               _village_power_button;
 
     private RectTransform                 content_rect;
     private RectTransform                 scroll_view_rect;
@@ -40,6 +35,8 @@ public class WindowCreatureSavedList : AbstractWindow<WindowCreatureSavedList>
         _pool = new ObjectPoolGenericMono<SavedActorDataCard>(SavedActorDataCard.Prefab, ContentTransform);
         _power_button = PowerButtonCreator.CreateGodPowerButton(GodPowers.place_saved_actor.id,
             SpriteTextureLoader.getSprite("gt_windows/save_actor_list"), Main.prefabs);
+        _village_power_button = PowerButtonCreator.CreateGodPowerButton(GodPowers.place_saved_actor_in_village.id,
+            SpriteTextureLoader.getSprite("ui/icons/iconCitySelect"), Main.prefabs);
     }
 
     private void OnUpdate()
@@ -57,13 +54,8 @@ public class WindowCreatureSavedList : AbstractWindow<WindowCreatureSavedList>
         for (var i = view_start_idx; i <= view_end_idx; i++)
         {
             var packet = _list[i];
-            ActorData data = packet.ActorData;
             SavedActorDataCard card = _pool.getNext();
-            card.Setup(data, () =>
-            {
-                CreatureSavedList.SelectActorToPlace(packet);
-                ArmPlacement();
-            }, () =>
+            card.Setup(packet, () => PlaceCatalogEntry(packet, false), () => PlaceCatalogEntry(packet, true), () =>
             {
                 CreatureSavedList.UnsaveActor(packet);
                 _list.Remove(packet);
@@ -78,16 +70,31 @@ public class WindowCreatureSavedList : AbstractWindow<WindowCreatureSavedList>
         _list = new (CreatureSavedList.SavedActors.Values);
     }
 
-    internal static void PlaceSnapshot(CreatureSavedList.SavedActorPacket packet)
+    private void PlaceCatalogEntry(CreatureSavedList.SavedActorPacket packet, bool inVillage)
     {
-        CreatureSavedList.SelectSnapshotToPlace(packet);
-        Instance.ArmPlacement();
+        if (!CanArmPlacement(packet, inVillage)) return;
+        CreatureSavedList.SelectActorToPlace(packet);
+        ArmPlacement(inVillage);
     }
 
-    private void ArmPlacement()
+    internal static void PlaceSnapshot(CreatureSavedList.SavedActorPacket packet, bool inVillage = false)
+    {
+        if (!CanArmPlacement(packet, inVillage)) return;
+        CreatureSavedList.SelectSnapshotToPlace(packet);
+        Instance.ArmPlacement(inVillage);
+    }
+
+    private static bool CanArmPlacement(CreatureSavedList.SavedActorPacket packet, bool inVillage) =>
+        inVillage ? CreatureSavedList.CanPlaceInVillage(packet) : CreatureSavedList.CanPlace(packet);
+
+    private void ArmPlacement(bool inVillage)
     {
         ScrollWindow.hideAllEvent();
-        if (World.world.selected_power != GodPowers.place_saved_actor)
-            _power_button.clickActivePower();
+        if (inVillage)
+        {
+            if (World.world.selected_power != GodPowers.place_saved_actor_in_village) _village_power_button.clickActivePower();
+            WorldTip.showNowTop("inmny.godtools.place_saved_actor_in_village description", true);
+        }
+        else if (World.world.selected_power != GodPowers.place_saved_actor) _power_button.clickActivePower();
     }
 }

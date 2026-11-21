@@ -9,6 +9,7 @@ public class GodPowers : ExtendLibrary<GodPower, GodPowers>
 {
     public static GodPower place_saved_actor { get; private set; }
     public static GodPower place_saved_actor_in_top { get; private set; }
+    public static GodPower place_saved_actor_in_village { get; private set; }
 
     [CloneSource("$template_drops$")]
     public static GodPower apply_socialize_topic { get; private set; }
@@ -39,6 +40,9 @@ public class GodPowers : ExtendLibrary<GodPower, GodPowers>
         place_saved_actor_in_top.name = place_saved_actor_in_top.id;
         place_saved_actor_in_top.path_icon = "gt_windows/save_actor_list";
         place_saved_actor_in_top.click_action = ConsistentCreaturePowerTop.SpawnSelectedSavedActor;
+        place_saved_actor_in_village.name = place_saved_actor_in_village.id;
+        place_saved_actor_in_village.path_icon = "iconCitySelect";
+        place_saved_actor_in_village.click_action = CreatureSavedList.SpawnSelectedSavedActor;
 
         apply_socialize_topic.name = "gt_socialize_topic_drop";
         apply_socialize_topic.path_icon = "actor_traits/iconCommunity";

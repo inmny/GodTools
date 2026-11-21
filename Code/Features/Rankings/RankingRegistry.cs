@@ -145,6 +145,7 @@ public sealed class RankingSource<T>
     public Func<T, string> Name { get; set; }
     public Func<T, Sprite> Icon { get; set; }
     internal Func<T, Sprite> SavedPortrait { get; set; }
+    internal Func<string, CreatureSavedList.SavedActorPacket> SavedCreature { get; set; }
     public Func<string, Actor> ActorPortrait { get; set; }
     public Func<string, NanoObject> MetaPortrait { get; set; }
     public Action<string> Inspect { get; set; }
@@ -237,6 +238,7 @@ public static class RankingRegistry
         internal Func<object, string> Name;
         internal Func<object, Sprite> Icon;
         internal Func<object, Sprite> SavedPortrait;
+        internal Func<string, CreatureSavedList.SavedActorPacket> SavedCreature;
         internal Func<string, Actor> ActorPortrait;
         internal Func<string, NanoObject> MetaPortrait;
         internal Action<string> Inspect;
@@ -442,6 +444,7 @@ public static class RankingRegistry
             Key = item => key((T)item), Name = item => name((T)item),
             Icon = item => icon?.Invoke((T)item),
             SavedPortrait = portrait == null ? null : item => portrait((T)item),
+            SavedCreature = definition.SavedCreature,
             ActorPortrait = definition.ActorPortrait,
             MetaPortrait = definition.MetaPortrait,
             Inspect = definition.Inspect, CanInspect = definition.CanInspect, Locate = definition.Locate, Place = definition.Place

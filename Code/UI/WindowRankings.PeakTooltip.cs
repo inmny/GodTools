@@ -17,6 +17,8 @@ public partial class WindowRankings
     private sealed class PeakTooltipData : TooltipData
     {
         internal RankingPeak Record;
+        internal CreatureSavedList.SavedActorPacket Creature;
+        internal string Name;
         internal Sprite Portrait;
     }
 
@@ -27,17 +29,20 @@ public partial class WindowRankings
     });
 
     private static void ShowPeakTooltip(GameObject target, RankingRow row) => Tooltip.show(target, PeakTooltip,
-        new PeakTooltipData { Record = row.Peak, Portrait = row.SavedPortrait ?? row.Icon });
+        new PeakTooltipData { Record = row.Peak, Creature = row.Peak.Creature, Name = row.Name, Portrait = row.SavedPortrait ?? row.Icon });
+
+    internal static void ShowSavedCreatureTooltip(GameObject target, CreatureSavedList.SavedActorPacket creature, Sprite portrait, string name) =>
+        Tooltip.show(target, PeakTooltip, new PeakTooltipData { Creature = creature, Portrait = portrait, Name = name });
 
     private static void HidePeakTooltip() => Tooltip.findActive(tip => tip.asset.id == PeakTooltip)?.hide();
 
-    private static string PeakStatus(RankingPeak record) => record.Creature?.ActorData == null ? L("peak.score_only") :
-        CreatureSavedList.CanPlace(record.Creature) ? L("peak.ready") : L("peak.missing_actor");
+    private static string CreatureStatus(CreatureSavedList.SavedActorPacket creature) => creature?.ActorData == null ? L("peak.score_only") :
+        CreatureSavedList.CanPlace(creature) ? L("peak.ready") : L("peak.missing_actor");
 
     private static void DrawPeakTooltip(Tooltip tip, PeakTooltipData data)
     {
         var record = data.Record;
-        var creature = record.Creature;
+        var creature = data.Creature;
         var unit = creature?.ActorData;
         // 保留原版提示框的背景和定位，标题与正文使用可换行的布局。
         tip.topGraphics.transform.parent.gameObject.SetActive(false);
@@ -82,9 +87,10 @@ public partial class WindowRankings
         }
         var headings = PeakStack(header, "PeakHeadings", 1);
         headings.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1;
-        PeakText(headings, "PeakName", record.ActorName, font, 12, HeadingTint);
-        PeakText(headings, "PeakTime", string.Format(L("peak.time_score"), Date.getYear(record.Time),
-            RankingValue.FormatNumber(record.Score)), font, 9, PeakMuted);
+        PeakText(headings, "PeakName", data.Name, font, 12, HeadingTint);
+        if (record != null)
+            PeakText(headings, "PeakTime", string.Format(L("peak.time_score"), Date.getYear(record.Time),
+                RankingValue.FormatNumber(record.Score)), font, 9, PeakMuted);
 
         var body = PeakStack(content, "PeakSavedContents", 4);
         body.GetComponent<VerticalLayoutGroup>().padding = new RectOffset(9, 9, 4, 1);
@@ -221,7 +227,7 @@ public partial class WindowRankings
             line.color = new Color(0.66f, 0.68f, 0.54f, 0.32f);
             line.raycastTarget = false;
         }
-        PeakText(body, "PeakStatus", PeakStatus(record), font, 9, canPlace ? PeakAvailable : unit == null ? PeakMuted : PeakWarning);
+        PeakText(body, "PeakStatus", CreatureStatus(creature), font, 9, canPlace ? PeakAvailable : unit == null ? PeakMuted : PeakWarning);
         if (canPlace && missing) PeakText(body, "PeakUnavailable", L("peak.partial"), font, 9, PeakWarning);
     }
 

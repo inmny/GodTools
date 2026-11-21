@@ -44,18 +44,19 @@ public class ConsistentCreaturePowerTop : IManager
     }
 
     public static bool SpawnSelectedSavedActor(WorldTile tile, string power_id)
+        => CreatureSavedList.Place(GetSavedCreature(_select_id), tile);
+
+    internal static CreatureSavedList.SavedActorPacket GetSavedCreature(long id)
     {
-        CreatureSavedList.SavedActorPacket packet;
         lock (_data_lock)
         {
-            if (!_creaturePowerData.TryGetValue(_select_id, out var entry)) return false;
-            packet = new CreatureSavedList.SavedActorPacket
+            if (!_creaturePowerData.TryGetValue(id, out var entry)) return null;
+            return new CreatureSavedList.SavedActorPacket
             {
                 ActorData = entry.Data, SubspeciesData = entry.SubspeciesData, LanguageData = entry.LanguageData,
                 CultureData = entry.CultureData, ClanData = entry.ClanData, ItemDatas = entry.ItemDatas
             };
         }
-        return CreatureSavedList.Place(packet, tile, keep_original_id: true);
     }
 
     public static List<CreaturePowerData> GetSortedCreaturePowerData()

@@ -28,10 +28,13 @@ TILE,地块,Tile
 OTHERS,其他,Others
 DEBUG,调试,Debug
 RemoveScar,去除圣痕,Remove Scar
-inmny.godtools.place_saved_actor,放置已保存的生物,Place saved creature
-inmny.godtools.place_saved_actor description,点击地图放置保存时的角色副本。,Click the map to place a copy of the saved creature.
+inmny.godtools.place_saved_actor,独立放置生物,Place creature independently
+inmny.godtools.place_saved_actor description,点击地图独立放置保存时的角色副本。,Click the map to place an independent copy of the saved creature.
 inmny.godtools.place_saved_actor_in_top,放置旧战力记录中的生物,Place creature from a legacy power record
 inmny.godtools.place_saved_actor_in_top description,点击地图放置旧战力记录中的角色。,Click the map to place the creature from this record.
+inmny.godtools.place_saved_actor_in_village,放入村庄,Place in village
+inmny.godtools.place_saved_actor_in_village description,点击当前地图的村庄陆地放置角色并加入该村庄。,Click land inside a village to place the creature and join it to that village.
+inmny.godtools.creature_placement.village_invalid,请点击仍存在的村庄内的陆地。,Choose a land tile within an active village.
 inmny.godtools.ui.create_sub_world,创建亚空间,Create Sub World
 inmny.godtools.ui.sub_world_size,亚空间大小,Sub World Size
 inmny.godtools.ui.sub_world_size_tip,滚轮调节亚空间大小,Scroll to Change Sub World Size
@@ -1016,7 +1019,7 @@ inmny.godtools.ranking.peak.time_score,世界第 {0} 年 · 峰值战力 {1},Wor
 inmny.godtools.ranking.peak.traits,特质,Traits
 inmny.godtools.ranking.peak.gear,装备,Gear
 inmny.godtools.ranking.peak.bag,背包,Backpack
-inmny.godtools.ranking.peak.affiliations,归属,Affiliation
+inmny.godtools.ranking.peak.affiliations,原归属,Origins
 inmny.godtools.ranking.peak.mods,模组,Mods
 inmny.godtools.ranking.peak.mod_count,保存了 {0} 项模组数据,{0} mod data entries saved
 inmny.godtools.ranking.peak.ready,已保存角色 · 可放回地图,Creature saved · Can be placed

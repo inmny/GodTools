@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GodTools.Abstract;
+using GodTools.Libraries;
 using GodTools.Utils;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -63,9 +64,6 @@ public class CreatureSavedList : IManager
     internal static SavedActorPacket Capture(Actor actor)
     {
         actor.prepareForSave();
-        actor.clan?.save();
-        actor.culture?.save();
-        actor.language?.save();
         actor.subspecies?.save();
         List<ItemData> item_datas = null;
         if (actor.canUseItems())
@@ -83,9 +81,22 @@ public class CreatureSavedList : IManager
         return new SavedActorPacket
         {
             ActorData = data,
-            ClanData = actor.clan?.data.Copy(),
-            CultureData = actor.culture?.data.Copy(),
-            LanguageData = actor.language?.data.Copy(),
+            AgeAtCapture = actor.getAge(),
+            ClanData = actor.clan?.data is { } clan ? new ClanData
+            {
+                name = clan.name, color_id = clan.color_id,
+                banner_background_id = clan.banner_background_id, banner_icon_id = clan.banner_icon_id
+            } : null,
+            CultureData = actor.culture?.data is { } culture ? new CultureData
+            {
+                name = culture.name, color_id = culture.color_id,
+                banner_decor_id = culture.banner_decor_id, banner_element_id = culture.banner_element_id
+            } : null,
+            LanguageData = actor.language?.data is { } language ? new LanguageData
+            {
+                name = language.name, color_id = language.color_id,
+                banner_background_id = language.banner_background_id, banner_icon_id = language.banner_icon_id
+            } : null,
             SubspeciesData = actor.subspecies?.data.Copy(),
             ItemDatas = item_datas,
             ModData = CreatureSaveExtensions.Capture(actor)
@@ -122,6 +133,7 @@ public class CreatureSavedList : IManager
         foreach (var pair in SavedActors)
         {
             var packet = pair.Value;
+            if (packet?.ActorData == null) continue;
             var id = packet.ID;
             if (!Guid.TryParseExact(id, "N", out _) || migrated_actors.ContainsKey(id))
             {
@@ -141,11 +153,13 @@ public class CreatureSavedList : IManager
     }
 
     private static Func<SavedActorPacket> _selected;
+    private static MapStats _selectedWorld;
 
     public class SavedActorPacket
     {
         public string ID;
         public ActorData ActorData;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)] public int? AgeAtCapture;
         public ClanData ClanData;
         public CultureData CultureData;
         public LanguageData LanguageData;
@@ -157,56 +171,44 @@ public class CreatureSavedList : IManager
     public static void SelectActorToPlace(SavedActorPacket packet)
     {
         _selected = () => SavedActors.GetValueOrDefault(packet.ID);
+        _selectedWorld = World.world?.map_stats;
     }
 
-    internal static void SelectSnapshotToPlace(SavedActorPacket packet) => _selected = () => packet;
+    internal static void SelectSnapshotToPlace(SavedActorPacket packet)
+    {
+        _selected = () => packet;
+        _selectedWorld = World.world?.map_stats;
+    }
 
-    public static bool SpawnSelectedSavedActor(WorldTile tile, string power_id) => Place(_selected?.Invoke(), tile);
+    public static bool SpawnSelectedSavedActor(WorldTile tile, string power_id) =>
+        _selectedWorld != null && _selectedWorld == World.world?.map_stats &&
+        Place(_selected?.Invoke(), tile, power_id == GodPowers.place_saved_actor_in_village.id);
 
     internal static bool CanPlace(SavedActorPacket packet) => packet?.ActorData?.asset_id is { Length: > 0 } id &&
         AssetManager.actor_library.get(id) != null;
 
-    internal static bool Place(SavedActorPacket saved_actor, WorldTile tile, bool keep_original_id = false)
+    internal static bool CanPlaceInVillage(SavedActorPacket packet) => CanPlace(packet) &&
+        AssetManager.actor_library.get(packet.ActorData.asset_id).canBecomeSapient();
+
+    internal static bool Place(SavedActorPacket saved_actor, WorldTile tile, bool inVillage = false)
     {
-        if (tile == null || !CanPlace(saved_actor)) return false;
-        var subspecies_data = saved_actor.SubspeciesData.Copy();
-        var language_data = saved_actor.LanguageData.Copy();
-        var culture_data = saved_actor.CultureData.Copy();
-        var clan_data = saved_actor.ClanData.Copy();
+        var world = World.world;
+        if (world == null || tile == null || world.GetTile(tile.x, tile.y) != tile || !CanPlace(saved_actor)) return false;
+        City village = null;
+        if (inVillage)
+        {
+            if (!CanPlaceInVillage(saved_actor)) return false;
+            village = tile.zone?.city;
+            if (tile.Type.liquid || village?.isAlive() != true || village.kingdom?.isAlive() != true ||
+                village.isNeutral() || world.cities.get(village.id) != village)
+            {
+                WorldTip.showNowTop("inmny.godtools.creature_placement.village_invalid", true);
+                return false;
+            }
+        }
         var data = saved_actor.ActorData.Copy();
         var item_datas = saved_actor.ItemDatas?.Select(item => item.Copy()).ToList();
-
-        if (subspecies_data != null)
-        {
-            subspecies_data.id = World.world.map_stats.getNextId("subspecies");
-            subspecies_data.created_time = World.world.map_stats.world_time;
-            data.subspecies = subspecies_data.id;
-            World.world.subspecies.loadObject(subspecies_data);
-        }
-
-        if (language_data != null)
-        {
-            language_data.id = World.world.map_stats.getNextId("language");
-            language_data.created_time = World.world.map_stats.world_time;
-            data.language = language_data.id;
-            World.world.languages.loadObject(language_data);
-        }
-
-        if (culture_data != null)
-        {
-            culture_data.id = World.world.map_stats.getNextId("culture");
-            culture_data.created_time = World.world.map_stats.world_time;
-            data.culture = culture_data.id;
-            World.world.cultures.loadObject(culture_data);
-        }
-
-        if (clan_data != null)
-        {
-            clan_data.id = World.world.map_stats.getNextId("clan");
-            clan_data.created_time = World.world.map_stats.world_time;
-            data.clan = clan_data.id;
-            World.world.clans.loadObject(clan_data);
-        }
+        data.subspecies = SavedCreatureSubspecies.Resolve(world, data.asset_id, saved_actor.SubspeciesData);
 
         if (data.saved_items != null)
         {
@@ -225,22 +227,30 @@ public class CreatureSavedList : IManager
             data.saved_items = data.saved_items.Where(item_ids.ContainsKey).Select(id => item_ids[id]).ToList();
         }
 
-        if (!keep_original_id || World.world.units.get(data.id) != null)
-            data.id = World.world.map_stats.getNextId("unit");
+        data.id = world.map_stats.getNextId("unit");
+        if (saved_actor.AgeAtCapture is int age)
+        {
+            data.created_time = world.getCurWorldTime();
+            data.age_overgrowth = age;
+        }
+        data.custom_data_string?.dict?.Remove(SavedActorIdKey);
 
         var resources = data.inventory?.getResources();
         if (resources != null)
             foreach (var resource in resources.Values.Where(resource => !AssetManager.resources.has(resource.id)).ToArray())
                 data.inventory = data.inventory.remove(resource.id, resource.amount);
 
-        if (World.world.cities.get(data.cityID) == null) data.cityID = -1;
-
-        data.homeBuildingID = -1;
-        data.transportID = -1;
+        // 原版会按这些数字在当前地图查找对象，放置副本前清除来源地图的关系和职务。
+        data.cityID = data.civ_kingdom_id = data.homeBuildingID = data.transportID = -1;
+        data.culture = data.clan = data.language = data.religion = data.name_culture_id = -1;
+        data.family = data.army = data.plot = data.ancestor_family = -1;
+        data.lover = data.best_friend_id = data.parent_id_1 = data.parent_id_2 = -1;
+        data.profession = UnitProfession.Nothing;
         data.x = tile.pos.x;
         data.y = tile.pos.y;
-        var actor = World.world.units.loadObject(data);
+        var actor = world.units.loadObject(data);
         if (actor == null) return false;
+        if (village != null) actor.joinCity(village);
         CreatureSaveExtensions.Restore(actor, saved_actor.ModData);
         actor.setStatsDirty();
         return true;

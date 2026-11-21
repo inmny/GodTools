@@ -131,6 +131,7 @@ internal sealed partial class BuiltInRankings : IManager
         {
             ID = LegacyPeaks, Read = ConsistentCreaturePowerTop.GetSortedCreaturePowerData,
             Key = entry => Key(entry.ID), Name = entry => entry.Name, Icon = entry => entry.Sprite,
+            SavedCreature = key => long.TryParse(key, out long id) ? ConsistentCreaturePowerTop.GetSavedCreature(id) : null,
             Inspect = InspectActor, CanInspect = CanInspectActor, Locate = LocateActor,
             Place = key => { if (long.TryParse(key, out long id)) WindowRankings.PlaceArchivedActor(id); }
         });

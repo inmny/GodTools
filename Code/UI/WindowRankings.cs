@@ -93,6 +93,8 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         internal Button Inspect;
         internal Button Locate;
         internal Button Place;
+        internal Button PlaceInVillage;
+        internal CreatureSavedList.SavedActorPacket Creature;
         internal readonly List<Metric> Metrics = new();
         internal RankingRow Entry;
     }
@@ -160,7 +162,7 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
     private static float ActionWidth(float tableWidth) => Mathf.Round(Mathf.Lerp(17, 22, Mathf.InverseLerp(279, Width, tableWidth)));
     private static float ColumnSpace(float tableWidth, RankingRegistry.Source source)
     {
-        int actions = (source.Locate == null ? 0 : 1) + (source.Place == null ? 0 : 1);
+        int actions = (source.Locate == null ? 0 : 1) + (source.Place == null ? 0 : 1) + (source.SavedCreature == null ? 0 : 1);
         return tableWidth - 2 * RowGap - actions * (ActionWidth(tableWidth) + RowGap);
     }
     private static int ColumnsThatFit(float tableWidth, RankingRegistry.Source source) =>
@@ -789,8 +791,11 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
             }
             line.Locate.gameObject.SetActive(_source.Locate != null);
             line.Locate.interactable = _source.Locate?.Invoke(entry.Key) != null;
+            line.Creature = entry.Peak != null ? entry.Peak.Creature : _source.SavedCreature?.Invoke(entry.Key);
             line.Place.gameObject.SetActive(_source.Place != null);
-            line.Place.interactable = entry.Peak == null || CreatureSavedList.CanPlace(entry.Peak.Creature);
+            line.Place.interactable = _source.SavedCreature == null || CreatureSavedList.CanPlace(line.Creature);
+            line.PlaceInVillage.gameObject.SetActive(_source.SavedCreature != null);
+            line.PlaceInVillage.interactable = CreatureSavedList.CanPlaceInVillage(line.Creature);
         }
     }
 
@@ -806,6 +811,7 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         float actionWidth = ActionWidth(TableWidth);
         SetWidth(line.Locate.transform, actionWidth);
         SetWidth(line.Place.transform, actionWidth);
+        SetWidth(line.PlaceInVillage.transform, actionWidth);
         while (line.Metrics.Count < _columns.Length)
         {
             var button = Button(line.Root, "", _metricWidth, null, flat: true);
@@ -904,6 +910,8 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         {
             if (line.Entry.Peak != null)
                 ShowPeakTooltip(tip.gameObject, line.Entry);
+            else if (line.Creature != null)
+                ShowSavedCreatureTooltip(tip.gameObject, line.Creature, line.Entry.Icon, line.Entry.Name);
             else if (_source.ActorPortrait?.Invoke(line.Entry.Key) is Actor actor && actor.isAlive())
                 actor.showTooltip(tip.gameObject);
             else if (line.Portrait.gameObject.activeSelf && line.Banner?.gameObject.activeSelf == true && _source.MetaPortrait?.Invoke(line.Entry.Key) != null)
@@ -922,7 +930,14 @@ public partial class WindowRankings : AbstractWideWindow<WindowRankings>
         var placeTip = line.Place.gameObject.AddComponent<TipButton>();
         placeTip.showOnClick = false;
         placeTip.setHoverAction(() => Tooltip.show(placeTip.gameObject, "normal",
-            new TooltipData { tip_name = line.Place.interactable ? L("place") : PeakStatus(line.Entry.Peak) }), false);
+            new TooltipData
+            {
+                tip_name = !line.Place.interactable ? CreatureStatus(line.Creature) :
+                    line.Creature != null ? LM.Get("inmny.godtools.place_saved_actor") : L("place")
+            }), false);
+        line.PlaceInVillage = Button(line.Root, "RankingPlaceInVillage", 22,
+            () => WindowCreatureSavedList.PlaceSnapshot(line.Creature, inVillage: true), Icon("iconCitySelect"),
+            hint: LM.Get("inmny.godtools.place_saved_actor_in_village"));
         return line;
     }
 
