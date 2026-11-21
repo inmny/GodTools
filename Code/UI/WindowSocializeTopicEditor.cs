@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GodTools.Abstract;
 using NeoModLoader.General.UI.Prefabs;
 using NeoModLoader.General.UI.Window;
 using NeoModLoader.General.UI.Window.Layout;
@@ -31,33 +27,41 @@ public class WindowSocializeTopicEditor : AutoLayoutWindow<WindowSocializeTopicE
     {
         base.OnFirstEnable();
 
-        var icons = Resources.LoadAll<Sprite>("ui/icons");
         var all_buttons = new List<SimpleButton>();
-        foreach (var icon in icons)
+        var normal = SpriteTextureLoader.getSprite("ui/button");
+        var selected = SpriteTextureLoader.getSprite("special/button2");
+
+        // AMod 的推荐表情排在第一格；未安装 AMod 时可照常选用原版图标。
+        var sweatingSoybean = SpriteTextureLoader.getSprite("inmny/amod/icons/socialize/sweating_soybean");
+        if (sweatingSoybean != null)
+            AddTopic(sweatingSoybean, LocalizedTextManager.getText("trait_inmny.amod.SweatingSoybean"));
+        foreach (var icon in Resources.LoadAll<Sprite>("ui/icons"))
+            AddTopic(icon, icon.name);
+
+        void AddTopic(Sprite icon, string label)
         {
             var button = SimpleButton.Instantiate();
             all_buttons.Add(button);
 
             _topicGrid.AddChild(button.gameObject);
 
-            var local_icon = icon;
             button.Setup(() =>
                 {
-                    SelectedTopic = local_icon;
+                    SelectedTopic = icon;
                     foreach (var other_button in all_buttons)
                     {
-                        other_button.Background.sprite = SpriteTextureLoader.getSprite("ui/button");
+                        other_button.Background.sprite = normal;
                     }
-                    button.Background.sprite = SpriteTextureLoader.getSprite("special/button2");
-                }, local_icon,
+                    button.Background.sprite = selected;
+                }, icon,
                 pTipType: "tip",
                 pTipData: new TooltipData()
                 {
-                    tip_name = local_icon.name
+                    tip_name = label
                 }
             );
 
-            button.Background.sprite = SpriteTextureLoader.getSprite("ui/button");
+            button.Background.sprite = normal;
         }
     }
 }
