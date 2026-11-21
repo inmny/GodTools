@@ -1219,3 +1219,25 @@ inmny.godtools.ranking.female,雌性,Female
 inmny.godtools.ranking.favorite,收藏状态,Favorite Status
 inmny.godtools.ranking.favorited,已收藏,Favorited
 inmny.godtools.ranking.not_favorited,未收藏,Not Favorited
+
+inmny.godtools.history.event_types,事件类型,Event types
+inmny.godtools.history.search,搜索事件正文,Search event text
+inmny.godtools.history.from,起始年份,From year
+inmny.godtools.history.to,结束年份,To year
+inmny.godtools.history.date,第{0}年 {1}月,Y{0} M{1}
+inmny.godtools.history.matches,共 {0} 条,{0} events
+inmny.godtools.history.earliest,最早可查 · {0},Earliest · {0}
+inmny.godtools.history.first,最早,First
+inmny.godtools.history.last,最新,Latest
+inmny.godtools.history.jump,跳到指定年份,Jump to year
+inmny.godtools.history.clear,清空筛选,Clear filters
+inmny.godtools.history.include,仅看所选,Include selected
+inmny.godtools.history.exclude,隐藏所选,Exclude selected
+inmny.godtools.history.close,收起详情,Close details
+inmny.godtools.history.coordinates,事发坐标 · {0} / {1},Event location · {0} / {1}
+inmny.godtools.history.no_position,这条事件没有可用坐标,Event location unavailable
+inmny.godtools.history.locate,跳到事发地,Go to location
+inmny.godtools.history.actor,查看人物,View unit
+inmny.godtools.history.no_results,没有符合条件的事件,No matching events
+inmny.godtools.history.empty,这个世界还没有可查事件,No events in this world
+inmny.godtools.history.invalid_range,起始年份应早于或等于结束年份,Start year must be at or before end year

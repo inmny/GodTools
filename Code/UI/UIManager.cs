@@ -18,7 +18,7 @@ internal class UIManager : IManager
         WindowSocializeTopicEditor.CreateWindow(nameof(WindowSocializeTopicEditor), nameof(WindowSocializeTopicEditor));
         WindowPrinterEditor.CreateWindow(nameof(WindowPrinterEditor), nameof(WindowPrinterEditor));
         WindowRankings.CreateAndInit(nameof(WindowRankings));
-        WindowDetailedHistory.CreateAndInit(nameof(WindowDetailedHistory));
+        WindowDetailedHistory.CreateAndInit(nameof(WindowDetailedHistory), pSize: new(534, 275));
         WindowWorldScript.CreateAndInit(nameof(WindowWorldScript));
         CanvasCreatureTitle.Init();
     }
