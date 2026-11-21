@@ -1,21 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using GodTools.Abstract;
 using NeoModLoader.api;
-using NeoModLoader.utils;
-using TMPro;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace GodTools;
 
 internal class Main : BasicMod<Main>, IReloadable
 {
     public static Transform     game_ui_object_temp_library;
-    public static TMP_FontAsset default_font;
 
     public static Transform prefabs;
 
@@ -98,21 +93,6 @@ internal class Main : BasicMod<Main>, IReloadable
         game_ui_object_temp_library = new GameObject("Game UI Objects").transform;
         game_ui_object_temp_library.SetParent(transform);
         game_ui_object_temp_library.localPosition = new Vector3(9999999, 9999999, 0);
-
-        AssetBundle tmp_bundle =
-            AssetBundle.LoadFromFile(Path.Combine(Mod.FolderPath, "ABPackages/tmp_essential_resources"));
-        var asset_paths = tmp_bundle.GetAllAssetNames();
-        foreach (var path in asset_paths)
-        {
-            Object asset = tmp_bundle.LoadAsset(path);
-            var target_path = path.Replace("assets/textmesh pro/", "");
-            target_path = target_path.Replace("resources/", "");
-            target_path = target_path.Substring(0, target_path.LastIndexOf('.'));
-            LogInfo($"Patch resource: \"{path}\" to \"{target_path}\"");
-            ResourcesPatch.PatchResource(target_path, asset);
-        }
-
-        default_font = Resources.Load<TMP_FontAsset>("fonts & materials/notosanssc-regular sdf");
 
         var manager_types = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => typeof(IManager).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
