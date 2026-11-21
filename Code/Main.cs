@@ -32,6 +32,7 @@ internal class Main : BasicMod<Main>, IReloadable
 
     private void Update()
     {
+        Features.WorldScript.WorldScriptRecording.CheckExit();
         //pos_show_effect_controller.update(Time.fixedDeltaTime * C.pos_show_effect_time_scale);
     }
 

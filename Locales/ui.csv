@@ -127,8 +127,179 @@ inmny.godtools.ui.data_editor.zhetian.talent,遮天天赋,Talent
 inmny.godtools.ui.data_editor.zhetian.zhetian_level,遮天等级,Level
 inmny.godtools.ui.world_script.enabled,已启用,Enabled
 inmny.godtools.ui.world_script.disabled,已禁用,Disabled
+inmny.godtools.ui.world_script.enabled_short,开,On
+inmny.godtools.ui.world_script.disabled_short,关,Off
 inmny.godtools.ui.world_script.delete,删除,Delete
+inmny.godtools.ui.world_script.delete_short,删,X
 inmny.godtools.ui.world_script.add_script,添加脚本,Add Script
+inmny.godtools.ui.world_script.default_name,新脚本,New Script
+inmny.godtools.ui.world_script.copy_suffix, 副本, Copy
+inmny.godtools.ui.world_script.section.script,脚本,Script
+inmny.godtools.ui.world_script.section.execution,执行设置,Execution
+inmny.godtools.ui.world_script.section.conditions,条件,Conditions
+inmny.godtools.ui.world_script.section.actions,动作,Actions
+inmny.godtools.ui.world_script.field.name,名称,Name
+inmny.godtools.ui.world_script.field.trigger,触发器,Trigger
+inmny.godtools.ui.world_script.field.target,目标,Target
+inmny.godtools.ui.world_script.field.order_by,排序,Order By
+inmny.godtools.ui.world_script.field.sampling,采样,Sampling
+inmny.godtools.ui.world_script.field.sample_count,采样数量,Sample Count
+inmny.godtools.ui.world_script.field.empty_policy,空结果策略,Empty Policy
+inmny.godtools.ui.world_script.query.order.registry,注册顺序,Registry Order
+inmny.godtools.ui.world_script.query.order.random,随机顺序,Random Order
+inmny.godtools.ui.world_script.query.order.actor_id,人物 ID,Actor ID
+inmny.godtools.ui.world_script.query.sampling.all,全部,All
+inmny.godtools.ui.world_script.query.sampling.random,随机采样,Random
+inmny.godtools.ui.world_script.query.sampling.first,取前若干,First
+inmny.godtools.ui.world_script.query.empty.skip,跳过,Skip
+inmny.godtools.ui.world_script.query.empty.error,报告错误,Error
+inmny.godtools.ui.world_script.query.empty.run_once,执行一次,Run Once
+inmny.godtools.ui.world_script.field.priority,优先级,Priority
+inmny.godtools.ui.world_script.field.cooldown,冷却时间,Cooldown
+inmny.godtools.ui.world_script.field.max_targets,目标上限,Max Targets
+inmny.godtools.ui.world_script.field.max_spawns,生成上限,Max Spawns
+inmny.godtools.ui.world_script.field.run_once,仅执行一次,Run Once
+inmny.godtools.ui.world_script.field.dangerous,允许破坏动作,Allow Destructive Actions
+inmny.godtools.ui.world_script.field.type,类型,Type
+inmny.godtools.ui.world_script.field.action,动作,Action
+inmny.godtools.ui.world_script.field.group,条件组,Condition Group
+inmny.godtools.ui.world_script.field.condition,条件,Condition
+inmny.godtools.ui.world_script.condition_kind.all,全部满足,All
+inmny.godtools.ui.world_script.condition_kind.any,任一满足,Any
+inmny.godtools.ui.world_script.condition_kind.not,取反,Not
+inmny.godtools.ui.world_script.condition_kind.condition,条件判断,Predicate
+inmny.godtools.ui.world_script.action_kind.action,动作,Action
+inmny.godtools.ui.world_script.action_kind.sequence,动作序列,Sequence
+inmny.godtools.ui.world_script.command.duplicate,复制,Duplicate
+inmny.godtools.ui.world_script.command.test,测试执行,Test Run
+inmny.godtools.ui.world_script.command.validate,校验,Validate
+inmny.godtools.ui.world_script.command.preview,预览,Preview
+inmny.godtools.ui.world_script.command.run_now,立即运行,Run Now
+inmny.godtools.ui.world_script.command.confirm_run,确认运行,Run Now
+inmny.godtools.ui.world_script.command.cancel,取消,Cancel
+inmny.godtools.ui.world_script.command.confirm_delete,确认删除,Delete
+inmny.godtools.ui.world_script.confirm.delete_title,删除脚本？,Delete Script?
+inmny.godtools.ui.world_script.confirm.delete_body,永久删除“{0}”吗？,Delete '{0}' permanently?
+inmny.godtools.ui.world_script.confirm.run_title,运行破坏性脚本？,Run Destructive Script?
+inmny.godtools.ui.world_script.confirm.run_body,这会立即执行破坏性动作。,This executes destructive actions immediately.
+inmny.godtools.ui.world_script.preview.summary,目标：{0} | 上限：{1} | 动作：{2},Target: {0} | Limit: {1} | Actions: {2}
+inmny.godtools.ui.world_script.validation.ok,未发现校验错误。,No validation errors.
+inmny.godtools.ui.world_script.validation.non_negative,上限和冷却时间必须为非负数。,Limits and cooldown must be non-negative.
+inmny.godtools.ui.world_script.validation.incompatible,节点与目标不兼容：{0},Incompatible node: {0}
+inmny.godtools.ui.world_script.validation.dangerous_disabled,破坏性动作未启用：{0},Destructive action is disabled: {0}
+inmny.godtools.ui.world_script.warning.unknown_node,未知节点：{0},Unknown node: {0}
+inmny.godtools.ui.world_script.warning.unknown_trigger,未知触发器：{0},Unknown trigger: {0}
+inmny.godtools.ui.world_script.warning.no_choices,没有兼容的选项,No compatible choices
+inmny.godtools.ui.world_script.command.reset_runtime,重置运行状态,Reset Runtime
+inmny.godtools.ui.world_script.command.add_condition,添加条件,Add Condition
+inmny.godtools.ui.world_script.command.add_child,添加子节点,Add Child
+inmny.godtools.ui.world_script.command.add_child_action,添加子动作,Add Child Action
+inmny.godtools.ui.world_script.command.add_action,添加动作,Add Action
+inmny.godtools.ui.world_script.command.move_up,上移,Move Up
+inmny.godtools.ui.world_script.command.move_down,下移,Move Down
+inmny.godtools.ui.world_script.command.delete,删除,Delete
+inmny.godtools.ui.world_script.value.yes,是,Yes
+inmny.godtools.ui.world_script.value.no,否,No
+inmny.godtools.ui.world_script.runtime.summary,上次 {0} | 执行 {1} 次 | 目标 {2} | 生成 {3},Last {0} | Runs {1} | Targets {2} | Spawns {3}
+inmny.godtools.ui.world_script.runtime.never,从未,Never
+inmny.godtools.ui.world_script.runtime.run_failed,运行失败。,Run failed.
+inmny.godtools.ui.world_script.value.unset,未设置,Unset
+inmny.godtools.ui.world_script.detail.condition,条件配置,Condition
+inmny.godtools.ui.world_script.detail.action,动作配置,Action
+inmny.godtools.ui.world_script.warning.incompatible_target,与当前目标类型不兼容,Incompatible with Current Target
+inmny.godtools.ui.world_script.warning.dangerous_action,破坏性动作,Destructive Action
+inmny.godtools.ui.world_script.group.MustTrue,全部满足,All True
+inmny.godtools.ui.world_script.group.AnyTrue,任一满足,Any True
+inmny.godtools.ui.world_script.group.MustFalse,全部不满足,All False
+inmny.godtools.ui.world_script.group.AnyFalse,任一不满足,Any False
+inmny.godtools.ui.world_script.trigger.WorldLoaded,世界加载,World Loaded
+inmny.godtools.ui.world_script.trigger.Interval,定时间隔,Interval
+inmny.godtools.ui.world_script.trigger.WorldTimeReached,到达世界时间,World Time Reached
+inmny.godtools.ui.world_script.trigger.EraChanged,纪元变化,Era Changed
+inmny.godtools.ui.world_script.trigger.ActorCreated,人物创建,Actor Created
+inmny.godtools.ui.world_script.trigger.ActorDied,人物死亡,Actor Died
+inmny.godtools.ui.world_script.trigger.ActorStatsUpdated,人物属性更新,Actor Stats Updated
+inmny.godtools.ui.world_script.target.world,当前世界,Current World
+inmny.godtools.ui.world_script.target.actor.all,全部人物,All Actors
+inmny.godtools.ui.world_script.target.actor.event,事件人物,Event Actor
+inmny.godtools.ui.world_script.target.actor.selected,选中人物,Selected Actor
+inmny.godtools.ui.world_script.target.actor.mouse_radius,光标附近人物,Actors Near Cursor
+inmny.godtools.ui.world_script.target.actor.position_radius,坐标附近人物,Actors Near Position
+inmny.godtools.ui.world_script.target.actor.kingdom,指定国家人物,Actors in Kingdom
+inmny.godtools.ui.world_script.target.actor.culture,指定文化人物,Actors in Culture
+inmny.godtools.ui.world_script.target.actor.clan,指定氏族人物,Actors in Clan
+inmny.godtools.ui.world_script.target.actor.language,指定语言人物,Actors Using Language
+inmny.godtools.ui.world_script.target.actor.subspecies,指定亚种人物,Actors in Subspecies
+inmny.godtools.ui.world_script.target.actor.asset,指定类型人物,Actors by Asset
+inmny.godtools.ui.world_script.target.tile.mouse_radius,光标附近地块,Tiles Near Cursor
+inmny.godtools.ui.world_script.target.tile.position_radius,坐标附近地块,Tiles Near Position
+inmny.godtools.ui.world_script.condition.actor.alive,人物存活,Actor Is Alive
+inmny.godtools.ui.world_script.condition.actor.asset,人物类型,Actor Asset
+inmny.godtools.ui.world_script.condition.actor.trait,拥有特质,Has Trait
+inmny.godtools.ui.world_script.condition.actor.status,拥有状态,Has Status
+inmny.godtools.ui.world_script.condition.actor.age,人物年龄,Actor Age
+inmny.godtools.ui.world_script.condition.actor.health,人物生命值,Actor Health
+inmny.godtools.ui.world_script.condition.actor.health_ratio,人物生命比例,Actor Health Ratio
+inmny.godtools.ui.world_script.condition.actor.level,人物等级,Actor Level
+inmny.godtools.ui.world_script.condition.actor.power,人物战力,Actor Power
+inmny.godtools.ui.world_script.condition.actor.kingdom,人物国家,Actor Kingdom
+inmny.godtools.ui.world_script.condition.actor.culture,人物文化,Actor Culture
+inmny.godtools.ui.world_script.condition.actor.clan,人物氏族,Actor Clan
+inmny.godtools.ui.world_script.condition.actor.language,人物语言,Actor Language
+inmny.godtools.ui.world_script.condition.actor.subspecies,人物亚种,Actor Subspecies
+inmny.godtools.ui.world_script.condition.tile.main_type,主地块类型,Main Tile Type
+inmny.godtools.ui.world_script.condition.tile.top_type,表层地块类型,Top Tile Type
+inmny.godtools.ui.world_script.condition.world.time,世界时间,World Time
+inmny.godtools.ui.world_script.condition.world.population,世界人口,World Population
+inmny.godtools.ui.world_script.condition.world.era,当前纪元,Current Era
+inmny.godtools.ui.world_script.action.actor.health.set,设置生命值,Set Health
+inmny.godtools.ui.world_script.action.actor.health.change,增减生命值,Change Health
+inmny.godtools.ui.world_script.action.actor.data.set,设置人物数值,Set Actor Value
+inmny.godtools.ui.world_script.action.actor.data.add,增减人物数值,Add Actor Value
+inmny.godtools.ui.world_script.action.actor.trait.add,添加特质,Add Trait
+inmny.godtools.ui.world_script.action.actor.trait.remove,移除特质,Remove Trait
+inmny.godtools.ui.world_script.action.actor.status.add,添加状态,Add Status
+inmny.godtools.ui.world_script.action.actor.status.remove,移除状态,Remove Status
+inmny.godtools.ui.world_script.action.actor.kingdom.set,设置国家,Set Kingdom
+inmny.godtools.ui.world_script.action.actor.culture.set,设置文化,Set Culture
+inmny.godtools.ui.world_script.action.actor.clan.set,设置氏族,Set Clan
+inmny.godtools.ui.world_script.action.actor.language.set,设置语言,Set Language
+inmny.godtools.ui.world_script.action.actor.subspecies.set,设置亚种,Set Subspecies
+inmny.godtools.ui.world_script.action.actor.teleport,传送人物,Teleport Actor
+inmny.godtools.ui.world_script.action.actor.kill,杀死人物,Kill Actor
+inmny.godtools.ui.world_script.action.actor.duplicate,复制人物,Duplicate Actor
+inmny.godtools.ui.world_script.action.tile.actor.spawn,生成人物,Spawn Actors
+inmny.godtools.ui.world_script.action.world.time.set,设置世界时间,Set World Time
+inmny.godtools.ui.world_script.action.world.time.add,增减世界时间,Add World Time
+inmny.godtools.ui.world_script.action.world.era.set,设置纪元,Set Era
+inmny.godtools.ui.world_script.action.tile.terraform,改造地形,Terraform Tiles
+inmny.godtools.ui.world_script.action.tile.cloud.spawn,生成天气云,Spawn Weather Cloud
+inmny.godtools.ui.world_script.parameter.interval,间隔,Interval
+inmny.godtools.ui.world_script.parameter.time,世界时间,World Time
+inmny.godtools.ui.world_script.parameter.repeat_interval,重复间隔,Repeat Interval
+inmny.godtools.ui.world_script.parameter.radius,半径,Radius
+inmny.godtools.ui.world_script.parameter.x,X 坐标,X
+inmny.godtools.ui.world_script.parameter.y,Y 坐标,Y
+inmny.godtools.ui.world_script.parameter.id,对象 ID,Object ID
+inmny.godtools.ui.world_script.parameter.asset_id,人物资源 ID,Actor Asset ID
+inmny.godtools.ui.world_script.parameter.operator,比较符,Operator
+inmny.godtools.ui.world_script.parameter.value,数值,Value
+inmny.godtools.ui.world_script.parameter.trait_id,特质 ID,Trait ID
+inmny.godtools.ui.world_script.parameter.status_id,状态 ID,Status ID
+inmny.godtools.ui.world_script.parameter.era_id,纪元 ID,Era ID
+inmny.godtools.ui.world_script.parameter.field,字段,Field
+inmny.godtools.ui.world_script.parameter.duration,持续时间,Duration
+inmny.godtools.ui.world_script.parameter.count,数量,Count
+inmny.godtools.ui.world_script.parameter.main_tile_id,主地块 ID,Main Tile ID
+inmny.godtools.ui.world_script.parameter.top_tile_id,表层地块 ID,Top Tile ID
+inmny.godtools.ui.world_script.parameter.cloud_id,天气云 ID,Cloud ID
+inmny.godtools.ui.world_script.choice.field.age,年龄,Age
+inmny.godtools.ui.world_script.choice.field.level,等级,Level
+inmny.godtools.ui.world_script.choice.field.nutrition,营养,Nutrition
+inmny.godtools.ui.world_script.choice.field.happiness,幸福度,Happiness
+inmny.godtools.ui.world_script.choice.field.stamina,耐力,Stamina
+inmny.godtools.ui.world_script.choice.field.mana,法力,Mana
+inmny.godtools.ui.world_script.choice.field.kills,击杀数,Kills
 inmny.godtools.WindowModInfo,模组介绍,Mod Info
 inmny.godtools.debug,DEBUG窗口,Debug Window
 inmny.godtools.console,控制台,Console
@@ -173,3 +344,502 @@ WindowSocializeTopicEditor,社交话题图标,Social Topic Icon
 WindowSocializeTopicEditor Title,社交话题图标,Social Topic Icon
 gt_socialize_topic_drop,套用话题图标,Apply Topic Icon
 gt_socialize_topic_drop_description,将已选择的社交话题图标套用到目标生物,Apply the selected social topic icon to the target actor
+inmny.godtools.ui.world_script.editor.empty,新建空白脚本，或从模板开始。,Create a script or start from a template.
+inmny.godtools.ui.world_script.editor.import,导入旧版脚本,Import old scripts
+inmny.godtools.ui.world_script.editor.active,已启用,Enabled
+inmny.godtools.ui.world_script.editor.paused,已停用,Disabled
+inmny.godtools.ui.world_script.editor.pause,停用,Disable
+inmny.godtools.ui.world_script.editor.rules,规则,Rules
+inmny.godtools.ui.world_script.editor.history,执行记录,Run history
+inmny.godtools.ui.world_script.editor.save_draft,应用修改,Apply changes
+inmny.godtools.ui.world_script.editor.enable,保存并启用,Save and enable
+inmny.godtools.ui.world_script.editor.more,更多,More
+inmny.godtools.ui.world_script.editor.name_required,请输入脚本名。,Enter a script name.
+inmny.godtools.ui.world_script.editor.applied,修改已应用。保存世界后会保留脚本。,Changes applied. Save the world to keep them.
+inmny.godtools.ui.world_script.editor.imported,已导入 {0} 条停用的脚本。启用前请检查规则。,Imported {0} disabled scripts. Review them before enabling.
+inmny.godtools.ui.world_script.editor.import_failed,无法读取旧版脚本文件。,Could not read the old script file.
+inmny.godtools.ui.world_script.editor.blank,空白脚本,Blank script
+inmny.godtools.ui.world_script.editor.template.heal,定期治疗伤员,Treat wounded units
+inmny.godtools.ui.world_script.editor.template.birth,新生单位获得特质,Give new units a trait
+inmny.godtools.ui.world_script.editor.discard,放弃未应用修改,Discard draft edits
+inmny.godtools.ui.world_script.editor.discard_question,要放弃未应用的修改吗？,Discard unapplied edits?
+inmny.godtools.ui.world_script.editor.choose_sample,选择样本单位,Choose a sample unit
+inmny.godtools.ui.world_script.editor.sample_required,选择一个单位作为测试时的事件来源。,Select a unit to supply the event context.
+inmny.godtools.ui.world_script.editor.preview_counts,命中 {0} 个　上限 {1} 个　将处理 {2} 个,Matched {0}    Limit {1}    Will process {2}
+inmny.godtools.ui.world_script.editor.extra_targets,另有 {0} 个目标,+ {0} more targets
+inmny.godtools.ui.world_script.editor.no_targets,没有符合条件的目标。,No matching targets.
+inmny.godtools.ui.world_script.editor.refresh_preview,刷新预览,Refresh preview
+inmny.godtools.ui.world_script.editor.run_question,现在对这 {0} 个目标执行动作吗？,Apply these actions to {0} target(s) now?
+inmny.godtools.ui.world_script.editor.history_empty,暂无执行记录,No execution records yet.
+inmny.godtools.ui.world_script.editor.manual,手动运行,Manual
+inmny.godtools.ui.world_script.editor.history_line,{0:0.##}　{1}　{2}　目标 {3}　动作 {4}　生成 {5},{0:0.##}  ·  {1}  ·  {2}  ·  Targets {3}  ·  Actions {4}  ·  Spawns {5}
+inmny.godtools.ui.world_script.editor.reset_question,要清空记录并重置冷却与仅运行一次的状态吗？,Clear history and reset cooldown and run-once state?
+inmny.godtools.ui.world_script.editor.outcome.completed,已执行,Completed
+inmny.godtools.ui.world_script.editor.outcome.failed,失败,Failed
+inmny.godtools.ui.world_script.editor.outcome.partial,部分执行,Partially executed
+inmny.godtools.ui.world_script.editor.outcome.no_targets,无目标，已跳过,Skipped: no targets
+inmny.godtools.ui.world_script.editor.confirm,确认,Confirm
+inmny.godtools.ui.world_script.editor.search,搜索,Search
+inmny.godtools.ui.world_script.editor.refine_search,还有更多结果，请缩小搜索范围。,More results available. Refine the search.
+inmny.godtools.ui.world_script.editor.when,何时,When
+inmny.godtools.ui.world_script.editor.who,对谁,Who
+inmny.godtools.ui.world_script.editor.change,更改,Change
+inmny.godtools.ui.world_script.editor.no_actions,至少添加一个启用的动作。,Add at least one enabled action.
+inmny.godtools.ui.world_script.editor.advanced,高级设置,Advanced settings
+inmny.godtools.ui.world_script.editor.interval_text,每隔 {0} 世界秒,Every {0} world seconds
+inmny.godtools.ui.world_script.editor.time_text,到达世界时间 {0},At world time {0}
+inmny.godtools.ui.world_script.editor.heal_value,恢复 {0} 点生命值,Restore {0} health
+inmny.godtools.ui.world_script.editor.world_seconds,世界秒,world seconds
+inmny.godtools.ui.world_script.editor.group.none,不分组,No grouping
+inmny.godtools.ui.world_script.editor.group.kind,按目标类型分组,Group by target type
+inmny.godtools.ui.world_script.editor.group.actor_asset,按单位类型分组,Group by unit type
+inmny.godtools.ui.world_script.editor.position,地图坐标,Map position
+inmny.godtools.ui.world_script.editor.pick_map,从地图拾取,Pick on map
+inmny.godtools.ui.world_script.editor.map_instruction,单击地图上的地块，按 Esc 或右键取消。,Click a tile on the map. Esc or right-click cancels.
+inmny.godtools.ui.world_script.editor.no_world,尚未加载世界。,No world is loaded.
+inmny.godtools.ui.world_script.editor.changed_targets,目标在确认后发生变化，请重新预览。,Targets changed since confirmation. Preview again before running.
+inmny.godtools.ui.world_script.editor.save_failed,世界脚本未能保存，请检查日志。,Could not save world scripts. Check the log.
+inmny.godtools.ui.world_script.condition_kind.none,全部不满足,None Match
+inmny.godtools.ui.world_script.editor.draft,草稿,Draft
+inmny.godtools.ui.world_script.editor.no_scripts,当前世界没有脚本,No scripts in this world
+inmny.godtools.ui.world_script.editor.matches,命中目标,Matched
+inmny.godtools.ui.world_script.editor.processing,本次处理,Will Process
+inmny.godtools.ui.world_script.flow.who,找谁,Who to find
+inmny.godtools.ui.world_script.flow.do,做什么,What to do
+inmny.godtools.ui.world_script.flow.gate,运行条件,Run only if
+inmny.godtools.ui.world_script.flow.filter,目标筛选,Target filters
+inmny.godtools.ui.world_script.flow.selection,排序与取样,Order and selection
+inmny.godtools.ui.world_script.flow.cap,总目标上限,Total target limit
+inmny.godtools.ui.world_script.flow.count,取前几个（0 为全部）,Take first (0 = all)
+inmny.godtools.ui.world_script.flow.per_group,每组取前几个（0 为全部）,Take per group (0 = all)
+inmny.godtools.ui.world_script.flow.kind,对象类型,Object type
+inmny.godtools.ui.world_script.flow.kind.Actor,人物,Actor
+inmny.godtools.ui.world_script.flow.kind.Tile,地块,Tile
+inmny.godtools.ui.world_script.flow.kind.World,世界,World
+inmny.godtools.ui.world_script.flow.kind.None,未设置,Unset
+inmny.godtools.ui.world_script.flow.scope,查找范围,Search scope
+inmny.godtools.ui.world_script.flow.scope_event_error,此范围需要对应的人物事件,This scope requires a matching actor event.
+inmny.godtools.ui.world_script.flow.distance_origin,距离起点,Distance from
+inmny.godtools.ui.world_script.flow.scope_center,当前范围的中心,Center of scope
+inmny.godtools.ui.world_script.flow.add_step,添加步骤,Add step
+inmny.godtools.ui.world_script.flow.action,动作,Action
+inmny.godtools.ui.world_script.flow.source,作用于,Apply to
+inmny.godtools.ui.world_script.flow.source.query,主查询结果,Main query
+inmny.godtools.ui.world_script.flow.source.scope,另设查询,Another query
+inmny.godtools.ui.world_script.flow.source.previous,上一步产物,Previous step output
+inmny.godtools.ui.world_script.flow.mode,执行方式,Execution
+inmny.godtools.ui.world_script.flow.mode.each,逐个目标执行,For each target
+inmny.godtools.ui.world_script.flow.mode.once,整批执行一次,Once per batch
+inmny.godtools.ui.world_script.flow.step_enabled,启用步骤,Enable step
+inmny.godtools.ui.world_script.flow.step_settings,目标与执行方式,Target and execution
+inmny.godtools.ui.world_script.flow.danger_help,运行此步骤前需在高级设置中允许危险动作,Enable destructive actions in Advanced settings to run this step.
+inmny.godtools.ui.world_script.flow.no_output,前一个启用的步骤没有产物,The preceding enabled step has no output.
+inmny.godtools.ui.world_script.flow.number.source,数值来源,Value source
+inmny.godtools.ui.world_script.flow.number.fixed,固定数值,Fixed number
+inmny.godtools.ui.world_script.flow.number.target.max_health,目标最大生命值,Target max health
+inmny.godtools.ui.world_script.flow.number.target.health,目标当前生命值,Target current health
+inmny.godtools.ui.world_script.flow.number.target.missing_health,目标已损失生命值,Target missing health
+inmny.godtools.ui.world_script.flow.number.event.max_health,事件人物最大生命值,Event actor max health
+inmny.godtools.ui.world_script.flow.number.percent,倍率（%）,Multiplier (%)
+inmny.godtools.ui.world_script.flow.template.rescue,同国伤员救援,Rescue after an ally dies
+inmny.godtools.ui.world_script.flow.template.spawn,生成单位并添加特质,Spawn units and give them a trait
+inmny.godtools.ui.world_script.flow.sample_victim,选择死者样本,Choose a sample victim
+inmny.godtools.ui.world_script.flow.sample_killer,选择击杀者样本（可选）,Choose a sample killer (optional)
+inmny.godtools.ui.world_script.flow.killer,击杀者,Killer
+inmny.godtools.ui.world_script.flow.no_killer,无击杀者,No killer
+inmny.godtools.ui.world_script.flow.simulated_event,本次预览使用样本模拟事件,The sample units supply event data for this preview.
+inmny.godtools.ui.world_script.flow.gate_failed,运行条件未满足,The run conditions are not met.
+inmny.godtools.ui.world_script.flow.preview_deferred,使用上一步执行时产生的对象,Uses output produced by the preceding step
+inmny.godtools.ui.world_script.flow.preview_inputs,{0} 个输入目标,{0} inputs
+inmny.godtools.ui.world_script.flow.confirm,按预览中的目标执行这些步骤？,Run the enabled steps with these inputs?
+inmny.godtools.ui.world_script.flow.invalid_order,排序方式与目标类型不兼容,Order is incompatible with the query target type.
+inmny.godtools.ui.world_script.flow.invalid_group,按组取样需要人物目标,Grouping requires actor targets.
+inmny.godtools.ui.world_script.flow.missing_origin,请选择距离起点,Choose a distance origin.
+inmny.godtools.ui.world_script.flow.invalid_number,有步骤使用了与目标或触发器不兼容的数值来源,A step uses a number source that is incompatible with its target or trigger.
+inmny.godtools.ui.world_script.flow.invalid_source,有步骤没有可用的目标来源,A step has no available target source.
+inmny.godtools.ui.world_script.flow.invalid_condition,有条件需要人物事件,A condition requires an actor event.
+inmny.godtools.ui.world_script.editor.outcome.gated,运行条件未满足,Run conditions not met
+inmny.godtools.ui.world_script.editor.group.kingdom,按王国分组,Group by kingdom
+inmny.godtools.ui.world_script.query.order.distance_asc,按距离由近到远,Nearest first
+inmny.godtools.ui.world_script.query.order.health_asc,按生命比例由低到高,Lowest health ratio first
+inmny.godtools.ui.world_script.query.order.power_desc,按战力由高到低,Highest power first
+inmny.godtools.ui.world_script.trigger.Manual,仅手动运行,Manual only
+inmny.godtools.ui.world_script.target.actor.event_radius,事件地点附近人物,Actors near event position
+inmny.godtools.ui.world_script.target.tile.event_radius,事件地点附近地块,Tiles near event position
+inmny.godtools.ui.world_script.target.actor.killer,击杀者,Killer
+inmny.godtools.ui.world_script.condition.actor.event_kingdom,与事件人物同国,Same kingdom as event actor
+inmny.godtools.ui.world_script.action.world.tip,显示世界提示,Show world tip
+inmny.godtools.ui.world_script.parameter.message,提示文字,Message
+inmny.godtools.ui.world_script.flow.main_selected,主查询入选,Main query
+inmny.godtools.ui.world_script.flow.dead_target,死者可以提供事件数据，无法作为存活目标,Use the victim as an event reference. Actions require a living target.
+inmny.godtools.ui.world_script.flow.group,分组方式,Group by
+inmny.godtools.ui.world_script.flow.take_summary,取前 {0} 个,Take {0}
+inmny.godtools.ui.world_script.flow.group_summary,每组取前 {0} 个,Take {0} per group
+inmny.godtools.ui.world_script.trait_group.ungrouped,未分组,Ungrouped
+inmny.godtools.ui.world_script.action.world.log,添加历史消息,Add history message
+inmny.godtools.ui.world_script.parameter.log_icon,历史图标,History icon
+inmny.godtools.ui.world_script.log.message,消息文字（富文本）,Message (rich text)
+inmny.godtools.ui.world_script.log.message_required,请输入历史消息,Enter a history message.
+inmny.godtools.ui.world_script.log.icon_required,请选择可用的历史图标,Choose an available history icon.
+inmny.godtools.ui.world_script.log.icons.previous,上一页,Previous
+inmny.godtools.ui.world_script.log.icons.next,下一页,Next
+inmny.godtools.ui.world_script.affiliation.kingdom,国家,Kingdom
+inmny.godtools.ui.world_script.affiliation.culture,文化,Culture
+inmny.godtools.ui.world_script.affiliation.clan,氏族,Clan
+inmny.godtools.ui.world_script.affiliation.language,语言,Language
+inmny.godtools.ui.world_script.affiliation.subspecies,亚种,Subspecies
+inmny.godtools.ui.world_script.affiliation.clear,清除归属,Clear affiliation
+inmny.godtools.ui.world_script.affiliation.unavailable,已失效 · #{0},Unavailable · #{0}
+inmny.godtools.ui.world_script.affiliation.choose,请选择归属,Choose an affiliation.
+inmny.godtools.ui.world_script.affiliation.choose_available,请选择当前世界中存在的对象,Choose an affiliation that exists in this world.
+inmny.godtools.ui.world_script.message.variables,消息变量,Message variables
+inmny.godtools.ui.world_script.message.insert,插入变量,Insert variable
+inmny.godtools.ui.world_script.message.variable.event_actor,事件人物姓名,Event actor name
+inmny.godtools.ui.world_script.message.variable.event_kingdom,事件人物所属国家,Event actor kingdom
+inmny.godtools.ui.world_script.message.variable.match_count,主查询命中数,Main query match count
+inmny.godtools.ui.world_script.message.variable.target_count,本步骤目标数,Step target count
+inmny.godtools.ui.world_script.branch.title,条件分支,Conditional
+inmny.godtools.ui.world_script.branch.if,如果,If
+inmny.godtools.ui.world_script.branch.then,满足时,Then
+inmny.godtools.ui.world_script.branch.otherwise,否则,Otherwise
+inmny.godtools.ui.world_script.branch.enable,添加分支,Add branch
+inmny.godtools.ui.world_script.branch.disable,关闭分支,Disable branch
+inmny.godtools.ui.world_script.branch.skip,跳过,Skip
+inmny.godtools.ui.world_script.branch.deferred,条件会在本步骤开始时判断,Conditions are evaluated when this step starts.
+inmny.godtools.ui.world_script.branch.condition_required,请为分支添加判断条件,Add a condition to the branch.
+inmny.godtools.ui.world_script.history.run_line,{0:0.##} · {1} · {2} · 命中 {3} · 入选 {4},{0:0.##} · {1} · {2} · Matched {3} · Selected {4}
+inmny.godtools.ui.world_script.history.actions,动作,Actions
+inmny.godtools.ui.world_script.history.spawns,生成,Spawned
+inmny.godtools.ui.world_script.history.branch_counts,满足时 {0} / 否则 {1},Then {0} / Otherwise {1}
+inmny.godtools.ui.world_script.history.action_counts,作用 {0} · 动作 {1} · 生成 {2},Applied to {0} · Actions {1} · Spawned {2}
+inmny.godtools.ui.world_script.history.omitted_steps,另有 {0} 个步骤未展开记录,{0} additional steps
+inmny.godtools.ui.world_script.editor.outcome.no_output,上一步没有产物，已跳过,Skipped: previous step produced nothing
+inmny.godtools.ui.world_script.editor.outcome.condition_unmet,条件未满足，已跳过,Skipped: branch condition did not pass
+inmny.godtools.ui.world_script.templates.library,我的模板,My templates
+inmny.godtools.ui.world_script.templates.save,另存为模板,Save as template
+inmny.godtools.ui.world_script.templates.saved,已保存模板「{0}」,Saved template {0}.
+inmny.godtools.ui.world_script.templates.save_failed,无法保存模板,Could not save the template.
+inmny.godtools.ui.world_script.templates.load_failed,无法读取模板,Could not read the templates.
+inmny.godtools.ui.world_script.templates.empty,将脚本另存为模板后即可在其他世界使用,Save a script as a template to use it in another world.
+inmny.godtools.ui.world_script.templates.pending,有 {0} 项归属待绑定,{0} affiliations to bind
+inmny.godtools.ui.world_script.templates.source_id,原 ID {0},Original ID {0}
+inmny.godtools.ui.world_script.templates.rebind_required,请为模板选择当前世界中的归属对象,Choose the template affiliations for this world.
+inmny.godtools.ui.world_script.flow.kind.City,村庄,Village
+inmny.godtools.ui.world_script.flow.kind.Kingdom,王国,Kingdom
+inmny.godtools.ui.world_script.target.city.all,全部村庄,All villages
+inmny.godtools.ui.world_script.target.city.by_id,指定村庄,Specific village
+inmny.godtools.ui.world_script.target.city.kingdom,指定王国的村庄,Villages in a kingdom
+inmny.godtools.ui.world_script.target.kingdom.all,全部王国,All kingdoms
+inmny.godtools.ui.world_script.target.kingdom.by_id,指定王国,Specific kingdom
+inmny.godtools.ui.world_script.condition.city.population,村庄人口,Village population
+inmny.godtools.ui.world_script.condition.city.capital,是首都,Is a capital
+inmny.godtools.ui.world_script.condition.city.kingdom,所属王国,Village kingdom
+inmny.godtools.ui.world_script.condition.kingdom.population,王国人口,Kingdom population
+inmny.godtools.ui.world_script.condition.kingdom.villages,村庄数量,Village count
+inmny.godtools.ui.world_script.condition.kingdom.has_king,有在世国王,Has a living king
+inmny.godtools.ui.world_script.affiliation.city,村庄,Village
+inmny.godtools.ui.world_script.relation.field,沿关系查找,Find related objects
+inmny.godtools.ui.world_script.relation.direct,直接使用选中的对象,Use selected objects
+inmny.godtools.ui.world_script.relation.city.residents,村庄居民,Village residents
+inmny.godtools.ui.world_script.relation.city.center,村庄中心地块,Village center tile
+inmny.godtools.ui.world_script.relation.kingdom.villages,王国所属村庄,Villages in the kingdom
+inmny.godtools.ui.world_script.relation.kingdom.king,王国的国王,King
+inmny.godtools.ui.world_script.relation.kingdom.members,王国成员,Kingdom members
+inmny.godtools.ui.world_script.relation.filter,关联对象筛选,Related object filters
+inmny.godtools.ui.world_script.relation.limit,每组上限（0 为全部）,Per group (0 = all)
+inmny.godtools.ui.world_script.relation.each,逐个关联对象执行,Once per related object
+inmny.godtools.ui.world_script.relation.once,每组执行一次,Once per group
+inmny.godtools.ui.world_script.relation.group_results,分组明细,Groups
+inmny.godtools.ui.world_script.relation.group_inputs,关联对象 {0} 个,{0} related targets
+inmny.godtools.ui.world_script.relation.group_processed,已处理 {0} 个,{0} processed
+inmny.godtools.ui.world_script.relation.preview_report,运行时使用本组的实际处理结果,Uses this group’s actual results at runtime
+inmny.godtools.ui.world_script.relation.report_requires_groups,请先在上一条启用的步骤中选择关系分组。,Choose a grouped step before reporting its results.
+inmny.godtools.ui.world_script.relation.invalid,请选择适用于当前来源的关系。,Choose a relation for the source object.
+inmny.godtools.ui.world_script.relation.invalid_limit,每组上限不能小于 0。,The group limit must be nonnegative.
+inmny.godtools.ui.world_script.history.omitted_groups,还有 {0} 个分组,{0} additional groups
+inmny.godtools.ui.world_script.flow.source.group_result,上一步的分组结果,Previous step’s group results
+inmny.godtools.ui.world_script.message.variable.group_name,当前村庄或王国名称,Current village or kingdom name
+inmny.godtools.ui.world_script.flow.template.city_rescue,低人口村庄救援,Treat residents of small villages
+inmny.godtools.ui.world_script.relation.city_rescue_message,{group_name}：本轮治疗了 {target_count} 名居民。,{group_name}: treated {target_count} residents.
+inmny.godtools.ui.world_script.relation.continue,继续查找,Continue from each village
+inmny.godtools.ui.world_script.relation.stop,停在村庄这一层,Use the villages
+inmny.godtools.ui.world_script.relation.filter.City,村庄筛选,Village filters
+inmny.godtools.ui.world_script.relation.filter.Actor,居民筛选,Resident filters
+inmny.godtools.ui.world_script.relation.filter.Tile,中心地块筛选,Center tile filters
+inmny.godtools.ui.world_script.relation.village_count,村庄 {0} 个,{0} villages
+inmny.godtools.ui.world_script.relation.invalid_chain,仅支持从村庄继续查找一层。,Continue from a village with one more relation.
+inmny.godtools.ui.world_script.flow.step_name,步骤名称,Step name
+inmny.godtools.ui.world_script.flow.source.step_matched,某一步命中的对象,Objects matched by a step
+inmny.godtools.ui.world_script.flow.source.step_processed,某一步实际处理的对象,Objects processed by a step
+inmny.godtools.ui.world_script.flow.source.step_created,某一步产生的对象,Objects created by a step
+inmny.godtools.ui.world_script.flow.reference_step,引用步骤,Source step
+inmny.godtools.ui.world_script.flow.immediately_previous,紧邻的上一条启用步骤,Previous enabled step
+inmny.godtools.ui.world_script.flow.result_condition,结果数量条件,Result count condition
+inmny.godtools.ui.world_script.flow.result_measure,统计数量,Count
+inmny.godtools.ui.world_script.flow.result_threshold,数量阈值,Threshold
+inmny.godtools.ui.world_script.flow.result.matched,命中数,Matched count
+inmny.godtools.ui.world_script.flow.result.processed,实际处理数,Processed count
+inmny.godtools.ui.world_script.flow.result.created,产物数,Created count
+inmny.godtools.ui.world_script.flow.preview_result_deferred,使用指定步骤运行时的实际结果,Uses the selected step’s results at runtime
+inmny.godtools.ui.world_script.flow.invalid_result_condition,请选择有效的结果数量条件。,Choose a valid step result condition.
+inmny.godtools.ui.world_script.history.result_value,条件计数 {0},Result count {0}
+inmny.godtools.ui.world_script.trigger.CityKingdomChanged,村庄易主,Village changes kingdom
+inmny.godtools.ui.world_script.trigger.KingdomKingChanged,国王变更,Kingdom changes ruler
+inmny.godtools.ui.world_script.trigger.Delayed,延时复查到期,Scheduled follow-up
+inmny.godtools.ui.world_script.target.city.event,事件村庄,Event village
+inmny.godtools.ui.world_script.target.kingdom.event,事件王国,Event kingdom
+inmny.godtools.ui.world_script.parameter.per_object_cooldown,按事件对象独立冷却,Cooldown per event object
+inmny.godtools.ui.world_script.flow.sample_city,样例村庄,Sample village
+inmny.godtools.ui.world_script.flow.sample_kingdom,样例王国,Sample kingdom
+inmny.godtools.ui.world_script.flow.sample_old_kingdom,原所属王国（样例）,Previous kingdom
+inmny.godtools.ui.world_script.flow.sample_subject,样例对象,Sample subject
+inmny.godtools.ui.world_script.message.variable.event_city,事件村庄名称,Event village name
+inmny.godtools.ui.world_script.message.variable.event_old,变化前的名称,Name before the change
+inmny.godtools.ui.world_script.message.variable.event_new,变化后的名称,Name after the change
+inmny.godtools.ui.world_script.condition.city.resources,村庄库存,Village resources
+inmny.godtools.ui.world_script.action.city.resources.change,调整村庄库存,Change village resources
+inmny.godtools.ui.world_script.action.settlement.rename,设置村庄或王国名称,Rename village or kingdom
+inmny.godtools.ui.world_script.action.actor.city.set,迁入村庄,Move to village
+inmny.godtools.ui.world_script.action.tile.building.place,建造建筑,Place building
+inmny.godtools.ui.world_script.action.kingdom.start_war,向王国宣战,Declare war
+inmny.godtools.ui.world_script.parameter.resource_id,资源,Resource
+inmny.godtools.ui.world_script.parameter.building_id,建筑,Building
+inmny.godtools.ui.world_script.parameter.new_name,新名称,New name
+inmny.godtools.ui.world_script.flow.estimated_change,预计变化 {0:+0;-0;0},Estimated change {0:+0;-0;0}
+inmny.godtools.ui.world_script.editor.outcome.no_change,已跳过 · 无变化,Skipped · no change
+inmny.godtools.ui.world_script.history.change_amount,实际变化 {0:+0;-0;0},Actual change {0:+0;-0;0}
+inmny.godtools.ui.world_script.history.skipped_count,跳过 {0} · {1},Skipped {0} · {1}
+inmny.godtools.ui.world_script.history.skip.no_change,对象状态未变,Object already in the requested state
+inmny.godtools.ui.world_script.history.skip.storage_unavailable,库存或可用仓储容量不足,Insufficient resources or available storage
+inmny.godtools.ui.world_script.history.skip.invalid_building_site,原版放置检查未通过,Placement check failed
+inmny.godtools.ui.world_script.history.skip.follow_up_unavailable,找不到可延时执行的脚本,Follow-up script unavailable
+inmny.godtools.ui.world_script.history.skip.follow_up_limit,待执行复查已达上限,Pending follow-up limit reached
+inmny.godtools.ui.world_script.condition.state.number,持久数值,Saved value
+inmny.godtools.ui.world_script.action.state.set,设置持久数值,Set saved value
+inmny.godtools.ui.world_script.action.state.add,增减持久数值,Add to saved value
+inmny.godtools.ui.world_script.action.script.schedule,安排延时复查,Schedule a follow-up script
+inmny.godtools.ui.world_script.parameter.state_key,状态名称,State key
+inmny.godtools.ui.world_script.parameter.script_id,复查脚本,Follow-up script
+inmny.godtools.ui.world_script.parameter.delay,延时,Delay
+inmny.godtools.ui.world_script.parameter.replace_pending,更新同一对象的待办复查,Replace pending follow-up
+inmny.godtools.ui.world_script.packages.import,导入脚本包,Import script package
+inmny.godtools.ui.world_script.packages.export,导出脚本包,Export script package
+inmny.godtools.ui.world_script.packages.empty,请将脚本包放入 {0},Place script package files in {0}
+inmny.godtools.ui.world_script.packages.failed,操作失败，请检查游戏日志。,Could not complete the script package.
+inmny.godtools.ui.world_script.packages.saved,脚本包已保存到 {0},Script package saved to {0}
+inmny.godtools.ui.world_script.packages.save,保存脚本包,Save package
+inmny.godtools.ui.world_script.packages.add,创建停用草稿,Create disabled drafts
+inmny.godtools.ui.world_script.history.trigger_total,收到触发 {0} 次 · 自动执行 {1} 次,Trigger events {0} · Automatic runs {1}
+inmny.godtools.ui.world_script.history.trigger_rate,平均每个游戏年收到 {0:0.##} 次触发,{0:0.##} trigger events per game year
+inmny.godtools.ui.world_script.history.duration,执行耗时 {0:0.##} 毫秒,Elapsed {0:0.##} ms
+inmny.godtools.ui.world_script.history.limit_step,步骤 {0},Step {0}
+inmny.godtools.ui.world_script.history.limit.targets,达到目标数量上限,Target limit reached
+inmny.godtools.ui.world_script.history.limit.actions,达到动作预算上限,Action budget reached
+inmny.godtools.ui.world_script.history.limit.spawns,达到生成数量上限,Spawn limit reached
+inmny.godtools.ui.world_script.validation.state_key,请输入状态名称。,Enter a state key.
+inmny.godtools.ui.world_script.validation.followup,请选择一个由延时复查触发的脚本。,Choose a follow-up script.
+inmny.godtools.ui.world_script.validation.delay,请输入大于 0 的延时。,Choose a positive delay.
+inmny.godtools.ui.world_script.validation.resource,请选择原版或模组提供的资源。,Choose a resource.
+inmny.godtools.ui.world_script.validation.building,请选择可用建筑。,Choose a building.
+inmny.godtools.ui.world_script.validation.new_name,请输入新名称。,Enter a new name.
+inmny.godtools.ui.world_script.parameter.log_location,地图定位,Map location
+inmny.godtools.ui.world_script.choice.log_location.none,无,None
+inmny.godtools.ui.world_script.choice.log_location.event,事件地点,Event location
+inmny.godtools.ui.world_script.choice.log_location.group,当前分组中心,Current group center
+inmny.godtools.ui.world_script.history.pending_runs,待复查 {0} 项 · 最近到期 {1:0.##},{0} pending follow-ups · Next at {1:0.##}
+inmny.godtools.ui.world_script.packages.missing_definition,缺少功能 {0},Unavailable definition {0}
+inmny.godtools.ui.world_script.scenario.list,剧本,Scenarios
+inmny.godtools.ui.world_script.scenario.name,剧本名称,Scenario name
+inmny.godtools.ui.world_script.scenario.add,新建剧本,Create scenario
+inmny.godtools.ui.world_script.scenario.assign,移入剧本,Move to scenario
+inmny.godtools.ui.world_script.scenario.none,独立脚本,Separate script
+inmny.godtools.ui.world_script.scenario.script_count,脚本 {0} 条,{0} scripts
+inmny.godtools.ui.world_script.scenario.task_count,待复查 {0} 项,{0} pending follow-ups
+inmny.godtools.ui.world_script.scenario.task_due,{0:0.##} 到期,Due {0:0.##}
+inmny.godtools.ui.world_script.scenario.recent,最近执行,Recent executions
+inmny.godtools.ui.world_script.scenario.locate,在地图上定位,Locate on map
+inmny.godtools.ui.world_script.scenario.edit_step,编辑此步骤,Edit this step
+inmny.godtools.ui.world_script.scenario.preview_skipped,跳过明细 · {0} 项,{0} filtered out
+inmny.godtools.ui.world_script.scenario.preview_reason.filter,未通过条件,Condition failed
+inmny.godtools.ui.world_script.scenario.preview_reason.branch,分支条件未满足,Branch condition failed
+inmny.godtools.ui.world_script.scenario.preview_reason.limit,超过目标上限,Target limit reached
+inmny.godtools.ui.world_script.scenario.scheduler_queue,等待调度的事件或复查 {0} 项,{0} queued events or follow-ups
+inmny.godtools.ui.world_script.scenario.follow_up_results,复查结果,Follow-up results
+inmny.godtools.ui.world_script.scenario.task_outcome.missing_script,已取消 · 复查脚本不存在,Cancelled · follow-up script unavailable
+inmny.godtools.ui.world_script.scenario.task_outcome.missing_subject,已取消 · 对象已消失,Cancelled · subject removed
+inmny.godtools.ui.world_script.scenario.task_outcome.ownership_changed,已取消 · 村庄易主,Cancelled · village changed kingdom
+inmny.godtools.ui.world_script.scenario.task_outcome.cooldown,已跳过 · 触发限制生效,Skipped · trigger limit in effect
+inmny.godtools.ui.world_script.parameter.ownership_policy,村庄再次易主时,On village ownership change
+inmny.godtools.ui.world_script.choice.ownership_policy.continue,按当前归属继续,Continue under current ownership
+inmny.godtools.ui.world_script.choice.ownership_policy.cancel,取消原待办,Cancel follow-up
+inmny.godtools.ui.world_script.trigger.WarEnded,战争结束,War ends
+inmny.godtools.ui.world_script.trigger.CityThreshold,村庄跨过阈值,Village crosses threshold
+inmny.godtools.ui.world_script.parameter.threshold_metric,监测指标,Metric
+inmny.godtools.ui.world_script.choice.threshold_metric.stock,资源库存,Resource stock
+inmny.godtools.ui.world_script.choice.threshold_metric.population,村庄人口,Village population
+inmny.godtools.ui.world_script.parameter.low_threshold,低位阈值,Low threshold
+inmny.godtools.ui.world_script.parameter.high_threshold,恢复阈值,Recovery threshold
+inmny.godtools.ui.world_script.parameter.threshold_direction,触发时机,When to trigger
+inmny.godtools.ui.world_script.choice.threshold_direction.low,降到低位,Falls to low threshold
+inmny.godtools.ui.world_script.choice.threshold_direction.recovered,恢复到高位,Recovers to high threshold
+inmny.godtools.ui.world_script.parameter.sample_interval,采样间隔（世界秒）,Sampling interval (world seconds)
+inmny.godtools.ui.world_script.validation.threshold,恢复阈值须高于低位阈值，并填写有效的资源与采样间隔。,The recovery threshold must exceed the low threshold. Choose a valid resource and sampling interval.
+inmny.godtools.ui.world_script.message.variable.event_war,战争名称,War name
+inmny.godtools.ui.world_script.message.variable.event_value,触发时的指标值,Value at trigger
+inmny.godtools.ui.world_script.condition.scenario.phase,当前剧本阶段,Scenario phase
+inmny.godtools.ui.world_script.condition.city.resources.scenario,村庄库存与剧本阈值比较,Village stock vs scenario parameter
+inmny.godtools.ui.world_script.action.scenario.phase.set,设置剧本阶段,Set scenario phase
+inmny.godtools.ui.world_script.parameter.phase,阶段名称,Phase name
+inmny.godtools.ui.world_script.parameter.scenario_parameter,剧本参数,Scenario parameter
+inmny.godtools.ui.world_script.flow.number.scenario.parameter,使用剧本参数,Scenario parameter
+inmny.godtools.ui.world_script.history.skip.scenario_missing,脚本没有所属剧本,Script has no scenario
+inmny.godtools.ui.world_script.history.skip.delay_invalid,复查间隔必须大于零,Follow-up delay must be positive
+inmny.godtools.ui.world_script.scenario.parameters,共享参数,Shared parameters
+inmny.godtools.ui.world_script.scenario.new_parameter,新参数,New parameter
+inmny.godtools.ui.world_script.scenario.parameter_add,添加,Add
+inmny.godtools.ui.world_script.scenario.progress,对象进度,Progress by object
+inmny.godtools.ui.world_script.scenario.timeline,阶段时间线,Phase changes
+inmny.godtools.ui.world_script.scenario.phase.none,未开始,Not started
+inmny.godtools.ui.world_script.scenario.phase.awaiting_supplies,等待物资,Awaiting supplies
+inmny.godtools.ui.world_script.scenario.phase.extended,延期复查,Review postponed
+inmny.godtools.ui.world_script.scenario.phase.complete,重建完成,Reconstruction complete
+inmny.godtools.ui.world_script.scenario.parameter.wood_grant,每村发放木材,Wood per village
+inmny.godtools.ui.world_script.scenario.parameter.wood_goal,复查所需木材,Wood required at review
+inmny.godtools.ui.world_script.scenario.parameter.review_delay,复查间隔（世界秒）,Review delay (world seconds)
+inmny.godtools.ui.world_script.scenario.reconstruction,战后重建,Postwar reconstruction
+inmny.godtools.ui.world_script.scenario.reconstruction.start,发起重建,Start reconstruction
+inmny.godtools.ui.world_script.scenario.reconstruction.supply,发放物资,Send supplies
+inmny.godtools.ui.world_script.scenario.reconstruction.review,到期复查,Review reconstruction
+inmny.godtools.ui.world_script.packages.revision,版本,Revision
+inmny.godtools.ui.world_script.packages.public_parameters,导入时可调整的参数,Parameters editable on import
+inmny.godtools.ui.world_script.packages.upgrade,确认升级方案,Apply upgrade
+inmny.godtools.ui.world_script.packages.upgrade_confirm,应用新规则并暂时停用更新的脚本？剧本进度、计数和待办会迁移。,Apply the new rules as disabled drafts and carry over progress and follow-ups?
+inmny.godtools.ui.world_script.packages.added_script,新增脚本,New script
+inmny.godtools.ui.world_script.packages.compare,规则变化,Compare rules
+inmny.godtools.ui.world_script.packages.archived_script,停用留档,Archive as disabled
+inmny.godtools.ui.world_script.packages.removed_step,此步骤已移除,Removed step
+inmny.godtools.ui.world_script.scenario.scheduler_dropped,事件队列已满 · 已丢弃 {0} 项,{0} events dropped at the queue limit
+inmny.godtools.ui.world_script.validation.phase,请输入阶段名称。,Enter a phase name.
+inmny.godtools.ui.world_script.scenario.cancel_task,取消待办,Cancel follow-up
+inmny.godtools.ui.world_script.scenario.cancel_task_question,确定取消这项待复查？,Cancel this pending follow-up?
+inmny.godtools.ui.world_script.scenario.task_outcome.manual_cancel,已手动取消,Cancelled manually
+inmny.godtools.ui.world_script.scenario.phase.cancelled,重建终止,Reconstruction cancelled
+inmny.godtools.ui.world_script.parameter.cancel_phase,取消后进入的阶段,Phase when cancelled
+inmny.godtools.ui.world_script.packages.step_changed,设置已修改,Step settings changed
+inmny.godtools.ui.world_script.field.targets_per_batch,每批处理目标数（0 为关闭）,Targets per batch (0 = off)
+inmny.godtools.ui.world_script.validation.batch,分批只适用于世界触发的主查询逐项步骤，请使用无关系和分支的步骤。,Batch jobs require independent per-target steps on the main query.
+inmny.godtools.ui.world_script.validation.batch_save,请先应用脚本修改，再安排分批。,Apply script changes before queueing a batch.
+inmny.godtools.ui.world_script.history.batch_progress,分批任务 · 步骤 {0}/{1} · 目标 {2}/{3},Batch · Step {0}/{1} · {2}/{3} targets
+inmny.godtools.ui.world_script.history.cancel_batch,取消分批,Cancel batch
+inmny.godtools.ui.world_script.history.cancel_batch_question,确定取消本批任务的剩余工作？,Cancel the remaining work in this batch?
+inmny.godtools.ui.world_script.editor.outcome.batch_queued,进入分批队列,Batch queued
+inmny.godtools.ui.world_script.editor.outcome.batch_slice,完成一批,Batch slice completed
+inmny.godtools.ui.world_script.editor.outcome.batch_completed,分批任务完成,Batch completed
+inmny.godtools.ui.world_script.editor.outcome.batch_stopped,分批任务已中止,Batch stopped
+inmny.godtools.ui.world_script.editor.outcome.batch_cancelled,分批任务已取消,Batch cancelled
+inmny.godtools.ui.world_script.history.event_cause,来源 {0} · 步骤 {1},From script {0} · Step {1}
+inmny.godtools.ui.world_script.history.write_records,逐对象写入明细,Changes by object
+inmny.godtools.ui.world_script.history.skip.inventory_satisfied,库存已满足策略,Inventory already meets policy
+inmny.godtools.ui.world_script.history.skip.kingdom_conflict,当前归属和事件记录不一致,Current kingdom differs from the event kingdom
+inmny.godtools.ui.world_script.history.write_policy.delta,直接增减,Apply delta
+inmny.godtools.ui.world_script.history.write_policy.at_least,补到下限,Raise to a minimum
+inmny.godtools.ui.world_script.history.write_policy.at_most,降到上限,Reduce to a maximum
+inmny.godtools.ui.world_script.history.write_policy.always,直接设置归属,Set kingdom
+inmny.godtools.ui.world_script.history.write_policy.event_kingdom,匹配事件归属才写入,Set only for the event kingdom
+inmny.godtools.ui.world_script.parameter.stock_write,库存写入策略,Inventory write policy
+inmny.godtools.ui.world_script.choice.stock_write.delta,直接增减,Apply delta
+inmny.godtools.ui.world_script.choice.stock_write.at_least,补到目标下限,Raise to target minimum
+inmny.godtools.ui.world_script.choice.stock_write.at_most,降到目标上限,Reduce to target maximum
+inmny.godtools.ui.world_script.parameter.kingdom_write,归属写入策略,Kingdom write policy
+inmny.godtools.ui.world_script.choice.kingdom_write.always,直接设置,Set directly
+inmny.godtools.ui.world_script.choice.kingdom_write.event_kingdom,仍属事件王国才设置,Set only if still in the event kingdom
+inmny.godtools.ui.world_script.region.list,地图区域,Map regions
+inmny.godtools.ui.world_script.region.name,区域名称,Region name
+inmny.godtools.ui.world_script.region.add,新建区域,Create region
+inmny.godtools.ui.world_script.region.pick_first,选择第一个角,Pick first corner
+inmny.godtools.ui.world_script.region.pick_second,选择对角,Pick opposite corner
+inmny.godtools.ui.world_script.affiliation.region,地图区域,Map region
+inmny.godtools.ui.world_script.target.city.region,区域内村庄,Villages in region
+inmny.godtools.ui.world_script.target.kingdom.region,在区域有村庄的王国,Kingdoms with villages in region
+inmny.godtools.ui.world_script.target.tile.region,区域内地块,Tiles in region
+inmny.godtools.ui.world_script.condition.region.contains,位于地图区域,Within map region
+inmny.godtools.ui.world_script.trigger.RegionOwnership,区域内村庄易主,Village changes kingdom in region
+inmny.godtools.ui.world_script.rehearsal.list,试运行,Rehearsals
+inmny.godtools.ui.world_script.rehearsal.create,创建试运行副本,Create rehearsal copies
+inmny.godtools.ui.world_script.rehearsal.open_saved,打开已保存规则,Open saved rules copy
+inmny.godtools.ui.world_script.rehearsal.open_draft,打开草稿规则,Open draft rules copy
+inmny.godtools.ui.world_script.rehearsal.capture,记录结果,Record result
+inmny.godtools.ui.world_script.rehearsal.switch,打开一份全新试运行副本？当前世界有改动时请先保存。,Open a fresh test copy? Save any current world changes first.
+inmny.godtools.ui.world_script.rehearsal.failed,试运行操作失败，请检查游戏日志。,Rehearsal operation failed. Check the game log.
+inmny.godtools.ui.world_script.rehearsal.capture_both,在两份副本里重现同一事件，再分别记录结果。,Run the same case in both copies and record each result.
+inmny.godtools.ui.world_script.rehearsal.times,已保存规则时间 {0:0.##} · 草稿规则时间 {1:0.##},Saved rules at {0:0.##} · Draft rules at {1:0.##}
+inmny.godtools.ui.world_script.rehearsal.script_result,处理数 {0} → {1} · 待办 {2} → {3},Processed {0} → {1} · Pending {2} → {3}
+inmny.godtools.ui.world_script.rehearsal.stock,库存差异 {0} 项,{0} stock differences
+inmny.godtools.ui.world_script.packages.preflight,兼容性检查,Compatibility check
+inmny.godtools.ui.world_script.packages.preflight_passed,通过检查,Validation passed
+inmny.godtools.ui.world_script.packages.external_follow_up,这条复查脚本未包含在包内。,Follow-up is outside this package.
+inmny.godtools.ui.world_script.packages.rehearse_upgrade,演练升级,Rehearse upgrade
+inmny.godtools.ui.world_script.scenario.relief,灾荒救济,Famine relief
+inmny.godtools.ui.world_script.scenario.relief.start,启动救济,Start relief
+inmny.godtools.ui.world_script.scenario.relief.supply,发放应急食物,Supply emergency food
+inmny.godtools.ui.world_script.scenario.relief.finish,结束救济,End relief
+inmny.godtools.ui.world_script.scenario.phase.receiving_relief,救济中,Receiving relief
+inmny.godtools.ui.world_script.scenario.phase.relief_recovered,库存已恢复,Stock recovered
+inmny.godtools.ui.world_script.scenario.parameter.relief_stock,救济补给下限,Relief stock minimum
+inmny.godtools.ui.world_script.scenario.dynasty,王朝交替,Royal succession
+inmny.godtools.ui.world_script.scenario.dynasty.record,记录王位变化,Record the change of ruler
+inmny.godtools.ui.world_script.scenario.dynasty.message,{event_kingdom} 王位变更 · {event_old} → {event_new},{event_kingdom} · {event_old} → {event_new}
+inmny.godtools.ui.world_script.scenario.phase.new_reign,新王在位,New reign
+inmny.godtools.ui.world_script.scenario.phase.interregnum,王位暂缺,Interregnum
+inmny.godtools.ui.world_script.history.batch_paused,恢复世界运行后继续处理。,Queued work continues when the world resumes.
+inmny.godtools.ui.world_script.scene.year,世界第 {0} 年,World year {0}
+inmny.godtools.ui.world_script.scene.mode.manual,手动开场,Manual
+inmny.godtools.ui.world_script.scene.mode.automatic,到年自动,Start on schedule
+inmny.godtools.ui.world_script.scene.mode.remind,到年提醒,Remind on schedule
+inmny.godtools.ui.world_script.scene.mode.pause,到年暂停,Pause on schedule
+inmny.godtools.ui.world_script.scene.started,已开场,Started
+inmny.godtools.ui.world_script.scene.awaiting,等待开场,Ready to start
+inmny.godtools.ui.world_script.scene.current,当前场次 · {0},Current · {0}
+inmny.godtools.ui.world_script.scene.next,下一场 · {0} · {1},Next · {0} · {1}
+inmny.godtools.ui.world_script.scene.add,新建场次,New scene
+inmny.godtools.ui.world_script.scene.untitled,未命名场次,Untitled scene
+inmny.godtools.ui.world_script.scene.name,场次名称,Scene name
+inmny.godtools.ui.world_script.scene.settings,场次设置,Scene settings
+inmny.godtools.ui.world_script.scene.start,开始场次,Start scene
+inmny.godtools.ui.world_script.scene.start_mode,开场方式,Start cue
+inmny.godtools.ui.world_script.scene.planned_year,计划世界年,Planned world year
+inmny.godtools.ui.world_script.scene.start_script,开场脚本,Opening script
+inmny.godtools.ui.world_script.scene.missing_script,开场脚本不可用,Opening script unavailable
+inmny.godtools.ui.world_script.scene.actor,出场人物,Featured unit
+inmny.godtools.ui.world_script.scene.pick_site,选择取景地点,Pick filming location
+inmny.godtools.ui.world_script.scene.watch,记录本场首次事件,Watch for first event in scene
+inmny.godtools.ui.world_script.scene.actor.died,出场人物死亡,Featured unit dies
+inmny.godtools.ui.world_script.scene.city.kingdom_changed,村庄易主,Village changes hands
+inmny.godtools.ui.world_script.scene.kingdom.king_changed,新王登基,New ruler takes the throne
+inmny.godtools.ui.world_script.scene.delete,移除场次,Remove scene
+inmny.godtools.ui.world_script.scene.delete_confirm,移除这个场次及其中的标记？,Remove this scene and its marks?
+inmny.godtools.ui.world_script.scene.mark_name,拍摄标记,Take note
+inmny.godtools.ui.world_script.scene.manual_mark,拍摄备注,Take note
+inmny.godtools.ui.world_script.scene.manual,手动标记,Manual mark
+inmny.godtools.ui.world_script.scene.add_mark,加标记,Add mark
+inmny.godtools.ui.world_script.scene.follow,跟拍人物,Follow unit
+inmny.godtools.ui.world_script.scene.wide,地图全景,Wide shot
+inmny.godtools.ui.world_script.scene.clean,干净取景,Clean view
+inmny.godtools.ui.world_script.scene.clean_help,用原版「隐藏界面」快捷键恢复画面（默认 H）。,Use the game's Toggle UI hotkey (H by default) to restore the interface.
+inmny.godtools.ui.world_script.scene.checkpoints,补拍检查点,Checkpoints
+inmny.godtools.ui.world_script.scene.checkpoint_name,检查点名称,Checkpoint name
+inmny.godtools.ui.world_script.scene.save,保存,Save
+inmny.godtools.ui.world_script.scene.save_here,保存当前世界,Save current world
+inmny.godtools.ui.world_script.scene.checkpoint_saved,已保存补拍检查点,Checkpoint saved
+inmny.godtools.ui.world_script.scene.no_checkpoints,从场次保存的检查点会显示在这里。,Save a checkpoint from a scene to list it here.
+inmny.godtools.ui.world_script.scene.open_checkpoint,打开工作副本,Open working copy
+inmny.godtools.ui.world_script.scene.checkpoint_confirm,打开新的工作副本？请先保存当前世界的改动。,Open a fresh working copy? Save your current world first.
+inmny.godtools.ui.world_script.scene.select_ending,选为正片结尾,Select as ending
+inmny.godtools.ui.world_script.scene.ending,正片结尾,Selected ending
+inmny.godtools.ui.world_script.scene.checkpoint_failed,检查点操作失败，请查看游戏日志。,Checkpoint operation failed. Check the game log.
+inmny.godtools.ui.world_script.scene.trial,百年试炼后的王位交替,The centennial trial
+inmny.godtools.ui.world_script.scene.trial_open,宣布百年试炼,Announce the centennial trial
+inmny.godtools.ui.world_script.scene.trial_message,百年之约已至，试炼开始。,The centennial trial begins.
+inmny.godtools.ui.world_script.scene.trial_start,守关人的试炼,The keeper's trial
+inmny.godtools.ui.world_script.scene.trial_end,试炼后的第一年,The first year after the trial
+inmny.godtools.ui.world_script.scene.watching,正在等候 · {0},Waiting for · {0}
