@@ -137,7 +137,8 @@ internal sealed partial class BuiltInRankings : IManager
         });
         Field<ConsistentCreaturePowerTop.CreaturePowerData>(LegacyPeaks, "name", "name", RankingFieldKind.Text,
             sample => RankingValue.Text(sample.Name));
-        Number<ConsistentCreaturePowerTop.CreaturePowerData>(LegacyPeaks, "peak", "power.score", sample => sample.Power);
+        Field<ConsistentCreaturePowerTop.CreaturePowerData>(LegacyPeaks, "peak", "power.score", RankingFieldKind.Number,
+            sample => RankingValue.Numeric(sample.Power), StandardDuelPower.IconPath);
         RankingRegistry.RegisterBoard(new RankingBoard
         {
             ID = LegacyPeaks, SourceID = LegacyPeaks, Name = Prefix + "basic_peaks", IconPath = "ui/icons/iconWorldLog",
@@ -154,8 +155,9 @@ internal sealed partial class BuiltInRankings : IManager
             Columns = columns, DefaultSort = columns.FirstOrDefault()
         });
 
-    internal static void Field<T>(string source, string id, string label, RankingFieldKind kind, Func<T, RankingValue> read) =>
-        RankingRegistry.RegisterField(source, new RankingField<T> { ID = id, Name = Prefix + label, Kind = kind, Read = read });
+    internal static void Field<T>(string source, string id, string label, RankingFieldKind kind, Func<T, RankingValue> read,
+        string iconPath = null) =>
+        RankingRegistry.RegisterField(source, new RankingField<T> { ID = id, Name = Prefix + label, Kind = kind, Read = read, IconPath = iconPath });
 
     internal static void Number<T>(string source, string id, string label, Func<T, double> read) =>
         Field<T>(source, id, label, RankingFieldKind.Number, item => RankingValue.Numeric(read(item)));

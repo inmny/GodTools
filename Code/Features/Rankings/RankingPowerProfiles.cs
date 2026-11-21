@@ -125,7 +125,8 @@ public static class RankingPowerProfiles
         BuiltInRankings.Field<RankingPeak>(id, "name", "name", RankingFieldKind.Text,
             sample => RankingValue.Text(sample.ActorName));
         BuiltInRankings.Field<RankingPeak>(id, "score", "power.score", RankingFieldKind.Number,
-            sample => RankingValue.Power(sample.Score, sample.Parts, details: sample.Details));
+            sample => RankingValue.Power(sample.Score, sample.Parts, details: sample.Details),
+            builtIn ? StandardDuelPower.IconPath : null);
         BuiltInRankings.Field<RankingPeak>(id, "year", "year", RankingFieldKind.Number,
             sample => RankingValue.Numeric(Date.getYear(sample.Time)));
         RankingRegistry.RegisterBoard(new RankingBoard
@@ -134,7 +135,8 @@ public static class RankingPowerProfiles
                 $"{Versioned(archive.Name ?? profile, version)} · {LM.Get("inmny.godtools.ranking.peak_samples")}",
             GroupID = RankingGroupIds.Archives,
             Order = builtIn ? 100 : 300,
-            Columns = new[] { "score", "year" }, DefaultSort = "score", IconPath = "ui/icons/iconWorldLog",
+            Columns = new[] { "score", "year" }, DefaultSort = "score",
+            IconPath = builtIn ? StandardDuelPower.IconPath : "ui/icons/iconWorldLog",
             Available = () => RankingStore.FindPeaks(profile, version) != null
         });
     }

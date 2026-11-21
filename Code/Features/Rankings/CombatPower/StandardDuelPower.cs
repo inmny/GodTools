@@ -15,6 +15,7 @@ internal static class StandardDuelPower
     internal const string PreviousFieldID = "power:" + ProfileID + "@1";
     internal const string BaseFieldID = "power";
     internal const string FieldID = "power:" + ProfileID + "@2";
+    internal const string IconPath = "inmny/godtools/icons/iconRankingPower";
     private const string Prefix = "inmny.godtools.ranking.duel.";
 
     private static readonly ModInput Cultiway =
@@ -25,7 +26,7 @@ internal static class StandardDuelPower
     internal static void Register() => RankingPowerProfiles.RegisterBuiltIn(new RankingPowerProfile
     {
         ID = ProfileID, Version = Version, Name = "inmny.godtools.ranking.power.score", Calculate = Assess,
-        Description = Prefix + "description", IconPath = "ui/icons/iconWarriors", RecordPeaks = true
+        Description = Prefix + "description", IconPath = IconPath, RecordPeaks = true
     });
 
     internal static RankingPowerScore Assess(Actor actor)
